@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { CORAL_CATEGORIES } from '../../constants/categories';
-import { Prediction } from '../../types/prediction';
-import { Eye, EyeOff, Layers } from 'lucide-react';
+import { CORAL_CATEGORIES } from '@/constants/categories';
+import { Prediction } from '@/types/prediction';
+import { Eye, EyeOff, Layers, Sparkles } from 'lucide-react';
 
 interface BoundingBoxOverlayProps {
   imageUrl: string;
@@ -22,22 +22,22 @@ export const BoundingBoxOverlay: React.FC<BoundingBoxOverlayProps> = ({
   const [activeBoxId, setActiveBoxId] = useState<string | null>(null);
 
   return (
-    <div className={`relative overflow-hidden rounded-xl border border-ocean-700/70 bg-ocean-950 ${className}`}>
+    <div className={`relative overflow-hidden rounded-2xl border border-reef-border/60 bg-reef-midnight shadow-xl ${className}`}>
       {/* Visual Controls */}
       <div className="absolute top-3 right-3 z-20 flex items-center gap-2">
         <button
           onClick={() => setShowBoxes(!showBoxes)}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-ocean-900/90 text-cyan-300 border border-ocean-700/80 shadow-md backdrop-blur hover:bg-ocean-800 transition-colors"
+          className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-reef-midnight/90 text-reef-aqua border border-reef-aqua/40 shadow-glow-aqua/20 backdrop-blur hover:bg-reef-surface transition-all"
           title={showBoxes ? 'Hide detection annotations' : 'Display YOLO11 bounding boxes'}
         >
           {showBoxes ? (
             <>
-              <EyeOff className="w-3.5 h-3.5" />
-              <span>Original Image</span>
+              <EyeOff className="w-3.5 h-3.5 text-reef-orange" />
+              <span>Show Original</span>
             </>
           ) : (
             <>
-              <Eye className="w-3.5 h-3.5" />
+              <Eye className="w-3.5 h-3.5 text-reef-aqua" />
               <span>Show Detections ({predictions.length})</span>
             </>
           )}
@@ -45,7 +45,7 @@ export const BoundingBoxOverlay: React.FC<BoundingBoxOverlayProps> = ({
       </div>
 
       {/* Main Image Container */}
-      <div className="relative w-full aspect-video bg-black flex items-center justify-center">
+      <div className="relative w-full aspect-video bg-black flex items-center justify-center overflow-hidden">
         <img
           src={imageUrl}
           alt={altText}
@@ -77,26 +77,26 @@ export const BoundingBoxOverlay: React.FC<BoundingBoxOverlayProps> = ({
                   }}
                   onMouseEnter={() => setActiveBoxId(pred.id)}
                   onMouseLeave={() => setActiveBoxId(null)}
-                  className={`absolute pointer-events-auto border-2 rounded transition-all duration-150 cursor-pointer ${
+                  className={`absolute pointer-events-auto rounded transition-all duration-150 cursor-pointer ${
                     isHovered
-                      ? 'border-4 shadow-[0_0_15px_rgba(255,255,255,0.4)] z-30 bg-white/10'
-                      : 'border-2 opacity-90'
+                      ? 'border-4 shadow-[0_0_20px_rgba(56,214,208,0.7)] z-30 bg-white/15'
+                      : 'border-2 opacity-95 shadow-md'
                   }`}
                 >
-                  {/* Category Tag & Confidence */}
+                  {/* Category Tag & Confidence Pill */}
                   <div
                     style={{ backgroundColor: meta.color }}
-                    className="absolute -top-6 left-0 px-2 py-0.5 rounded-t text-[11px] font-bold text-slate-950 font-mono flex items-center gap-1.5 shadow whitespace-nowrap z-30"
+                    className="absolute -top-6 left-0 px-2 py-0.5 rounded-t-md text-[10.5px] font-black text-slate-950 font-mono flex items-center gap-1.5 shadow-lg whitespace-nowrap z-30"
                   >
                     <span>{meta.displayName}</span>
-                    <span className="opacity-90">
+                    <span className="opacity-90 font-bold">
                       {Math.round(pred.confidence * 100)}%
                     </span>
                   </div>
 
                   {/* On-hover Detailed Coords Pill */}
                   {isHovered && (
-                    <div className="absolute -bottom-7 left-0 px-2 py-0.5 rounded bg-ocean-950/95 border border-ocean-700 text-[10px] text-cyan-300 font-mono shadow-lg whitespace-nowrap z-30">
+                    <div className="absolute -bottom-7 left-0 px-2 py-0.5 rounded-md bg-reef-midnight/95 border border-reef-aqua/60 text-[10px] text-reef-aqua font-mono shadow-2xl whitespace-nowrap z-30">
                       bbox: [{Math.round(pred.boundingBox.x1)}, {Math.round(pred.boundingBox.y1)}, {Math.round(pred.boundingBox.x2)}, {Math.round(pred.boundingBox.y2)}]
                     </div>
                   )}
@@ -109,11 +109,11 @@ export const BoundingBoxOverlay: React.FC<BoundingBoxOverlayProps> = ({
 
       {/* Detection Objects Footer Strip */}
       {predictions.length > 0 && (
-        <div className="px-4 py-3 bg-ocean-900/90 border-t border-ocean-700/60 flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-slate-400">
-            <Layers className="w-3.5 h-3.5 text-cyan-400" />
-            <span>Detected Specimen Count:</span>
-            <span className="font-bold font-mono text-cyan-300">
+        <div className="px-4 py-3 bg-gradient-to-r from-reef-midnight via-reef-surface to-reef-midnight border-t border-reef-border/40 flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2 text-slate-300">
+            <Layers className="w-4 h-4 text-reef-aqua" />
+            <span className="font-semibold">Detected Specimen Count:</span>
+            <span className="font-bold font-mono text-reef-aqua">
               {predictions.length} objects
             </span>
           </div>
@@ -123,10 +123,10 @@ export const BoundingBoxOverlay: React.FC<BoundingBoxOverlayProps> = ({
               return (
                 <span
                   key={p.id}
-                  className="px-2 py-0.5 rounded text-[11px] font-medium border font-mono flex items-center gap-1"
+                  className="px-2.5 py-0.5 rounded-full text-[11px] font-semibold border font-mono flex items-center gap-1.5 shadow-sm"
                   style={{
-                    backgroundColor: `${meta.color}15`,
-                    borderColor: `${meta.color}40`,
+                    backgroundColor: `${meta.color}20`,
+                    borderColor: `${meta.color}50`,
                     color: meta.color,
                   }}
                 >

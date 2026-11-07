@@ -8,75 +8,105 @@
   }
 
   body {
-    background-color: #050B14;
-    color: #F1F5F9;
+    background-color: #061B2C;
+    color: #F3FAFC;
     font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
   }
 
-  /* Custom scientific dark scrollbar */
+  /* Custom underwater scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #08101E;
+    background: #061B2C;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #1A2F50;
-    border-radius: 3px;
+    background: #0B3346;
+    border-radius: 4px;
+    border: 1px solid rgba(56, 214, 208, 0.2);
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #2F5288;
+    background: #087E8B;
   }
 }
 
-/* Leaflet dark styling */
+/* Glassmorphism Panels for ReefSentra */
+.reef-glass {
+  background: rgba(11, 51, 70, 0.65);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(56, 214, 208, 0.22);
+  box-shadow: 0 10px 30px -5px rgba(3, 16, 28, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+}
+
+.reef-glass-interactive {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reef-glass-interactive:hover {
+  background: rgba(15, 62, 86, 0.8);
+  border-color: rgba(56, 214, 208, 0.45);
+  box-shadow: 0 14px 35px -5px rgba(3, 16, 28, 0.8), 0 0 20px -3px rgba(56, 214, 208, 0.25);
+  transform: translateY(-2px);
+}
+
+.reef-glass-hero {
+  background: linear-gradient(135deg, rgba(8, 42, 58, 0.85) 0%, rgba(6, 27, 44, 0.92) 100%);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(56, 214, 208, 0.3);
+  box-shadow: 0 20px 45px -10px rgba(2, 10, 18, 0.9);
+}
+
+/* Gradient text accents */
+.text-gradient-aqua {
+  background: linear-gradient(135deg, #38D6D0 0%, #8DE2C5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-coral {
+  background: linear-gradient(135deg, #FF8066 0%, #FF6F91 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Leaflet dark oceanic styling - no API key watermark! */
 .leaflet-container {
   width: 100%;
   height: 100%;
-  background: #08101E !important;
+  background: #061B2C !important;
   font-family: inherit;
 }
 
+.leaflet-tile-pane {
+  filter: hue-rotate(195deg) saturate(1.2) brightness(0.9) contrast(1.1);
+}
+
 .leaflet-popup-content-wrapper {
-  background: #0D192C !important;
-  color: #F1F5F9 !important;
-  border: 1px solid #213B64;
-  border-radius: 8px !important;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+  background: #082A3A !important;
+  color: #F3FAFC !important;
+  border: 1px solid rgba(56, 214, 208, 0.35) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 15px 35px -5px rgba(2, 10, 18, 0.8) !important;
 }
 
 .leaflet-popup-tip {
-  background: #0D192C !important;
-  border: 1px solid #213B64;
+  background: #082A3A !important;
+  border: 1px solid rgba(56, 214, 208, 0.35) !important;
 }
 
 .leaflet-bar a {
-  background-color: #0D192C !important;
-  color: #22D3EE !important;
-  border-bottom: 1px solid #213B64 !important;
+  background-color: #082A3A !important;
+  color: #38D6D0 !important;
+  border-bottom: 1px solid rgba(56, 214, 208, 0.2) !important;
 }
 
 .leaflet-bar a:hover {
-  background-color: #13233D !important;
-  color: #38BDF8 !important;
-}
-
-/* Scientific glass card effect */
-.glass-panel {
-  background: rgba(13, 25, 44, 0.7);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(33, 59, 100, 0.6);
-}
-
-.glass-card-hover {
-  transition: all 0.2s ease-in-out;
-}
-
-.glass-card-hover:hover {
-  border-color: rgba(34, 211, 238, 0.4);
-  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.15);
+  background-color: #0B3346 !important;
+  color: #8DE2C5 !important;
 }

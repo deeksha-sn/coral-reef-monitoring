@@ -9,7 +9,7 @@ import {
   Cell,
   CartesianGrid,
 } from 'recharts';
-import { AssessmentSummary } from '../../types/assessment';
+import { AssessmentSummary } from '@/types/assessment';
 
 interface DiseaseCategoryBarProps {
   summary: AssessmentSummary;
@@ -48,16 +48,16 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="bg-ocean-900 border border-ocean-700 p-2.5 rounded-lg shadow-xl text-xs font-mono">
-          <p className="font-bold text-slate-100 flex items-center gap-1.5">
+        <div className="bg-reef-midnight/95 border border-reef-aqua/40 p-3 rounded-xl shadow-2xl text-xs font-mono backdrop-blur-md">
+          <p className="font-bold text-white flex items-center gap-1.5 text-sm">
             <span
-              className="w-2.5 h-2.5 rounded-full"
+              className="w-2.5 h-2.5 rounded-full shadow-sm"
               style={{ backgroundColor: item.color }}
             />
             {item.fullName}
           </p>
-          <p className="text-slate-300 mt-1">Detections: {item.count} objects</p>
-          <p className="text-cyan-400 font-semibold">Prevalence: {item.pct}%</p>
+          <p className="text-slate-300 mt-1.5">Specimens: <span className="text-white font-bold">{item.count}</span> objects</p>
+          <p className="text-reef-aqua font-bold">Prevalence: {item.pct}%</p>
         </div>
       );
     }
@@ -69,21 +69,22 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
       <div style={{ width: '100%', height }}>
         <ResponsiveContainer>
           <BarChart data={data} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#1A2F50" opacity={0.6} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(56, 214, 208, 0.15)" vertical={false} />
             <XAxis
               dataKey="name"
-              stroke="#94A3B8"
+              stroke="#8DE2C5"
               fontSize={11}
               tickLine={false}
+              fontWeight={600}
             />
             <YAxis
-              stroke="#94A3B8"
+              stroke="#8DE2C5"
               fontSize={11}
               tickLine={false}
               unit="%"
             />
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="pct" radius={[4, 4, 0, 0]}>
+            <Bar dataKey="pct" radius={[6, 6, 0, 0]}>
               {data.map((entry, index) => (
                 <Cell key={`bar-${index}`} fill={entry.color} />
               ))}
@@ -92,9 +93,9 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-2 pt-2 border-t border-ocean-800 flex items-center justify-between text-xs font-mono px-2">
-        <span className="text-slate-400">Combined Band Disease:</span>
-        <span className="font-bold text-violet-400">
+      <div className="mt-2 pt-2.5 border-t border-reef-border/40 flex items-center justify-between text-xs font-mono px-2">
+        <span className="text-slate-300 font-semibold">Combined Band Disease:</span>
+        <span className="font-black text-purple-300 bg-purple-950/40 px-2 py-0.5 rounded-md border border-purple-500/40">
           {summary.combinedBandDisease.count} lesions ({summary.combinedBandDisease.percentage}%)
         </span>
       </div>

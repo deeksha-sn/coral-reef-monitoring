@@ -12,6 +12,7 @@ import {
   Clock,
   Layers,
   MapPin,
+  Waves,
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { useAuth } from '@/context/AuthContext';
@@ -45,17 +46,13 @@ export const Alerts: React.FC = () => {
   });
 
   const activeCount = alerts.filter((a) => a.status === 'ACTIVE').length;
-  const criticalCount = alerts.filter((a) => a.severity === 'CRITICAL').length;
-  const acknowledgedCount = alerts.filter(
-    (a) => a.status === 'ACKNOWLEDGED'
-  ).length;
 
   const handleDispatchEmail = async () => {
     if (!selectedAlertForEmail) return;
 
     await sendMockEmail({
       recipients: emailSettings.recipients,
-      subject: `[Coral Health Alert: ${selectedAlertForEmail.severity}] ${selectedAlertForEmail.title}`,
+      subject: `[ReefSentra Alert: ${selectedAlertForEmail.severity}] ${selectedAlertForEmail.title}`,
       alertId: selectedAlertForEmail.id,
       siteName: selectedAlertForEmail.siteName,
       reason: selectedAlertForEmail.alertReason,
@@ -74,78 +71,78 @@ export const Alerts: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-subtle">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 sm:p-7 rounded-3xl reef-glass shadow-2xl border border-reef-border/60">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-bold tracking-wider text-rose-400 uppercase">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-xs font-mono font-bold tracking-wider text-reef-pink uppercase">
               Automated Pathology Surveillance
             </span>
             <DemoDataBadge size="sm" />
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">
-            Alerts &amp; Surveillance Notifications
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+            <span>Surveillance Alerts &amp; Notifications</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
+          <p className="text-xs text-slate-300 mt-1 max-w-2xl">
             Real-time threshold evaluation triggered by phototransect surveys: Thermal bleaching surges (&gt;15 pp), Combined Band Disease outbreaks (&gt;15 pp), and novel pathogen arrivals.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-xs font-mono">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
-            <span className="text-slate-300">Active Alerts:</span>
-            <span className="text-rose-400 font-bold">{activeCount}</span>
+          <div className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-reef-midnight border border-reef-pink/50 text-xs font-mono shadow-glow-pink/20">
+            <span className="w-2.5 h-2.5 rounded-full bg-reef-pink animate-pulse" />
+            <span className="text-slate-200 font-semibold">Active Alerts:</span>
+            <span className="text-reef-pink font-black text-sm">{activeCount}</span>
           </div>
         </div>
       </div>
 
       {/* Rules Criteria Reference Strip */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
-        <div className="p-3.5 rounded-xl bg-ocean-850/80 border border-amber-500/30 text-xs">
-          <span className="font-bold text-amber-400 block mb-0.5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="p-4 rounded-2xl reef-glass border border-reef-orange/40 text-xs">
+          <span className="font-extrabold text-reef-orange block mb-1 text-sm">
             Rule 1: Bleaching Alert
           </span>
-          <p className="text-slate-300">
+          <p className="text-slate-300 leading-relaxed">
             Bleached coral proportion increases by &gt;{alertThresholds.bleachingThresholdPP} percentage points compared to previous assessment of the same site.
           </p>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-ocean-850/80 border border-violet-500/30 text-xs">
-          <span className="font-bold text-violet-400 block mb-0.5">
+        <div className="p-4 rounded-2xl reef-glass border border-purple-500/40 text-xs">
+          <span className="font-extrabold text-purple-300 block mb-1 text-sm">
             Rule 2: Combined Band Disease Alert
           </span>
-          <p className="text-slate-300">
+          <p className="text-slate-300 leading-relaxed">
             Combined Black, White, and Yellow Band disease increases by &gt;{alertThresholds.bandDiseaseThresholdPP} pp compared to previous assessment of the same site.
           </p>
         </div>
 
-        <div className="p-3.5 rounded-xl bg-ocean-850/80 border border-cyan-500/30 text-xs">
-          <span className="font-bold text-cyan-400 block mb-0.5">
+        <div className="p-4 rounded-2xl reef-glass border border-reef-aqua/40 text-xs">
+          <span className="font-extrabold text-reef-aqua block mb-1 text-sm">
             Rule 3: New Disease Category Alert
           </span>
-          <p className="text-slate-300">
+          <p className="text-slate-300 leading-relaxed">
             A previously absent disease category (0% prior) appears in a new assessment at that site.
           </p>
         </div>
       </div>
 
       {/* Filters & Tabs */}
-      <div className="p-4 rounded-xl bg-ocean-850/80 border border-ocean-700/70 flex flex-wrap items-center justify-between gap-4 text-xs">
+      <div className="p-4 rounded-2xl reef-glass flex flex-wrap items-center justify-between gap-4 text-xs">
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-1.5 text-slate-300 font-semibold">
-            <Filter className="w-3.5 h-3.5 text-cyan-400" />
+          <div className="flex items-center gap-1.5 text-white font-bold">
+            <Filter className="w-3.5 h-3.5 text-reef-aqua" />
             <span>Severity:</span>
           </div>
           {['ALL', 'CRITICAL', 'WARNING'].map((sev) => (
             <button
               key={sev}
               onClick={() => setSeverityFilter(sev)}
-              className={`px-2.5 py-1 rounded-lg font-mono font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-xl font-mono font-bold transition-all ${
                 severityFilter === sev
-                  ? 'bg-cyan-500 text-slate-950 font-bold'
-                  : 'bg-ocean-950 text-slate-400 hover:text-slate-200'
+                  ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+                  : 'bg-reef-midnight text-slate-300 hover:text-white hover:bg-reef-surface'
               }`}
             >
               {sev}
@@ -154,15 +151,15 @@ export const Alerts: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-slate-400 font-semibold">Status:</span>
+          <span className="text-white font-bold">Status:</span>
           {['ALL', 'ACTIVE', 'ACKNOWLEDGED', 'RESOLVED'].map((st) => (
             <button
               key={st}
               onClick={() => setStatusFilter(st)}
-              className={`px-2.5 py-1 rounded-lg font-mono font-medium transition-colors ${
+              className={`px-3 py-1.5 rounded-xl font-mono font-bold transition-all ${
                 statusFilter === st
-                  ? 'bg-teal-500 text-slate-950 font-bold'
-                  : 'bg-ocean-950 text-slate-400 hover:text-slate-200'
+                  ? 'bg-gradient-to-r from-reef-seafoam to-reef-aqua text-reef-deep shadow-glow-aqua/30'
+                  : 'bg-reef-midnight text-slate-300 hover:text-white hover:bg-reef-surface'
               }`}
             >
               {st}
@@ -174,12 +171,12 @@ export const Alerts: React.FC = () => {
       {/* Alerts List */}
       <div className="space-y-4">
         {filteredAlerts.length === 0 ? (
-          <div className="p-12 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 text-center space-y-2">
-            <CheckCircle2 className="w-10 h-10 text-emerald-400 mx-auto" />
-            <h3 className="text-sm font-bold text-slate-200">
+          <div className="p-12 rounded-3xl reef-glass text-center space-y-2">
+            <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto" />
+            <h3 className="text-base font-bold text-white">
               No Alerts Matching Current Filter
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-300">
               All monitored reef transects are currently within acceptable biological variance.
             </p>
           </div>
@@ -187,92 +184,92 @@ export const Alerts: React.FC = () => {
           filteredAlerts.map((alt) => (
             <div
               key={alt.id}
-              className={`p-5 rounded-2xl border transition-all shadow-lg ${
+              className={`p-6 rounded-3xl border transition-all shadow-xl ${
                 alt.severity === 'CRITICAL'
-                  ? 'bg-ocean-850/90 border-rose-500/40 hover:border-rose-500/70'
-                  : 'bg-ocean-850/90 border-amber-500/40 hover:border-amber-500/70'
+                  ? 'reef-glass border-reef-pink/50 hover:border-reef-pink'
+                  : 'reef-glass border-reef-orange/50 hover:border-reef-orange'
               }`}
             >
               <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
-                <div className="space-y-2 flex-1">
+                <div className="space-y-2.5 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     <span
-                      className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${
+                      className={`px-3 py-0.5 rounded-full text-[11px] font-mono font-black border ${
                         alt.severity === 'CRITICAL'
-                          ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
-                          : 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                          ? 'bg-reef-pink/20 text-reef-pink border-reef-pink/50 shadow-glow-pink/30'
+                          : 'bg-amber-500/20 text-reef-orange border-reef-orange/50'
                       }`}
                     >
                       {alt.severity}
                     </span>
 
-                    <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-ocean-950 text-slate-300 border border-ocean-800">
+                    <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-reef-midnight text-slate-200 border border-reef-border/60">
                       {alt.ruleType}
                     </span>
 
                     <span
-                      className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold ${
+                      className={`px-2.5 py-0.5 rounded-md text-[11px] font-mono font-black ${
                         alt.status === 'ACTIVE'
-                          ? 'bg-rose-950 text-rose-300 border border-rose-700'
+                          ? 'bg-rose-950/80 text-rose-300 border border-rose-500/60'
                           : alt.status === 'ACKNOWLEDGED'
-                          ? 'bg-amber-950 text-amber-300 border border-amber-700'
-                          : 'bg-emerald-950 text-emerald-300 border border-emerald-700'
+                          ? 'bg-amber-950/80 text-amber-300 border border-amber-500/60'
+                          : 'bg-emerald-950/80 text-emerald-300 border border-emerald-500/60'
                       }`}
                     >
                       {alt.status}
                     </span>
 
-                    <span className="text-xs text-slate-500 font-mono ml-auto">
+                    <span className="text-xs text-slate-400 font-mono ml-auto">
                       Alert ID: {alt.id}
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
+                  <h3 className="text-base font-black text-white flex items-center gap-2">
                     <AlertTriangle
                       className={`w-4 h-4 ${
                         alt.severity === 'CRITICAL'
-                          ? 'text-rose-400'
-                          : 'text-amber-400'
+                          ? 'text-reef-pink'
+                          : 'text-reef-orange'
                       }`}
                     />
                     <span>{alt.title}</span>
                   </h3>
 
-                  <p className="text-xs text-slate-300 leading-relaxed">
+                  <p className="text-xs text-slate-200 leading-relaxed">
                     {alt.alertReason}
                   </p>
 
                   {/* Quantitative Metrics Box */}
-                  <div className="p-3 rounded-xl bg-ocean-950/80 border border-ocean-800 flex flex-wrap items-center gap-6 text-xs font-mono text-slate-300">
-                    <div className="flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+                  <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50 flex flex-wrap items-center gap-6 text-xs font-mono text-slate-200">
+                    <div className="flex items-center gap-1.5 font-sans font-semibold">
+                      <MapPin className="w-3.5 h-3.5 text-reef-aqua" />
                       <span>{alt.siteName}</span>
-                      <span className="text-slate-500">({alt.siteId})</span>
+                      <span className="text-slate-400">({alt.siteId})</span>
                     </div>
 
                     <div>
-                      <span className="text-slate-500">Survey Date: </span>
-                      <span>{alt.assessmentDate}</span>
+                      <span className="text-slate-400">Survey Date: </span>
+                      <span className="text-white font-bold">{alt.assessmentDate}</span>
                     </div>
 
                     {alt.previousPercentage !== null && (
                       <div>
-                        <span className="text-slate-500">Previous Prevalence: </span>
+                        <span className="text-slate-400">Prior Prevalence: </span>
                         <span>{alt.previousPercentage}%</span>
                       </div>
                     )}
 
                     <div>
-                      <span className="text-slate-500">Current Prevalence: </span>
-                      <span className="text-slate-100 font-bold">
+                      <span className="text-slate-400">Current Prevalence: </span>
+                      <span className="text-white font-extrabold">
                         {alt.currentPercentage}%
                       </span>
                     </div>
 
                     {alt.percentagePointChange !== null && (
                       <div>
-                        <span className="text-slate-500">Surge Delta: </span>
-                        <span className="text-rose-400 font-bold">
+                        <span className="text-slate-400">Surge Delta: </span>
+                        <span className="text-reef-pink font-black">
                           {formatPercentagePointDiff(alt.percentagePointChange)}
                         </span>
                       </div>
@@ -285,7 +282,7 @@ export const Alerts: React.FC = () => {
                   {alt.status === 'ACTIVE' && permissions.canAcknowledgeAlerts && (
                     <button
                       onClick={() => acknowledgeAlert(alt.id)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-semibold flex items-center justify-center gap-1.5"
+                      className="w-full px-3.5 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <Check className="w-3.5 h-3.5" />
                       <span>Acknowledge</span>
@@ -295,7 +292,7 @@ export const Alerts: React.FC = () => {
                   {alt.status !== 'RESOLVED' && permissions.canAcknowledgeAlerts && (
                     <button
                       onClick={() => resolveAlert(alt.id)}
-                      className="w-full px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-semibold flex items-center justify-center gap-1.5"
+                      className="w-full px-3.5 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
                     >
                       <CheckCircle2 className="w-3.5 h-3.5" />
                       <span>Resolve</span>
@@ -304,10 +301,10 @@ export const Alerts: React.FC = () => {
 
                   <button
                     onClick={() => setSelectedAlertForEmail(alt)}
-                    className="w-full px-3 py-1.5 rounded-lg bg-ocean-800 hover:bg-ocean-750 text-cyan-300 border border-ocean-700 text-xs font-semibold flex items-center justify-center gap-1.5"
+                    className="w-full px-3.5 py-2 rounded-xl bg-reef-surface hover:bg-reef-surface/90 text-reef-aqua border border-reef-aqua/40 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm"
                     title="Simulate email alert notification to researchers"
                   >
-                    <Mail className="w-3.5 h-3.5" />
+                    <Mail className="w-3.5 h-3.5 text-reef-orange" />
                     <span>Mock Email</span>
                   </button>
                 </div>
@@ -319,13 +316,13 @@ export const Alerts: React.FC = () => {
 
       {/* Dispatched Mock Email Audit Log */}
       {sentEmails.length > 0 && (
-        <div className="p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-ocean-800">
-            <h3 className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-2">
-              <Mail className="w-4 h-4 text-cyan-400" />
+        <div className="p-6 rounded-3xl reef-glass shadow-lg space-y-3.5">
+          <div className="flex items-center justify-between pb-2 border-b border-reef-border/40">
+            <h3 className="text-xs font-extrabold text-white uppercase tracking-wider flex items-center gap-2">
+              <Mail className="w-4 h-4 text-reef-aqua" />
               <span>Simulated Email Notification Dispatch Log ({sentEmails.length})</span>
             </h3>
-            <span className="text-[11px] text-slate-400 font-mono">
+            <span className="text-[11px] text-reef-seafoam font-mono font-semibold">
               Ready for FastAPI SMTP backend integration
             </span>
           </div>
@@ -334,15 +331,15 @@ export const Alerts: React.FC = () => {
             {sentEmails.map((em, idx) => (
               <div
                 key={idx}
-                className="p-3 rounded-xl bg-ocean-950 border border-ocean-800 text-xs font-mono flex flex-col md:flex-row md:items-center justify-between gap-2"
+                className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50 text-xs font-mono flex flex-col md:flex-row md:items-center justify-between gap-2"
               >
                 <div>
-                  <span className="text-cyan-400 font-bold block">{em.subject}</span>
-                  <span className="text-slate-400 text-[11px]">
+                  <span className="text-reef-aqua font-bold block">{em.subject}</span>
+                  <span className="text-slate-300 text-[11px]">
                     Recipients: {em.recipients.join(', ')}
                   </span>
                 </div>
-                <div className="text-right text-[11px] text-slate-500 shrink-0">
+                <div className="text-right text-[11px] text-slate-400 shrink-0">
                   {new Date(em.sentAt).toLocaleTimeString()}
                 </div>
               </div>
@@ -353,50 +350,50 @@ export const Alerts: React.FC = () => {
 
       {/* Mock Email Dispatch Dialog */}
       {selectedAlertForEmail && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-ocean-900 border border-ocean-700 shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-                <Mail className="w-4 h-4 text-cyan-400" />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-lg rounded-3xl bg-reef-midnight border border-reef-aqua/40 shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <Mail className="w-4 h-4 text-reef-aqua" />
                 <span>Simulate Automated Email Notification</span>
               </h3>
               <button
                 onClick={() => setSelectedAlertForEmail(null)}
-                className="text-slate-400 hover:text-slate-200"
+                className="text-slate-400 hover:text-white"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-3.5 text-xs">
               <div>
-                <label className="block text-slate-400 mb-1 font-semibold">
+                <label className="block text-slate-300 mb-1 font-bold">
                   Recipient List (Configured in Settings):
                 </label>
-                <div className="p-2 rounded-lg bg-ocean-950 border border-ocean-800 text-slate-300 font-mono">
+                <div className="p-2.5 rounded-xl bg-reef-deep border border-reef-border text-slate-200 font-mono">
                   {emailSettings.recipients.join(', ')}
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1 font-semibold">
+                <label className="block text-slate-300 mb-1 font-bold">
                   Subject Line:
                 </label>
-                <div className="p-2 rounded-lg bg-ocean-950 border border-ocean-800 text-cyan-300 font-mono font-bold">
-                  [Coral Alert: {selectedAlertForEmail.severity}] {selectedAlertForEmail.title} at {selectedAlertForEmail.siteName}
+                <div className="p-2.5 rounded-xl bg-reef-deep border border-reef-border text-reef-aqua font-mono font-bold">
+                  [ReefSentra Alert: {selectedAlertForEmail.severity}] {selectedAlertForEmail.title} at {selectedAlertForEmail.siteName}
                 </div>
               </div>
 
               <div>
-                <label className="block text-slate-400 mb-1 font-semibold">
+                <label className="block text-slate-300 mb-1 font-bold">
                   Formatted Email Payload Preview:
                 </label>
-                <div className="p-3 rounded-lg bg-ocean-950 border border-ocean-800 text-slate-300 font-mono text-[11px] space-y-2">
+                <div className="p-3.5 rounded-2xl bg-reef-deep border border-reef-border text-slate-200 font-mono text-[11px] space-y-2">
                   <p>
-                    <strong>ATTENTION RESEARCH TEAM:</strong>
+                    <strong className="text-reef-orange">ATTENTION RESEARCH TEAM:</strong>
                   </p>
                   <p>{selectedAlertForEmail.alertReason}</p>
-                  <div className="pt-2 border-t border-ocean-800">
+                  <div className="pt-2 border-t border-reef-border/40 text-slate-300">
                     <div>Station: {selectedAlertForEmail.siteName} ({selectedAlertForEmail.siteId})</div>
                     <div>Survey Date: {selectedAlertForEmail.assessmentDate}</div>
                     <div>Surge: {formatPercentagePointDiff(selectedAlertForEmail.percentagePointChange)}</div>
@@ -404,26 +401,26 @@ export const Alerts: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-cyan-950/40 border border-cyan-800/60 text-[11px] text-cyan-300">
-                <strong>Prototype Notice: </strong>
+              <div className="p-3 rounded-2xl bg-reef-surface/70 border border-reef-aqua/30 text-[11px] text-slate-300">
+                <strong className="text-reef-aqua">Prototype Notice: </strong>
                 Emails are dispatched via mock client simulator. The real SMTP or SendGrid daemon will be wired by the FastAPI backend team during integration.
               </div>
 
               {emailSendSuccess ? (
-                <div className="p-3 rounded-xl bg-emerald-950 border border-emerald-700 text-emerald-300 text-center font-bold">
+                <div className="p-3.5 rounded-2xl bg-emerald-950 border border-emerald-500 text-emerald-300 text-center font-bold">
                   ✓ Mock Email Successfully Dispatched and Logged!
                 </div>
               ) : (
-                <div className="flex items-center justify-end gap-2 pt-3 border-t border-ocean-800">
+                <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-reef-border/40">
                   <button
                     onClick={() => setSelectedAlertForEmail(null)}
-                    className="px-4 py-2 rounded-lg bg-ocean-800 text-slate-300"
+                    className="px-4 py-2 rounded-xl bg-reef-surface text-slate-300 hover:text-white"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleDispatchEmail}
-                    className="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-teal-500 text-slate-950 font-bold flex items-center gap-1.5"
+                    className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-black flex items-center gap-1.5 shadow-glow-aqua"
                   >
                     <Send className="w-4 h-4" />
                     <span>Send Mock Notification</span>

@@ -1,6 +1,6 @@
 import React from 'react';
-import { CORAL_CATEGORIES } from '../../constants/categories';
-import { CoralCategoryKey } from '../../types/prediction';
+import { CORAL_CATEGORIES } from '@/constants/categories';
+import { CoralCategoryKey } from '@/types/prediction';
 
 interface CategoryBadgeProps {
   category: CoralCategoryKey | 'combined_band_disease';
@@ -20,13 +20,13 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
   if (category === 'combined_band_disease') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-950/60 border border-violet-700/50 text-violet-300 ${className}`}
+        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-purple-950/70 via-reef-midnight to-purple-950/70 border border-purple-500/50 text-purple-300 shadow-sm ${className}`}
       >
-        {showDot && <span className="w-2 h-2 rounded-full bg-violet-400" />}
+        {showDot && <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />}
         <span>Combined Band Disease</span>
-        {count !== undefined && <span className="text-violet-400 font-mono">({count})</span>}
+        {count !== undefined && <span className="text-purple-300 font-mono">({count})</span>}
         {percentage !== undefined && (
-          <span className="text-violet-300 font-mono font-bold">{percentage}%</span>
+          <span className="text-purple-200 font-mono font-extrabold ml-0.5">{percentage}%</span>
         )}
       </span>
     );
@@ -36,11 +36,11 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium border ${meta.tailwindBg} ${meta.tailwindText} ${meta.tailwindBorder} ${className}`}
+      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold border backdrop-blur shadow-sm ${meta.tailwindBg} ${meta.tailwindText} ${meta.tailwindBorder} ${className}`}
     >
       {showDot && (
         <span
-          className="w-2 h-2 rounded-full"
+          className="w-2 h-2 rounded-full shadow-sm"
           style={{ backgroundColor: meta.color }}
         />
       )}

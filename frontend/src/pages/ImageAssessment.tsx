@@ -13,8 +13,9 @@ import {
   Calendar,
   FileText,
   Save,
-  ArrowRight,
   ShieldAlert,
+  Sparkles,
+  Waves,
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { useAuth } from '@/context/AuthContext';
@@ -57,13 +58,13 @@ export const ImageAssessment: React.FC = () => {
 
   // Assessment info state
   const [assessmentName, setAssessmentName] = useState<string>(
-    `Phototransect Health Audit ${new Date().toISOString().slice(0, 10)}`
+    `Benthic Quadrat Survey ${new Date().toISOString().slice(0, 10)}`
   );
   const [assessmentDate, setAssessmentDate] = useState<string>(
     new Date().toISOString().slice(0, 10)
   );
   const [notes, setNotes] = useState<string>(
-    'Standard benthic 1m x 1m quadrat survey documenting thermal stress and band pathogen margins.'
+    'Standard phototransect quadrat audit documenting thermal bleaching margin and annular band pathogen spread.'
   );
 
   // Uploaded files
@@ -111,7 +112,6 @@ export const ImageAssessment: React.FC = () => {
     setUploadedFiles((prev) => [...prev, ...newItems]);
   };
 
-  // Drag and drop handlers
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault();
   };
@@ -160,7 +160,7 @@ export const ImageAssessment: React.FC = () => {
       }
       setUploadedFiles(newItems);
     } catch (e) {
-      setUploadError('Failed to load sample remote assets. Please upload local files.');
+      setUploadError('Failed to load remote sample images. Please upload local files.');
     }
   };
 
@@ -177,7 +177,7 @@ export const ImageAssessment: React.FC = () => {
 
     setIsRunning(true);
     setInferenceError(null);
-    setProgressStatus('Initializing inference service pipeline...');
+    setProgressStatus('Initializing YOLO11 inference pipeline...');
 
     const newAssessmentId = `ASM-${new Date().getFullYear()}-${String(
       Math.floor(Math.random() * 900) + 100
@@ -216,7 +216,6 @@ export const ImageAssessment: React.FC = () => {
 
       setProgressStatus('Compiling six-category pathology summary & evaluating alert rules...');
 
-      // Calculate summary
       const summary = buildAssessmentSummary(allDetections);
 
       const completedAssessment: Assessment = {
@@ -234,7 +233,6 @@ export const ImageAssessment: React.FC = () => {
         createdAt: new Date().toISOString(),
       };
 
-      // Save to global state (triggers alert evaluation)
       addAssessment(completedAssessment);
       setAssessmentResult(completedAssessment);
       setActiveImageTab(0);
@@ -246,7 +244,6 @@ export const ImageAssessment: React.FC = () => {
     }
   };
 
-  // Handle New Site Registration
   const handleSaveNewSite = (e: React.FormEvent) => {
     e.preventDefault();
     const createdSite = addSite(newSiteData);
@@ -255,81 +252,83 @@ export const ImageAssessment: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-subtle">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-bold tracking-wider text-cyan-400 uppercase">
-              Field Survey Workflow
-            </span>
-            <DemoDataBadge size="sm" />
+    <div className="space-y-7">
+      {/* Coral-Themed Page Header */}
+      <div className="relative rounded-3xl p-6 sm:p-7 reef-glass overflow-hidden shadow-2xl border border-reef-border/60">
+        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-mono font-bold tracking-wider text-reef-aqua uppercase">
+                ReefSentra Field Workflow
+              </span>
+              <DemoDataBadge size="sm" />
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2.5">
+              <span>Coral Health &amp; Pathology Assessment</span>
+            </h1>
+            <p className="text-xs text-slate-300 max-w-2xl">
+              Register reef transects, upload multi-image benthic phototransects, and execute 6-class deep learning pathology detection across coral conditions and band diseases.
+            </p>
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">
-            Coral Health &amp; Pathology Assessment
-          </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-            Register reef transects, upload multi-image phototransects, and execute 6-class YOLO11 detection across coral conditions and band diseases.
-          </p>
-        </div>
 
-        <div className="flex items-center gap-2">
-          {uploadedFiles.length === 0 && (
-            <button
-              onClick={loadSampleCoralImages}
-              className="px-3.5 py-2 rounded-xl bg-ocean-800 hover:bg-ocean-750 text-cyan-300 border border-ocean-700 text-xs font-semibold flex items-center gap-1.5 transition-colors"
-            >
-              <FileImage className="w-4 h-4 text-cyan-400" />
-              <span>Load Demo Images (3)</span>
-            </button>
-          )}
+          <div className="flex items-center gap-2 shrink-0">
+            {uploadedFiles.length === 0 && (
+              <button
+                onClick={loadSampleCoralImages}
+                className="px-4 py-2.5 rounded-xl bg-reef-surface hover:bg-reef-surface/90 text-reef-aqua border border-reef-aqua/40 text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+              >
+                <FileImage className="w-4 h-4 text-reef-orange" />
+                <span>Load Demo Images (3)</span>
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
       {/* Role Restriction Banner if Viewer */}
       {!permissions.canUploadAssessments && (
-        <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-700/60 text-amber-300 text-xs flex items-center gap-3">
-          <ShieldAlert className="w-5 h-5 shrink-0 text-amber-400" />
+        <div className="p-4 rounded-2xl bg-amber-950/40 border border-reef-orange/60 text-amber-200 text-xs flex items-center gap-3">
+          <ShieldAlert className="w-5 h-5 shrink-0 text-reef-orange" />
           <div>
             <span className="font-bold">Demonstration Role Notice: </span>
-            You are currently signed in as a <strong className="underline">VIEWER</strong>. You may inspect previous assessments and run demo evaluations, but database records cannot be permanently committed. Switch to <strong className="underline">RESEARCHER</strong> or <strong className="underline">ADMIN</strong> in the top header menu to unlock all write permissions.
+            You are signed in as a <strong className="underline">VIEWER</strong>. You may test assessment simulations, but permanent records require <strong className="underline">RESEARCHER</strong> or <strong className="underline">ADMIN</strong>. Switch roles in the top header.
           </div>
         </div>
       )}
 
-      {/* Main 2-Step Form & Upload Grid */}
+      {/* Main 2-Column Workflow Form */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        {/* Left Column: Step 1 Site Selection & Step 2 Metadata (5 cols) */}
+        {/* Left Column: Step 1 Site & Step 2 Metadata (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
           {/* Step 1: Select Reef Site */}
-          <div className="p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center justify-center text-xs font-bold font-mono">
+          <div className="p-6 rounded-3xl reef-glass space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <div className="flex items-center gap-2.5">
+                <span className="w-7 h-7 rounded-full bg-gradient-to-br from-reef-aqua to-reef-teal text-reef-deep flex items-center justify-center text-xs font-black font-mono shadow-sm">
                   1
                 </span>
-                <h3 className="text-sm font-bold text-slate-100">
+                <h3 className="text-sm font-extrabold text-white">
                   Select Reef Monitoring Site
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setShowNewSiteModal(true)}
-                className="text-xs text-cyan-400 hover:text-cyan-300 font-medium flex items-center gap-1 hover:underline"
+                className="text-xs text-reef-aqua hover:text-white font-bold flex items-center gap-1 transition-colors"
               >
-                <Plus className="w-3.5 h-3.5" />
-                <span>Register New Site</span>
+                <Plus className="w-3.5 h-3.5 text-reef-orange" />
+                <span>Register Site</span>
               </button>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                Saved Reef Site:
+              <label className="block text-xs font-bold text-slate-200 mb-1.5">
+                Saved Monitoring Station:
               </label>
               <select
                 value={selectedSiteId}
                 onChange={(e) => setSelectedSiteId(e.target.value)}
-                className="w-full px-3 py-2 rounded-xl bg-ocean-950/90 border border-ocean-700 text-xs text-slate-200 focus:outline-none focus:border-cyan-500 transition-colors"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep/90 border border-reef-border text-xs text-white focus:outline-none focus:border-reef-aqua font-medium"
               >
                 {sites.map((site) => (
                   <option key={site.id} value={site.id}>
@@ -340,21 +339,21 @@ export const ImageAssessment: React.FC = () => {
             </div>
 
             {selectedSite && (
-              <div className="p-3 rounded-xl bg-ocean-950/70 border border-ocean-800 text-xs space-y-1 font-mono text-slate-300">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/80 border border-reef-border/50 text-xs space-y-1.5 font-mono text-slate-200">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Site ID:</span>
-                  <span className="text-cyan-400 font-bold">{selectedSite.id}</span>
+                  <span className="text-slate-400">Site ID:</span>
+                  <span className="text-reef-aqua font-bold">{selectedSite.id}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Reef Ecosystem:</span>
-                  <span className="text-slate-200">{selectedSite.reefName}</span>
+                  <span className="text-slate-400">Reef Ecosystem:</span>
+                  <span className="text-white truncate max-w-[200px]">{selectedSite.reefName}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">GPS Coordinates:</span>
+                  <span className="text-slate-400">GPS Coordinates:</span>
                   <span>{selectedSite.latitude.toFixed(4)}, {selectedSite.longitude.toFixed(4)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Depth Profile:</span>
+                  <span className="text-slate-400">Depth Profile:</span>
                   <span>{selectedSite.depthMeters || 8} meters</span>
                 </div>
               </div>
@@ -362,72 +361,71 @@ export const ImageAssessment: React.FC = () => {
           </div>
 
           {/* Step 2: Assessment Metadata */}
-          <div className="p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
-            <div className="flex items-center gap-2 pb-3 border-b border-ocean-800">
-              <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center justify-center text-xs font-bold font-mono">
+          <div className="p-6 rounded-3xl reef-glass space-y-4">
+            <div className="flex items-center gap-2.5 pb-3 border-b border-reef-border/40">
+              <span className="w-7 h-7 rounded-full bg-gradient-to-br from-reef-aqua to-reef-teal text-reef-deep flex items-center justify-center text-xs font-black font-mono shadow-sm">
                 2
               </span>
-              <h3 className="text-sm font-bold text-slate-100">
+              <h3 className="text-sm font-extrabold text-white">
                 Assessment Metadata &amp; Survey Date
               </h3>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-3.5">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Assessment Survey Title:
+                <label className="block text-xs font-bold text-slate-200 mb-1">
+                  Survey Name / Transect Label:
                 </label>
                 <input
                   type="text"
                   value={assessmentName}
                   onChange={(e) => setAssessmentName(e.target.value)}
-                  placeholder="e.g. Heron Reef Post-Bleaching Transect 2025"
-                  className="w-full px-3 py-2 rounded-xl bg-ocean-950/90 border border-ocean-700 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                  placeholder="e.g. Heron Reef Post-Thermal Event 2025"
+                  className="w-full px-3.5 py-2 rounded-xl bg-reef-deep/90 border border-reef-border text-xs text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-slate-200 mb-1">
                   Survey Date:
                 </label>
                 <input
                   type="date"
                   value={assessmentDate}
                   onChange={(e) => setAssessmentDate(e.target.value)}
-                  className="w-full px-3 py-2 rounded-xl bg-ocean-950/90 border border-ocean-700 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3.5 py-2 rounded-xl bg-reef-deep/90 border border-reef-border text-xs text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1">
-                  Field Observer Notes &amp; Marine Conditions:
+                <label className="block text-xs font-bold text-slate-200 mb-1">
+                  Field Observer Notes &amp; Benthic Parameters:
                 </label>
                 <textarea
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Environmental parameters, water temperature, tide level, camera setup..."
-                  className="w-full px-3 py-2 rounded-xl bg-ocean-950/90 border border-ocean-700 text-xs text-slate-200 focus:outline-none focus:border-cyan-500"
+                  placeholder="Environmental parameters, sea surface temperature, tide status..."
+                  className="w-full px-3.5 py-2 rounded-xl bg-reef-deep/90 border border-reef-border text-xs text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Column: Step 3 Upload & Step 4 Run Assessment (7 cols) */}
+        {/* Right Column: Step 3 Upload & Step 4 Run (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
-          {/* Step 3: Multi-Image Uploader */}
-          <div className="p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <div className="flex items-center gap-2">
-                <span className="w-6 h-6 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center justify-center text-xs font-bold font-mono">
+          <div className="p-6 rounded-3xl reef-glass space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <div className="flex items-center gap-2.5">
+                <span className="w-7 h-7 rounded-full bg-gradient-to-br from-reef-orange to-reef-pink text-white flex items-center justify-center text-xs font-black font-mono shadow-sm">
                   3
                 </span>
-                <h3 className="text-sm font-bold text-slate-100">
-                  Upload Coral Phototransect Images (JPG / PNG)
+                <h3 className="text-sm font-extrabold text-white">
+                  Upload Coral Phototransect Images
                 </h3>
               </div>
-              <span className="text-xs font-mono text-cyan-400">
+              <span className="text-xs font-mono font-bold text-reef-aqua">
                 {uploadedFiles.length} file{uploadedFiles.length === 1 ? '' : 's'} queued
               </span>
             </div>
@@ -436,7 +434,7 @@ export const ImageAssessment: React.FC = () => {
             <div
               onDragOver={handleDragOver}
               onDrop={handleDrop}
-              className="border-2 border-dashed border-ocean-700 hover:border-cyan-500/70 rounded-2xl p-6 text-center bg-ocean-950/40 hover:bg-ocean-900/50 transition-all cursor-pointer flex flex-col items-center justify-center"
+              className="border-2 border-dashed border-reef-border hover:border-reef-aqua rounded-3xl p-7 text-center bg-reef-deep/40 hover:bg-reef-midnight/60 transition-all cursor-pointer flex flex-col items-center justify-center group"
               onClick={() => document.getElementById('coral-file-input')?.click()}
             >
               <input
@@ -447,39 +445,39 @@ export const ImageAssessment: React.FC = () => {
                 className="hidden"
                 onChange={handleFileChange}
               />
-              <div className="p-3 rounded-full bg-ocean-800 text-cyan-400 border border-ocean-700 mb-3 shadow-glow-cyan/20">
-                <UploadCloud className="w-7 h-7" />
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-reef-midnight to-reef-surface text-reef-aqua border border-reef-aqua/40 mb-3 shadow-glow-aqua/30 group-hover:scale-105 transition-transform">
+                <UploadCloud className="w-8 h-8 text-reef-aqua" />
               </div>
-              <h4 className="text-sm font-bold text-slate-200">
-                Drag and drop coral survey images here
+              <h4 className="text-sm font-bold text-white">
+                Drag &amp; drop coral phototransect images here
               </h4>
-              <p className="text-xs text-slate-400 mt-1">
-                Supports JPG, JPEG, and PNG (maximum 15 MB per image)
+              <p className="text-xs text-slate-300 mt-1">
+                Supports JPG, JPEG, and PNG (up to 15 MB per image)
               </p>
               <button
                 type="button"
-                className="mt-3 px-3.5 py-1.5 rounded-lg bg-cyan-500/15 hover:bg-cyan-500/25 border border-cyan-500/30 text-cyan-300 text-xs font-semibold"
+                className="mt-3.5 px-4 py-1.5 rounded-xl bg-reef-aqua/20 hover:bg-reef-aqua/30 border border-reef-aqua/50 text-reef-aqua text-xs font-bold transition-colors"
               >
                 Browse Local Files
               </button>
             </div>
 
             {uploadError && (
-              <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-700/60 text-rose-300 text-xs flex items-center gap-2">
+              <div className="p-3 rounded-xl bg-rose-950/60 border border-rose-500/60 text-rose-300 text-xs flex items-center gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
                 <span>{uploadError}</span>
               </div>
             )}
 
-            {/* Queued Images Preview Grid */}
+            {/* Queued Previews */}
             {uploadedFiles.length > 0 && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs text-slate-400">
-                  <span>Queued Quadrats:</span>
+                <div className="flex items-center justify-between text-xs text-slate-300">
+                  <span className="font-semibold">Queued Quadrat Images:</span>
                   <button
                     type="button"
                     onClick={() => setUploadedFiles([])}
-                    className="text-rose-400 hover:underline"
+                    className="text-reef-pink hover:underline font-bold"
                   >
                     Clear All
                   </button>
@@ -488,7 +486,7 @@ export const ImageAssessment: React.FC = () => {
                   {uploadedFiles.map((item, index) => (
                     <div
                       key={item.id}
-                      className="group relative rounded-xl overflow-hidden border border-ocean-700 bg-ocean-950 aspect-video flex items-center justify-center"
+                      className="group relative rounded-2xl overflow-hidden border border-reef-border bg-black aspect-video flex items-center justify-center"
                     >
                       <img
                         src={item.previewUrl}
@@ -496,7 +494,7 @@ export const ImageAssessment: React.FC = () => {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between p-2">
-                        <span className="text-[10px] text-slate-200 truncate font-mono">
+                        <span className="text-[10px] text-white truncate font-mono font-bold">
                           #{index + 1} {item.file.name}
                         </span>
                         <button
@@ -505,7 +503,7 @@ export const ImageAssessment: React.FC = () => {
                             e.stopPropagation();
                             removeFile(item.id);
                           }}
-                          className="self-end p-1 rounded bg-rose-600/80 text-white hover:bg-rose-500 transition-colors"
+                          className="self-end p-1.5 rounded-lg bg-rose-600/80 text-white hover:bg-rose-500 transition-colors"
                           title="Remove image"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
@@ -518,15 +516,15 @@ export const ImageAssessment: React.FC = () => {
             )}
 
             {/* Step 4: Run Assessment Button */}
-            <div className="pt-3 border-t border-ocean-800">
+            <div className="pt-3 border-t border-reef-border/40">
               <button
                 type="button"
                 disabled={isRunning || uploadedFiles.length === 0}
                 onClick={handleRunAssessment}
-                className={`w-full py-3.5 px-4 rounded-xl font-bold text-sm tracking-wide flex items-center justify-center gap-2 shadow-lg transition-all ${
+                className={`w-full py-4 px-5 rounded-2xl font-black text-sm tracking-wide flex items-center justify-center gap-2.5 shadow-xl transition-all ${
                   isRunning || uploadedFiles.length === 0
-                    ? 'bg-ocean-800 text-slate-500 cursor-not-allowed border border-ocean-700'
-                    : 'bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 text-slate-950 hover:brightness-110 shadow-glow-cyan cursor-pointer'
+                    ? 'bg-reef-midnight/60 text-slate-500 cursor-not-allowed border border-reef-border/30'
+                    : 'bg-gradient-to-r from-reef-aqua via-reef-teal to-emerald-500 text-reef-deep hover:brightness-110 shadow-glow-aqua cursor-pointer transform hover:-translate-y-0.5'
                 }`}
               >
                 {isRunning ? (
@@ -543,14 +541,14 @@ export const ImageAssessment: React.FC = () => {
               </button>
 
               {isRunning && (
-                <div className="mt-3 p-3 rounded-xl bg-ocean-950 border border-ocean-800 text-xs font-mono text-cyan-300 flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+                <div className="mt-3.5 p-3.5 rounded-2xl bg-reef-deep border border-reef-aqua/40 text-xs font-mono text-reef-aqua flex items-center gap-2.5">
+                  <div className="w-2.5 h-2.5 rounded-full bg-reef-aqua animate-ping" />
                   <span>{progressStatus}</span>
                 </div>
               )}
 
               {inferenceError && (
-                <div className="mt-3 p-3.5 rounded-xl bg-rose-950/60 border border-rose-700 text-rose-300 text-xs flex items-center gap-2">
+                <div className="mt-3.5 p-3.5 rounded-2xl bg-rose-950/70 border border-rose-500 text-rose-300 text-xs flex items-center gap-2">
                   <AlertCircle className="w-4 h-4 shrink-0 text-rose-400" />
                   <div>
                     <span className="font-bold">Inference Error: </span>
@@ -559,11 +557,11 @@ export const ImageAssessment: React.FC = () => {
                 </div>
               )}
 
-              <div className="mt-2 text-center">
-                <span className="text-[11px] text-slate-500">
+              <div className="mt-2.5 text-center">
+                <span className="text-[11px] text-slate-400 font-mono">
                   {apiMode === 'MOCK'
                     ? 'Operating in Standalone MOCK Mode (Simulated YOLO11 Bounding Boxes)'
-                    : `Attempting inference via Live FastAPI endpoint: ${modelSettings.fastApiBaseUrl}${modelSettings.modelEndpoint}`}
+                    : `Live API Mode: ${modelSettings.fastApiBaseUrl}${modelSettings.modelEndpoint}`}
                 </span>
               </div>
             </div>
@@ -573,32 +571,30 @@ export const ImageAssessment: React.FC = () => {
 
       {/* Step 5: Display Assessment Results */}
       {assessmentResult && (
-        <div className="p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-2xl space-y-6">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-ocean-700/80">
+        <div className="p-7 rounded-3xl reef-glass shadow-2xl space-y-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-reef-border/40">
             <div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-1.5">
                 <CheckCircle2 className="w-5 h-5 text-emerald-400" />
                 <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
                   Assessment Completed Successfully
                 </span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded bg-ocean-800 text-cyan-300 border border-ocean-700">
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded-md bg-reef-midnight text-reef-aqua border border-reef-border font-bold">
                   {assessmentResult.id}
                 </span>
               </div>
-              <h2 className="text-xl font-bold text-slate-100">
+              <h2 className="text-xl font-black text-white">
                 {assessmentResult.assessmentName}
               </h2>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Site: {selectedSite?.siteName} • Survey Date: {assessmentResult.assessmentDate}
+              <p className="text-xs text-slate-300 mt-0.5">
+                Station: {selectedSite?.siteName} • Survey Date: {assessmentResult.assessmentDate}
               </p>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="text-right font-mono">
-                <div className="text-xs text-slate-400">Total Specimens Detected</div>
-                <div className="text-2xl font-extrabold text-cyan-300">
-                  {assessmentResult.totalDetections}
-                </div>
+            <div className="text-right font-mono">
+              <div className="text-xs text-slate-300 font-bold uppercase tracking-wider">Total Specimens Detected</div>
+              <div className="text-3xl font-black text-reef-aqua">
+                {assessmentResult.totalDetections}
               </div>
             </div>
           </div>
@@ -606,21 +602,21 @@ export const ImageAssessment: React.FC = () => {
           {/* Six Category Summary Cards */}
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-bold text-slate-200 flex items-center gap-2">
-                <Layers className="w-4 h-4 text-cyan-400" />
+              <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+                <Layers className="w-4 h-4 text-reef-aqua" />
                 <span>Six Official Coral Categories (Object Detections Breakdown)</span>
               </h3>
-              <span className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-300 font-mono font-semibold">
                 Total Objects: {assessmentResult.totalDetections} across {assessmentResult.imageCount} image{assessmentResult.imageCount === 1 ? '' : 's'}
               </span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-emerald-500/30">
-                <span className="text-[11px] font-semibold text-emerald-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-emerald-500/40">
+                <span className="text-[11px] font-bold text-emerald-400 block mb-1">
                   Healthy Coral
                 </span>
-                <div className="text-xl font-bold font-mono text-slate-100">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.healthyCoral.percentage}%
                 </div>
                 <span className="text-[11px] text-slate-400 font-mono">
@@ -628,11 +624,11 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-amber-500/30">
-                <span className="text-[11px] font-semibold text-amber-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-orange/40">
+                <span className="text-[11px] font-bold text-reef-orange block mb-1">
                   Bleached Coral
                 </span>
-                <div className="text-xl font-bold font-mono text-slate-100">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.bleachedCoral.percentage}%
                 </div>
                 <span className="text-[11px] text-slate-400 font-mono">
@@ -640,11 +636,11 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-red-500/30">
-                <span className="text-[11px] font-semibold text-red-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-rose-500/40">
+                <span className="text-[11px] font-bold text-rose-400 block mb-1">
                   Dead Coral
                 </span>
-                <div className="text-xl font-bold font-mono text-slate-100">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.deadCoral.percentage}%
                 </div>
                 <span className="text-[11px] text-slate-400 font-mono">
@@ -652,11 +648,11 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-purple-500/30">
-                <span className="text-[11px] font-semibold text-purple-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-purple-500/40">
+                <span className="text-[11px] font-bold text-purple-400 block mb-1">
                   Black Band
                 </span>
-                <div className="text-xl font-bold font-mono text-slate-100">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.blackBandDisease.percentage}%
                 </div>
                 <span className="text-[11px] text-slate-400 font-mono">
@@ -664,11 +660,11 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-sky-500/30">
-                <span className="text-[11px] font-semibold text-sky-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-sky-400/40">
+                <span className="text-[11px] font-bold text-sky-400 block mb-1">
                   White Band
                 </span>
-                <div className="text-xl font-bold font-mono text-slate-100">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.whiteBandDisease.percentage}%
                 </div>
                 <span className="text-[11px] text-slate-400 font-mono">
@@ -676,11 +672,11 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-yellow-500/30">
-                <span className="text-[11px] font-semibold text-yellow-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-yellow-400/40">
+                <span className="text-[11px] font-bold text-yellow-400 block mb-1">
                   Yellow Band
                 </span>
-                <div className="text-xl font-bold font-mono text-slate-100">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.yellowBandDisease.percentage}%
                 </div>
                 <span className="text-[11px] text-slate-400 font-mono">
@@ -688,36 +684,35 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-900 border border-violet-500/40 shadow-glow-teal/20">
-                <span className="text-[11px] font-bold text-violet-300 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-purple-400/60 shadow-glow-coral/20">
+                <span className="text-[11px] font-black text-purple-300 block mb-1">
                   Combined Band
                 </span>
-                <div className="text-xl font-extrabold font-mono text-violet-300">
+                <div className="text-xl font-black font-mono text-purple-200">
                   {assessmentResult.summary.combinedBandDisease.percentage}%
                 </div>
-                <span className="text-[11px] text-violet-400 font-mono">
+                <span className="text-[11px] text-purple-300 font-mono">
                   {assessmentResult.summary.combinedBandDisease.count} lesions
                 </span>
               </div>
             </div>
           </div>
 
-          {/* Interactive Per-Image Visualizer */}
-          <div className="space-y-3 pt-4 border-t border-ocean-700/80">
+          {/* Per-Image Visualizer with Bounding Boxes */}
+          <div className="space-y-3.5 pt-4 border-t border-reef-border/40">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-200">
+              <h3 className="text-sm font-extrabold text-white">
                 Annotated Quadrat Inspection:
               </h3>
-              {/* Image Tabs */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-md">
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-md">
                 {assessmentResult.images.map((img, idx) => (
                   <button
                     key={img.id}
                     onClick={() => setActiveImageTab(idx)}
-                    className={`px-3 py-1 rounded-lg text-xs font-mono font-medium transition-colors whitespace-nowrap ${
+                    className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all whitespace-nowrap ${
                       activeImageTab === idx
-                        ? 'bg-cyan-500 text-slate-950 font-bold'
-                        : 'bg-ocean-900 text-slate-300 hover:bg-ocean-800'
+                        ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+                        : 'bg-reef-midnight text-slate-300 hover:bg-reef-surface'
                     }`}
                   >
                     Image {idx + 1} ({img.detections.length})
@@ -726,31 +721,29 @@ export const ImageAssessment: React.FC = () => {
               </div>
             </div>
 
-            {/* Current Active Image with BoundingBoxOverlay */}
             {assessmentResult.images[activeImageTab] && (
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <BoundingBoxOverlay
                   imageUrl={assessmentResult.images[activeImageTab].originalUrl}
                   predictions={assessmentResult.images[activeImageTab].detections}
                   altText={assessmentResult.images[activeImageTab].filename}
                 />
 
-                {/* Per-Image Detection List */}
-                <div className="p-4 rounded-xl bg-ocean-900/80 border border-ocean-700">
-                  <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-2">
+                <div className="p-4 rounded-2xl bg-reef-midnight/80 border border-reef-border/40">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-2.5">
                     Quadrat Bounding Box Coordinates &amp; Confidence Log:
                   </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2.5">
                     {assessmentResult.images[activeImageTab].detections.map((p) => (
                       <div
                         key={p.id}
-                        className="p-2 rounded-lg bg-ocean-950 border border-ocean-800 text-xs flex items-center justify-between font-mono"
+                        className="p-2.5 rounded-xl bg-reef-deep border border-reef-border/40 text-xs flex items-center justify-between font-mono"
                       >
                         <CategoryBadge category={p.className} showDot={true} />
-                        <span className="text-cyan-400 font-bold">
+                        <span className="text-reef-aqua font-bold">
                           {Math.round(p.confidence * 100)}% conf
                         </span>
-                        <span className="text-slate-500 text-[10px]">
+                        <span className="text-slate-400 text-[10px]">
                           [{p.boundingBox.x1}, {p.boundingBox.y1}, {p.boundingBox.x2}, {p.boundingBox.y2}]
                         </span>
                       </div>
@@ -765,25 +758,25 @@ export const ImageAssessment: React.FC = () => {
 
       {/* Register New Site Modal */}
       {showNewSiteModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-ocean-900 border border-ocean-700 shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-cyan-400" />
-                <span>Register New Reef Monitoring Site</span>
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-lg rounded-3xl bg-reef-midnight border border-reef-aqua/40 shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-reef-aqua" />
+                <span>Register New Reef Monitoring Station</span>
               </h3>
               <button
                 onClick={() => setShowNewSiteModal(false)}
-                className="text-slate-400 hover:text-slate-200"
+                className="text-slate-400 hover:text-white"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSaveNewSite} className="space-y-3 text-xs">
+            <form onSubmit={handleSaveNewSite} className="space-y-3.5 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Country:
                   </label>
                   <input
@@ -793,11 +786,11 @@ export const ImageAssessment: React.FC = () => {
                     onChange={(e) =>
                       setNewSiteData({ ...newSiteData, country: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     State / Region:
                   </label>
                   <input
@@ -807,13 +800,13 @@ export const ImageAssessment: React.FC = () => {
                     onChange={(e) =>
                       setNewSiteData({ ...newSiteData, region: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   Reef Ecosystem Name:
                 </label>
                 <input
@@ -823,12 +816,12 @@ export const ImageAssessment: React.FC = () => {
                   onChange={(e) =>
                     setNewSiteData({ ...newSiteData, reefName: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   Site Name / Transect Designation:
                 </label>
                 <input
@@ -838,13 +831,13 @@ export const ImageAssessment: React.FC = () => {
                   onChange={(e) =>
                     setNewSiteData({ ...newSiteData, siteName: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Latitude (-90 to +90):
                   </label>
                   <input
@@ -858,11 +851,11 @@ export const ImageAssessment: React.FC = () => {
                         latitude: parseFloat(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500 font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-mono"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Longitude (-180 to +180):
                   </label>
                   <input
@@ -876,14 +869,14 @@ export const ImageAssessment: React.FC = () => {
                         longitude: parseFloat(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500 font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-mono"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
-                  Site Description &amp; Benthic Habitat:
+                <label className="block font-bold text-slate-200 mb-1">
+                  Habitat Description:
                 </label>
                 <textarea
                   rows={2}
@@ -891,24 +884,24 @@ export const ImageAssessment: React.FC = () => {
                   onChange={(e) =>
                     setNewSiteData({ ...newSiteData, description: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-ocean-800">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-reef-border/40">
                 <button
                   type="button"
                   onClick={() => setShowNewSiteModal(false)}
-                  className="px-4 py-2 rounded-lg bg-ocean-800 hover:bg-ocean-750 text-slate-300"
+                  className="px-4 py-2 rounded-xl bg-reef-surface text-slate-300 hover:text-white"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-1.5"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-black flex items-center gap-1.5 shadow-glow-aqua"
                 >
                   <Save className="w-4 h-4" />
-                  <span>Register Site</span>
+                  <span>Register Station</span>
                 </button>
               </div>
             </form>

@@ -15,12 +15,13 @@ import {
   Users,
   Eye,
   UserCheck,
+  Sparkles,
+  Waves,
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { useAuth } from '@/context/AuthContext';
 import { DemoDataBadge } from '@/components/common/DemoDataBadge';
 import { ROLE_PERMISSIONS } from '@/mock/users';
-import { ApiMode } from '@/types/settings';
 import { UserRole } from '@/types/user';
 
 export const Settings: React.FC = () => {
@@ -37,7 +38,7 @@ export const Settings: React.FC = () => {
     updateEmailSettings,
   } = useApp();
 
-  const { currentUser, currentRole, switchRole, allUsers, permissions } = useAuth();
+  const { currentUser, currentRole, switchRole } = useAuth();
 
   const [activeTab, setActiveTab] = useState<
     'integration' | 'thresholds' | 'email' | 'roles' | 'profile'
@@ -112,26 +113,26 @@ export const Settings: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-subtle">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 sm:p-7 rounded-3xl reef-glass shadow-2xl border border-reef-border/60">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-bold tracking-wider text-cyan-400 uppercase">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-xs font-mono font-bold tracking-wider text-reef-aqua uppercase">
               System Architecture &amp; Configuration
             </span>
             <DemoDataBadge size="sm" />
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">
-            System Settings &amp; Integration Hub
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+            <span>ReefSentra Settings &amp; Integration Hub</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
+          <p className="text-xs text-slate-300 mt-1 max-w-2xl">
             Configure YOLO11 endpoint parameters, research alert thresholds, user demonstration access permissions, and automated email dispatch channels.
           </p>
         </div>
 
         {saveSuccessMsg && (
-          <div className="px-4 py-2 rounded-xl bg-emerald-950/80 border border-emerald-700 text-emerald-300 text-xs font-semibold flex items-center gap-2 animate-fade-in">
+          <div className="px-4 py-2.5 rounded-2xl bg-emerald-950/80 border border-emerald-500 text-emerald-300 text-xs font-bold flex items-center gap-2 animate-fade-in shadow-md">
             <CheckCircle2 className="w-4 h-4 text-emerald-400" />
             <span>{saveSuccessMsg}</span>
           </div>
@@ -139,13 +140,13 @@ export const Settings: React.FC = () => {
       </div>
 
       {/* Settings Navigation Tabs */}
-      <div className="flex items-center gap-2 border-b border-ocean-800 pb-2 overflow-x-auto text-xs font-medium">
+      <div className="flex items-center gap-2 border-b border-reef-border/40 pb-2.5 overflow-x-auto text-xs font-bold">
         <button
           onClick={() => setActiveTab('integration')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'integration'
-              ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-ocean-850'
+              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
           }`}
         >
           <Server className="w-4 h-4" />
@@ -154,10 +155,10 @@ export const Settings: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('thresholds')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'thresholds'
-              ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-ocean-850'
+              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
           }`}
         >
           <BellRing className="w-4 h-4" />
@@ -166,10 +167,10 @@ export const Settings: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('email')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'email'
-              ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-ocean-850'
+              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
           }`}
         >
           <Mail className="w-4 h-4" />
@@ -178,10 +179,10 @@ export const Settings: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('roles')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'roles'
-              ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-ocean-850'
+              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
           }`}
         >
           <ShieldCheck className="w-4 h-4" />
@@ -190,10 +191,10 @@ export const Settings: React.FC = () => {
 
         <button
           onClick={() => setActiveTab('profile')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all whitespace-nowrap ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'profile'
-              ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-ocean-850'
+              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
           }`}
         >
           <User className="w-4 h-4" />
@@ -204,20 +205,19 @@ export const Settings: React.FC = () => {
       {/* TAB 1: MODEL INTEGRATION & API MODE */}
       {activeTab === 'integration' && (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          {/* Left Form (7 cols) */}
-          <div className="lg:col-span-7 p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-5">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <Server className="w-4 h-4 text-cyan-400" />
+          <div className="lg:col-span-7 p-7 rounded-3xl reef-glass shadow-2xl space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+                <Server className="w-4 h-4 text-reef-aqua" />
                 <span>FastAPI &amp; YOLO11 Inference Configuration</span>
               </h3>
-              <div className="flex items-center rounded-lg bg-ocean-950 border border-ocean-700 p-0.5 text-xs">
+              <div className="flex items-center rounded-xl bg-reef-deep border border-reef-border p-1 text-xs">
                 <button
                   type="button"
                   onClick={() => setApiMode('MOCK')}
-                  className={`px-3 py-1 rounded font-bold transition-colors ${
+                  className={`px-3 py-1 rounded-lg font-bold transition-all ${
                     apiMode === 'MOCK'
-                      ? 'bg-cyan-500 text-slate-950'
+                      ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-sm'
                       : 'text-slate-400'
                   }`}
                 >
@@ -226,9 +226,9 @@ export const Settings: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setApiMode('LIVE')}
-                  className={`px-3 py-1 rounded font-bold transition-colors ${
+                  className={`px-3 py-1 rounded-lg font-bold transition-all ${
                     apiMode === 'LIVE'
-                      ? 'bg-teal-500 text-slate-950'
+                      ? 'bg-gradient-to-r from-reef-orange to-reef-pink text-white shadow-sm'
                       : 'text-slate-400'
                   }`}
                 >
@@ -239,7 +239,7 @@ export const Settings: React.FC = () => {
 
             <form onSubmit={handleSaveModelSettings} className="space-y-4 text-xs">
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   FastAPI Server Base URL (Environment / Endpoint):
                 </label>
                 <input
@@ -247,16 +247,16 @@ export const Settings: React.FC = () => {
                   value={fastApiBaseUrl}
                   onChange={(e) => setFastApiBaseUrl(e.target.value)}
                   placeholder="http://localhost:8000"
-                  className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 font-mono focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white font-mono focus:outline-none focus:border-reef-aqua"
                 />
-                <span className="text-[11px] text-slate-500 mt-1 block">
+                <span className="text-[11px] text-slate-400 mt-1 block">
                   Defaults to VITE_API_BASE_URL or http://localhost:8000
                 </span>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Prediction Route:
                   </label>
                   <input
@@ -264,11 +264,11 @@ export const Settings: React.FC = () => {
                     value={modelEndpoint}
                     onChange={(e) => setModelEndpoint(e.target.value)}
                     placeholder="/api/v1/predict"
-                    className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 font-mono focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white font-mono focus:outline-none focus:border-reef-aqua"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Health Check Route:
                   </label>
                   <input
@@ -276,17 +276,17 @@ export const Settings: React.FC = () => {
                     value={healthEndpoint}
                     onChange={(e) => setHealthEndpoint(e.target.value)}
                     placeholder="/health"
-                    className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 font-mono focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white font-mono focus:outline-none focus:border-reef-aqua"
                   />
                 </div>
               </div>
 
               <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="font-semibold text-slate-300">
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="font-bold text-slate-200">
                     Confidence Detection Threshold:
                   </label>
-                  <span className="text-cyan-400 font-mono font-bold">
+                  <span className="text-reef-aqua font-mono font-black text-sm">
                     {Math.round(confidenceThreshold * 100)}%
                   </span>
                 </div>
@@ -299,17 +299,17 @@ export const Settings: React.FC = () => {
                   onChange={(e) =>
                     setConfidenceThreshold(parseFloat(e.target.value))
                   }
-                  className="w-full accent-cyan-400"
+                  className="w-full accent-reef-aqua cursor-pointer"
                 />
-                <span className="text-[11px] text-slate-500">
+                <span className="text-[11px] text-slate-400">
                   Minimum confidence required for bounding boxes to be accepted as positive pathology detections.
                 </span>
               </div>
 
-              <div className="pt-3 border-t border-ocean-800 flex justify-end">
+              <div className="pt-3 border-t border-reef-border/40 flex justify-end">
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-1.5 shadow-glow-cyan"
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-black flex items-center gap-1.5 shadow-glow-aqua hover:brightness-110 cursor-pointer"
                 >
                   <Save className="w-4 h-4" />
                   <span>Save Integration Settings</span>
@@ -318,17 +318,16 @@ export const Settings: React.FC = () => {
             </form>
           </div>
 
-          {/* Right Status Panel (5 cols) */}
-          <div className="lg:col-span-5 p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <Radio className="w-4 h-4 text-cyan-400" />
+          <div className="lg:col-span-5 p-7 rounded-3xl reef-glass shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+                <Radio className="w-4 h-4 text-reef-aqua" />
                 <span>Backend Connection Status</span>
               </h3>
               <button
                 type="button"
                 onClick={refreshBackendHealth}
-                className="p-1.5 rounded-lg bg-ocean-950 border border-ocean-700 text-cyan-400 hover:text-cyan-300"
+                className="p-2 rounded-xl bg-reef-midnight border border-reef-border text-reef-aqua hover:text-white"
                 title="Test health connection"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
@@ -336,14 +335,14 @@ export const Settings: React.FC = () => {
             </div>
 
             <div className="space-y-3 text-xs font-mono">
-              <div className="p-4 rounded-xl bg-ocean-950 border border-ocean-800 space-y-2">
+              <div className="p-4 rounded-2xl bg-reef-midnight border border-reef-border/50 space-y-2.5">
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Current Operating Mode:</span>
                   <span
-                    className={`px-2 py-0.5 rounded font-bold ${
+                    className={`px-2.5 py-0.5 rounded-md font-bold ${
                       apiMode === 'MOCK'
-                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                        : 'bg-teal-500/20 text-teal-300 border border-teal-500/40'
+                        ? 'bg-reef-aqua/20 text-reef-aqua border border-reef-aqua/40'
+                        : 'bg-reef-orange/20 text-reef-orange border border-reef-orange/40'
                     }`}
                   >
                     {apiMode} MODE
@@ -352,21 +351,21 @@ export const Settings: React.FC = () => {
 
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">FastAPI Host:</span>
-                  <span className="text-slate-200">{fastApiBaseUrl}</span>
+                  <span className="text-white font-semibold">{fastApiBaseUrl}</span>
                 </div>
 
                 <div className="flex items-center justify-between">
                   <span className="text-slate-400">Live Health Check:</span>
                   <span
-                    className={`font-bold flex items-center gap-1.5 ${
+                    className={`font-black flex items-center gap-1.5 ${
                       backendHealth?.isOnline
                         ? 'text-emerald-400'
-                        : 'text-rose-400'
+                        : 'text-reef-pink'
                     }`}
                   >
                     <span
                       className={`w-2 h-2 rounded-full ${
-                        backendHealth?.isOnline ? 'bg-emerald-400' : 'bg-rose-500'
+                        backendHealth?.isOnline ? 'bg-emerald-400' : 'bg-reef-pink'
                       }`}
                     />
                     {backendHealth?.isOnline ? 'ONLINE' : 'UNREACHABLE'}
@@ -374,17 +373,17 @@ export const Settings: React.FC = () => {
                 </div>
 
                 {backendHealth?.statusText && (
-                  <div className="pt-2 border-t border-ocean-800 text-[11px] text-slate-400 font-sans">
+                  <div className="pt-2 border-t border-reef-border/40 text-[11px] text-slate-300 font-sans">
                     {backendHealth.statusText}
                   </div>
                 )}
               </div>
 
-              <div className="p-3.5 rounded-xl bg-ocean-950/60 border border-ocean-800 text-[11px] text-slate-400 font-sans leading-relaxed">
-                <span className="font-bold text-slate-200 block mb-1">
-                  Architecture Compliance Note:
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/60 border border-reef-border/40 text-[11px] text-slate-300 font-sans leading-relaxed">
+                <span className="font-bold text-white block mb-1">
+                  Architecture Compliance:
                 </span>
-                In MOCK mode, the dashboard operates 100% client-side with simulated inference. In LIVE API mode, inference requests are sent directly to the configured FastAPI server. If the backend is offline, the app displays genuine connection errors without falling back silently to mock data.
+                In MOCK mode, ReefSentra operates 100% client-side with simulated inference. In LIVE API mode, inference requests are sent directly to the configured FastAPI server. If the backend is offline, the app displays genuine connection errors without falling back silently to mock data.
               </div>
             </div>
           </div>
@@ -393,25 +392,24 @@ export const Settings: React.FC = () => {
 
       {/* TAB 2: SURVEILLANCE ALERT THRESHOLDS */}
       {activeTab === 'thresholds' && (
-        <div className="max-w-2xl p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-5">
-          <div className="pb-3 border-b border-ocean-800">
-            <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-              <BellRing className="w-4 h-4 text-cyan-400" />
+        <div className="max-w-2xl p-7 rounded-3xl reef-glass shadow-2xl space-y-5">
+          <div className="pb-3 border-b border-reef-border/40">
+            <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+              <BellRing className="w-4 h-4 text-reef-aqua" />
               <span>Research Alert Threshold Parameters</span>
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-300 mt-0.5">
               Defines the statistical percentage-point increase criteria required to trigger active surveillance alerts.
             </p>
           </div>
 
           <form onSubmit={handleSaveThresholds} className="space-y-4 text-xs">
-            {/* Rule 1 Threshold */}
-            <div className="p-4 rounded-xl bg-ocean-950 border border-ocean-800 space-y-2">
+            <div className="p-4 rounded-2xl bg-reef-midnight border border-reef-border/50 space-y-2">
               <div className="flex items-center justify-between">
-                <label className="font-semibold text-amber-300">
+                <label className="font-bold text-reef-orange">
                   Rule 1: Bleaching Increase Threshold:
                 </label>
-                <span className="text-amber-400 font-mono font-bold text-sm">
+                <span className="text-reef-orange font-mono font-black text-base">
                   +{bleachThreshold} pp
                 </span>
               </div>
@@ -422,20 +420,19 @@ export const Settings: React.FC = () => {
                 step="1"
                 value={bleachThreshold}
                 onChange={(e) => setBleachThreshold(parseInt(e.target.value))}
-                className="w-full accent-amber-400"
+                className="w-full accent-reef-orange cursor-pointer"
               />
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-slate-400">
                 Default: 15 percentage points. Bleaching surge over previous survey triggers CRITICAL alert.
               </span>
             </div>
 
-            {/* Rule 2 Threshold */}
-            <div className="p-4 rounded-xl bg-ocean-950 border border-ocean-800 space-y-2">
+            <div className="p-4 rounded-2xl bg-reef-midnight border border-reef-border/50 space-y-2">
               <div className="flex items-center justify-between">
-                <label className="font-semibold text-violet-300">
+                <label className="font-bold text-purple-300">
                   Rule 2: Combined Band Disease Increase Threshold:
                 </label>
-                <span className="text-violet-400 font-mono font-bold text-sm">
+                <span className="text-purple-300 font-mono font-black text-base">
                   +{bandThreshold} pp
                 </span>
               </div>
@@ -446,20 +443,19 @@ export const Settings: React.FC = () => {
                 step="1"
                 value={bandThreshold}
                 onChange={(e) => setBandThreshold(parseInt(e.target.value))}
-                className="w-full accent-violet-400"
+                className="w-full accent-purple-400 cursor-pointer"
               />
-              <span className="text-[11px] text-slate-500">
+              <span className="text-[11px] text-slate-400">
                 Default: 15 percentage points. Summed Black, White, and Yellow Band disease increase.
               </span>
             </div>
 
-            {/* Rule 3 Toggle */}
-            <div className="p-4 rounded-xl bg-ocean-950 border border-ocean-800 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-reef-midnight border border-reef-border/50 flex items-center justify-between">
               <div>
-                <label className="font-semibold text-cyan-300 block">
+                <label className="font-bold text-reef-aqua block">
                   Rule 3: New Disease Category Alert
                 </label>
-                <span className="text-[11px] text-slate-500">
+                <span className="text-[11px] text-slate-400">
                   Triggers WARNING when a disease category previously at 0% appears for the first time.
                 </span>
               </div>
@@ -467,14 +463,14 @@ export const Settings: React.FC = () => {
                 type="checkbox"
                 checked={enableNewDiseaseAlert}
                 onChange={(e) => setEnableNewDiseaseAlert(e.target.checked)}
-                className="w-4 h-4 accent-cyan-400 rounded"
+                className="w-4 h-4 accent-reef-aqua rounded cursor-pointer"
               />
             </div>
 
-            <div className="pt-3 border-t border-ocean-800 flex justify-end">
+            <div className="pt-3 border-t border-reef-border/40 flex justify-end">
               <button
                 type="submit"
-                className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-1.5 shadow-glow-cyan"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-black flex items-center gap-1.5 shadow-glow-aqua"
               >
                 <Save className="w-4 h-4" />
                 <span>Save Alert Thresholds</span>
@@ -486,60 +482,60 @@ export const Settings: React.FC = () => {
 
       {/* TAB 3: EMAIL NOTIFICATION CONFIGURATION */}
       {activeTab === 'email' && (
-        <div className="max-w-2xl p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-5">
-          <div className="pb-3 border-b border-ocean-800">
-            <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-              <Mail className="w-4 h-4 text-cyan-400" />
+        <div className="max-w-2xl p-7 rounded-3xl reef-glass shadow-2xl space-y-5">
+          <div className="pb-3 border-b border-reef-border/40">
+            <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+              <Mail className="w-4 h-4 text-reef-aqua" />
               <span>Surveillance Email Recipient Configuration</span>
             </h3>
-            <p className="text-xs text-slate-400 mt-0.5">
+            <p className="text-xs text-slate-300 mt-0.5">
               Target email addresses to be notified upon active surveillance trigger events.
             </p>
           </div>
 
           <form onSubmit={handleSaveEmailSettings} className="space-y-4 text-xs">
             <div>
-              <label className="block font-semibold text-slate-300 mb-1">
+              <label className="block font-bold text-slate-200 mb-1">
                 Recipient Email Addresses (Comma-Separated):
               </label>
               <textarea
                 rows={3}
                 value={recipientInput}
                 onChange={(e) => setRecipientInput(e.target.value)}
-                placeholder="alerts@marine-research.org, lab@university.edu"
-                className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 font-mono focus:outline-none focus:border-cyan-500"
+                placeholder="alerts@reefsentra.org, lab@university.edu"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white font-mono focus:outline-none focus:border-reef-aqua"
               />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   Mock SMTP Host:
                 </label>
                 <input
                   type="text"
                   disabled
-                  value={emailSettings.smtpHost || 'smtp.marine-research.org'}
-                  className="w-full px-3 py-2 rounded-xl bg-ocean-950/60 border border-ocean-800 text-slate-500 font-mono"
+                  value={emailSettings.smtpHost || 'smtp.reefsentra.org'}
+                  className="w-full px-3.5 py-2 rounded-xl bg-reef-midnight/60 border border-reef-border text-slate-400 font-mono"
                 />
               </div>
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   SMTP Port:
                 </label>
                 <input
                   type="text"
                   disabled
                   value={emailSettings.smtpPort || '587'}
-                  className="w-full px-3 py-2 rounded-xl bg-ocean-950/60 border border-ocean-800 text-slate-500 font-mono"
+                  className="w-full px-3.5 py-2 rounded-xl bg-reef-midnight/60 border border-reef-border text-slate-400 font-mono"
                 />
               </div>
             </div>
 
-            <div className="pt-3 border-t border-ocean-800 flex justify-end">
+            <div className="pt-3 border-t border-reef-border/40 flex justify-end">
               <button
                 type="submit"
-                className="px-4 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-1.5 shadow-glow-cyan"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-black flex items-center gap-1.5 shadow-glow-aqua"
               >
                 <Save className="w-4 h-4" />
                 <span>Save Email Settings</span>
@@ -551,89 +547,87 @@ export const Settings: React.FC = () => {
 
       {/* TAB 4: ROLE PERMISSIONS & ACCESS */}
       {activeTab === 'roles' && (
-        <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
-            <div className="pb-3 border-b border-ocean-800">
-              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-cyan-400" />
-                <span>Demonstration Role Permissions Matrix</span>
-              </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
-                Overview of capabilities across the three demonstrated roles: ADMIN, RESEARCHER, and VIEWER.
-              </p>
-            </div>
+        <div className="p-7 rounded-3xl reef-glass shadow-2xl space-y-5">
+          <div className="pb-3 border-b border-reef-border/40">
+            <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-reef-aqua" />
+              <span>Demonstration Role Permissions Matrix</span>
+            </h3>
+            <p className="text-xs text-slate-300 mt-0.5">
+              Overview of capabilities across the three demonstrated roles: ADMIN, RESEARCHER, and VIEWER.
+            </p>
+          </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {(['ADMIN', 'RESEARCHER', 'VIEWER'] as UserRole[]).map((role) => {
-                const perm = ROLE_PERMISSIONS[role];
-                const isActive = currentRole === role;
-                return (
-                  <div
-                    key={role}
-                    className={`p-4 rounded-xl border transition-all ${
-                      isActive
-                        ? 'bg-cyan-500/10 border-cyan-500/50 shadow-glow-cyan/20'
-                        : 'bg-ocean-950 border-ocean-800'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="font-bold text-slate-100 font-mono text-sm">
-                        {role}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {(['ADMIN', 'RESEARCHER', 'VIEWER'] as UserRole[]).map((role) => {
+              const perm = ROLE_PERMISSIONS[role];
+              const isActive = currentRole === role;
+              return (
+                <div
+                  key={role}
+                  className={`p-5 rounded-2xl border transition-all ${
+                    isActive
+                      ? 'bg-reef-aqua/10 border-reef-aqua shadow-glow-aqua/30'
+                      : 'bg-reef-midnight border-reef-border'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-black text-white font-mono text-base">
+                      {role}
+                    </span>
+                    {isActive ? (
+                      <span className="px-2.5 py-0.5 rounded-md text-[10px] font-black bg-reef-aqua text-reef-deep font-mono uppercase">
+                        Active Role
                       </span>
-                      {isActive ? (
-                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500 text-slate-950 font-mono uppercase">
-                          Active Role
-                        </span>
-                      ) : (
-                        <button
-                          onClick={() => switchRole(role)}
-                          className="text-[11px] text-cyan-400 hover:underline"
-                        >
-                          Switch
-                        </button>
-                      )}
+                    ) : (
+                      <button
+                        onClick={() => switchRole(role)}
+                        className="text-xs text-reef-aqua hover:underline font-bold"
+                      >
+                        Switch Role
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-300 mb-3">{perm.description}</p>
+                  <div className="space-y-1.5 text-[11px] font-mono border-t border-reef-border/40 pt-2.5 text-slate-200">
+                    <div className="flex justify-between">
+                      <span>Create Sites:</span>
+                      <span className={perm.canCreateSites ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
+                        {perm.canCreateSites ? '✓ Yes' : '✕ No'}
+                      </span>
                     </div>
-                    <p className="text-xs text-slate-400 mb-3">{perm.description}</p>
-                    <div className="space-y-1.5 text-[11px] font-mono border-t border-ocean-800/80 pt-2 text-slate-300">
-                      <div className="flex justify-between">
-                        <span>Create Sites:</span>
-                        <span className={perm.canCreateSites ? 'text-emerald-400' : 'text-slate-600'}>
-                          {perm.canCreateSites ? '✓ Yes' : '✕ No'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Upload Surveys:</span>
-                        <span className={perm.canUploadAssessments ? 'text-emerald-400' : 'text-slate-600'}>
-                          {perm.canUploadAssessments ? '✓ Yes' : '✕ No'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Run Predictions:</span>
-                        <span className={perm.canRunPredictions ? 'text-emerald-400' : 'text-slate-600'}>
-                          {perm.canRunPredictions ? '✓ Yes' : '✕ No'}
-                        </span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Manage Settings:</span>
-                        <span className={perm.canManageSettings ? 'text-emerald-400' : 'text-slate-600'}>
-                          {perm.canManageSettings ? '✓ Yes' : '✕ No'}
-                        </span>
-                      </div>
+                    <div className="flex justify-between">
+                      <span>Upload Surveys:</span>
+                      <span className={perm.canUploadAssessments ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
+                        {perm.canUploadAssessments ? '✓ Yes' : '✕ No'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Run Predictions:</span>
+                      <span className={perm.canRunPredictions ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
+                        {perm.canRunPredictions ? '✓ Yes' : '✕ No'}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Manage Settings:</span>
+                      <span className={perm.canManageSettings ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
+                        {perm.canManageSettings ? '✓ Yes' : '✕ No'}
+                      </span>
                     </div>
                   </div>
-                );
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       )}
 
       {/* TAB 5: USER PROFILE */}
       {activeTab === 'profile' && (
-        <div className="max-w-xl p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
-          <div className="pb-3 border-b border-ocean-800">
-            <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-              <User className="w-4 h-4 text-cyan-400" />
+        <div className="max-w-xl p-7 rounded-3xl reef-glass shadow-2xl space-y-4">
+          <div className="pb-3 border-b border-reef-border/40">
+            <h3 className="text-sm font-extrabold text-white flex items-center gap-2">
+              <User className="w-4 h-4 text-reef-aqua" />
               <span>Current Demonstration Profile</span>
             </h3>
           </div>
@@ -642,16 +636,16 @@ export const Settings: React.FC = () => {
             <img
               src={currentUser.avatarUrl}
               alt={currentUser.name}
-              className="w-16 h-16 rounded-full object-cover border-2 border-cyan-400"
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-reef-aqua shadow-glow-aqua/30"
             />
             <div>
-              <h4 className="text-base font-bold text-slate-100">{currentUser.name}</h4>
-              <p className="text-xs text-slate-400">{currentUser.email}</p>
-              <div className="mt-1 flex items-center gap-2">
-                <span className="px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
+              <h4 className="text-lg font-black text-white">{currentUser.name}</h4>
+              <p className="text-xs text-slate-300 font-medium">{currentUser.email}</p>
+              <div className="mt-1.5 flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-md text-[11px] font-mono font-bold bg-reef-aqua/20 text-reef-aqua border border-reef-aqua/40">
                   {currentUser.role}
                 </span>
-                <span className="text-xs text-slate-400">{currentUser.affiliation}</span>
+                <span className="text-xs text-slate-300">{currentUser.affiliation}</span>
               </div>
             </div>
           </div>

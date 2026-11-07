@@ -12,6 +12,7 @@ import {
   FileText,
   Layers,
   Info,
+  Waves,
 } from 'lucide-react';
 import {
   BarChart,
@@ -42,7 +43,6 @@ export const HistoricalComparison: React.FC = () => {
 
   const selectedSite = sites.find((s) => s.id === selectedSiteId) || sites[0];
 
-  // Get chronological assessments for this site ONLY
   const siteAssessments = assessments
     .filter((a) => a.siteId === selectedSiteId)
     .sort(
@@ -50,7 +50,6 @@ export const HistoricalComparison: React.FC = () => {
         new Date(a.assessmentDate).getTime() - new Date(b.assessmentDate).getTime()
     );
 
-  // Default two dates to compare: earliest and latest (or last two)
   const [assessmentIdA, setAssessmentIdA] = useState<string>(
     siteAssessments.length >= 2
       ? siteAssessments[siteAssessments.length - 2].id
@@ -65,10 +64,8 @@ export const HistoricalComparison: React.FC = () => {
   const assessmentA = siteAssessments.find((a) => a.id === assessmentIdA);
   const assessmentB = siteAssessments.find((a) => a.id === assessmentIdB);
 
-  // If site has < 2 assessments, show clear empty state
   const hasMultipleAssessments = siteAssessments.length >= 2;
 
-  // Compute comparison rows across all 6 categories + combined band disease
   const categoryDefinitions: { key: CoralCategoryKey; name: string }[] = [
     { key: 'healthy_coral', name: 'Healthy Coral' },
     { key: 'bleached_coral', name: 'Bleached Coral' },
@@ -114,12 +111,10 @@ export const HistoricalComparison: React.FC = () => {
     };
   });
 
-  // Combined Band Disease row
   const prevBandPct = assessmentA?.summary.combinedBandDisease.percentage || 0;
   const currBandPct = assessmentB?.summary.combinedBandDisease.percentage || 0;
   const combinedBandDiff = calculatePercentagePointDiff(currBandPct, prevBandPct);
 
-  // Bar chart comparative dataset
   const comparativeChartData = comparisonRows.map((row) => ({
     name: row.name.replace(' Disease', ''),
     Baseline: row.prevPct,
@@ -133,20 +128,20 @@ export const HistoricalComparison: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* Page Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-subtle">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 sm:p-7 rounded-3xl reef-glass shadow-2xl border border-reef-border/60">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-bold tracking-wider text-cyan-400 uppercase">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-xs font-mono font-bold tracking-wider text-reef-aqua uppercase">
               Longitudinal Chronological Analysis
             </span>
             <DemoDataBadge size="sm" />
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">
-            Historical Transect Comparison
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+            <span>Historical Transect Comparison</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
+          <p className="text-xs text-slate-300 mt-1 max-w-2xl">
             Evaluate temporal trajectories for a single reef station across distinct survey dates using scientific percentage-point differences. Never compares different geographical locations.
           </p>
         </div>
@@ -154,7 +149,7 @@ export const HistoricalComparison: React.FC = () => {
         {hasMultipleAssessments && assessmentA && assessmentB && (
           <button
             onClick={handleExportPDF}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-glow-cyan transition-all shrink-0"
+            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-reef-aqua to-reef-teal hover:brightness-110 text-reef-deep font-black text-xs shadow-glow-aqua transition-all shrink-0 cursor-pointer"
           >
             <Download className="w-4 h-4" />
             <span>Export Comparison Report (PDF)</span>
@@ -163,12 +158,11 @@ export const HistoricalComparison: React.FC = () => {
       </div>
 
       {/* Station & Survey Date Selector Card */}
-      <div className="p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-lg space-y-4">
+      <div className="p-6 rounded-3xl reef-glass space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-          {/* Site Selection */}
           <div>
-            <label className="block font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="block font-bold text-slate-200 mb-1.5 flex items-center gap-1.5">
+              <MapPin className="w-3.5 h-3.5 text-reef-aqua" />
               <span>1. Select Monitoring Station (Site ID):</span>
             </label>
             <select
@@ -191,7 +185,7 @@ export const HistoricalComparison: React.FC = () => {
                   setAssessmentIdB(newSiteAsms[0].id);
                 }
               }}
-              className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-medium"
             >
               {sites.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -201,17 +195,16 @@ export const HistoricalComparison: React.FC = () => {
             </select>
           </div>
 
-          {/* Assessment Date A (Baseline) */}
           <div>
-            <label className="block font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-teal-400" />
+            <label className="block font-bold text-slate-200 mb-1.5 flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-reef-seafoam" />
               <span>2. Baseline Survey Date:</span>
             </label>
             <select
               disabled={!hasMultipleAssessments}
               value={assessmentIdA}
               onChange={(e) => setAssessmentIdA(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-medium disabled:opacity-50"
             >
               {siteAssessments.map((a) => (
                 <option key={a.id} value={a.id}>
@@ -221,17 +214,16 @@ export const HistoricalComparison: React.FC = () => {
             </select>
           </div>
 
-          {/* Assessment Date B (Comparative) */}
           <div>
-            <label className="block font-semibold text-slate-300 mb-1.5 flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+            <label className="block font-bold text-slate-200 mb-1.5 flex items-center gap-1.5">
+              <Calendar className="w-3.5 h-3.5 text-reef-aqua" />
               <span>3. Comparative Survey Date:</span>
             </label>
             <select
               disabled={!hasMultipleAssessments}
               value={assessmentIdB}
               onChange={(e) => setAssessmentIdB(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500 disabled:opacity-50"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-medium disabled:opacity-50"
             >
               {siteAssessments.map((a) => (
                 <option key={a.id} value={a.id}>
@@ -242,46 +234,43 @@ export const HistoricalComparison: React.FC = () => {
           </div>
         </div>
 
-        {/* Site metadata banner */}
         {selectedSite && (
-          <div className="p-3 rounded-xl bg-ocean-950/80 border border-ocean-800 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-slate-400">
+          <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/40 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-slate-300">
             <div>
-              <span className="text-slate-500">Station: </span>
-              <span className="text-slate-200 font-bold">{selectedSite.siteName}</span>
-              <span className="text-slate-500 ml-2">({selectedSite.region}, {selectedSite.country})</span>
+              <span className="text-slate-400">Station: </span>
+              <span className="text-white font-bold">{selectedSite.siteName}</span>
+              <span className="text-reef-seafoam ml-2 font-semibold">({selectedSite.region}, {selectedSite.country})</span>
             </div>
             <div>
-              <span className="text-slate-500">Logged Surveys for this Site: </span>
-              <span className="text-cyan-400 font-bold">{siteAssessments.length}</span>
+              <span className="text-slate-400">Logged Surveys for this Site: </span>
+              <span className="text-reef-aqua font-black">{siteAssessments.length}</span>
             </div>
           </div>
         )}
       </div>
 
       {!hasMultipleAssessments ? (
-        /* Empty State */
-        <div className="p-12 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 text-center space-y-3">
-          <div className="w-12 h-12 rounded-full bg-ocean-800 text-cyan-400 flex items-center justify-center mx-auto">
-            <History className="w-6 h-6" />
+        <div className="p-12 rounded-3xl reef-glass text-center space-y-3">
+          <div className="w-14 h-14 rounded-2xl bg-reef-midnight text-reef-aqua border border-reef-border flex items-center justify-center mx-auto shadow-md">
+            <History className="w-7 h-7" />
           </div>
-          <h3 className="text-base font-bold text-slate-200">
+          <h3 className="text-base font-bold text-white">
             Insufficient Longitudinal Records for this Station
           </h3>
-          <p className="text-xs text-slate-400 max-w-md mx-auto">
+          <p className="text-xs text-slate-300 max-w-md mx-auto">
             This reef station currently has only {siteAssessments.length} logged survey. Chronological comparison requires at least two distinct assessment dates for the same Site ID ({selectedSite.id}).
           </p>
         </div>
       ) : assessmentA && assessmentB ? (
         <>
-          {/* Key Change Summary Callouts */}
+          {/* Key Trajectory Delta Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {/* Bleaching Change */}
-            <div className="p-4 rounded-xl bg-ocean-850/90 border border-amber-500/30 shadow-lg">
-              <span className="text-xs font-mono uppercase tracking-wider text-amber-400 block mb-1">
+            <div className="p-5 rounded-3xl reef-glass border border-reef-orange/40 shadow-lg">
+              <span className="text-xs font-mono uppercase tracking-wider text-reef-orange font-bold block mb-1">
                 Thermal Bleaching Trajectory
               </span>
               <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-slate-100">
+                <span className="text-3xl font-black font-mono text-white">
                   {formatPercentagePointDiff(
                     calculatePercentagePointDiff(
                       assessmentB.summary.bleachedCoral.percentage,
@@ -289,40 +278,38 @@ export const HistoricalComparison: React.FC = () => {
                     )
                   )}
                 </span>
-                <span className="text-xs font-mono text-slate-400">
+                <span className="text-xs font-mono text-slate-300 font-semibold">
                   {assessmentA.summary.bleachedCoral.percentage}% → {assessmentB.summary.bleachedCoral.percentage}%
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2">
+              <p className="text-[11px] text-slate-400 mt-2 font-sans">
                 Evaluated from {assessmentA.assessmentDate} to {assessmentB.assessmentDate}.
               </p>
             </div>
 
-            {/* Combined Band Disease Change */}
-            <div className="p-4 rounded-xl bg-ocean-850/90 border border-violet-500/30 shadow-lg">
-              <span className="text-xs font-mono uppercase tracking-wider text-violet-400 block mb-1">
+            <div className="p-5 rounded-3xl reef-glass border border-purple-500/40 shadow-lg">
+              <span className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold block mb-1">
                 Combined Band Disease Trajectory
               </span>
               <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-slate-100">
+                <span className="text-3xl font-black font-mono text-purple-200">
                   {formatPercentagePointDiff(combinedBandDiff)}
                 </span>
-                <span className="text-xs font-mono text-slate-400">
+                <span className="text-xs font-mono text-slate-300 font-semibold">
                   {prevBandPct}% → {currBandPct}%
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2">
+              <p className="text-[11px] text-slate-400 mt-2 font-sans">
                 Sum of Black, White, and Yellow Band disease lesions.
               </p>
             </div>
 
-            {/* Healthy Coral Change */}
-            <div className="p-4 rounded-xl bg-ocean-850/90 border border-emerald-500/30 shadow-lg">
-              <span className="text-xs font-mono uppercase tracking-wider text-emerald-400 block mb-1">
+            <div className="p-5 rounded-3xl reef-glass border border-emerald-500/40 shadow-lg">
+              <span className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold block mb-1">
                 Healthy Tissue Trajectory
               </span>
               <div className="flex items-baseline justify-between">
-                <span className="text-2xl font-bold font-mono text-slate-100">
+                <span className="text-3xl font-black font-mono text-emerald-300">
                   {formatPercentagePointDiff(
                     calculatePercentagePointDiff(
                       assessmentB.summary.healthyCoral.percentage,
@@ -330,47 +317,46 @@ export const HistoricalComparison: React.FC = () => {
                     )
                   )}
                 </span>
-                <span className="text-xs font-mono text-slate-400">
+                <span className="text-xs font-mono text-slate-300 font-semibold">
                   {assessmentA.summary.healthyCoral.percentage}% → {assessmentB.summary.healthyCoral.percentage}%
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 mt-2">
-                Vibrant pigment and active zooxanthellae coverage.
+              <p className="text-[11px] text-slate-400 mt-2 font-sans">
+                Vibrant pigment and active photosynthetic zooxanthellae coverage.
               </p>
             </div>
           </div>
 
           {/* Six Category Comparison Table & Bar Chart Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            {/* Table (6 cols) */}
-            <div className="lg:col-span-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 p-5 shadow-lg flex flex-col justify-between">
+            <div className="lg:col-span-6 rounded-3xl reef-glass p-6 flex flex-col justify-between">
               <div>
-                <h3 className="text-sm font-bold text-slate-100 mb-1">
+                <h3 className="text-sm font-extrabold text-white mb-1">
                   Six Official Categories: Percentage-Point Analysis
                 </h3>
-                <p className="text-xs text-slate-400 mb-4">
+                <p className="text-xs text-slate-300 mb-4">
                   Note: Differences represent absolute percentage points (pp), not relative % change.
                 </p>
 
                 <div className="overflow-x-auto">
                   <table className="w-full text-left border-collapse text-xs font-mono">
                     <thead>
-                      <tr className="border-b border-ocean-700 text-[11px] uppercase text-slate-400">
+                      <tr className="border-b border-reef-border/60 text-[11px] uppercase text-slate-300 font-bold">
                         <th className="py-2.5 px-3 font-sans">Category</th>
                         <th className="py-2.5 px-3">{assessmentA.assessmentDate}</th>
                         <th className="py-2.5 px-3">{assessmentB.assessmentDate}</th>
                         <th className="py-2.5 px-3 text-right">Change (pp)</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-ocean-800">
+                    <tbody className="divide-y divide-reef-border/30">
                       {comparisonRows.map((row) => (
-                        <tr key={row.name} className="hover:bg-ocean-800/40">
-                          <td className="py-2.5 px-3 font-sans font-semibold text-slate-200">
+                        <tr key={row.name} className="hover:bg-reef-surface/40 transition-colors">
+                          <td className="py-2.5 px-3 font-sans font-bold text-white">
                             {row.name}
                           </td>
-                          <td className="py-2.5 px-3 text-slate-400">{row.prevPct}%</td>
-                          <td className="py-2.5 px-3 text-slate-200 font-bold">{row.currPct}%</td>
-                          <td className="py-2.5 px-3 text-right font-bold">
+                          <td className="py-2.5 px-3 text-slate-300">{row.prevPct}%</td>
+                          <td className="py-2.5 px-3 text-white font-extrabold">{row.currPct}%</td>
+                          <td className="py-2.5 px-3 text-right font-black">
                             <span
                               className={
                                 row.ppDiff === null || row.ppDiff === 0
@@ -390,14 +376,13 @@ export const HistoricalComparison: React.FC = () => {
                         </tr>
                       ))}
 
-                      {/* Combined Band Row */}
-                      <tr className="bg-ocean-900/60 font-bold">
-                        <td className="py-3 px-3 font-sans text-violet-300">
+                      <tr className="bg-reef-midnight/90 font-black">
+                        <td className="py-3 px-3 font-sans text-purple-300">
                           Combined Band Disease
                         </td>
-                        <td className="py-3 px-3 text-violet-300">{prevBandPct}%</td>
-                        <td className="py-3 px-3 text-violet-300">{currBandPct}%</td>
-                        <td className="py-3 px-3 text-right text-rose-400">
+                        <td className="py-3 px-3 text-purple-300">{prevBandPct}%</td>
+                        <td className="py-3 px-3 text-purple-200">{currBandPct}%</td>
+                        <td className="py-3 px-3 text-right text-reef-pink">
                           {formatPercentagePointDiff(combinedBandDiff)}
                         </td>
                       </tr>
@@ -406,22 +391,21 @@ export const HistoricalComparison: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-ocean-800 text-[11px] text-slate-400 flex items-center gap-1.5">
-                <Info className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+              <div className="mt-4 pt-3 border-t border-reef-border/40 text-[11px] text-slate-300 flex items-center gap-2">
+                <Info className="w-4 h-4 text-reef-aqua shrink-0" />
                 <span>
                   Scientific rigor: An increase from 20.0% to 38.0% is reported as +18.0 percentage points.
                 </span>
               </div>
             </div>
 
-            {/* Comparison Bar Chart (6 cols) */}
-            <div className="lg:col-span-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 p-5 shadow-lg flex flex-col justify-between">
+            <div className="lg:col-span-6 rounded-3xl reef-glass p-6 flex flex-col justify-between">
               <div>
-                <h3 className="text-sm font-bold text-slate-100 mb-1">
+                <h3 className="text-sm font-extrabold text-white mb-1">
                   Comparative Prevalence Histogram
                 </h3>
-                <p className="text-xs text-slate-400 mb-4">
-                  Visual side-by-side distribution across baseline and comparative survey phototransects.
+                <p className="text-xs text-slate-300 mb-4">
+                  Side-by-side distribution across baseline and comparative survey phototransects.
                 </p>
 
                 <div className="h-72">
@@ -430,21 +414,21 @@ export const HistoricalComparison: React.FC = () => {
                       data={comparativeChartData}
                       margin={{ top: 10, right: 10, left: -20, bottom: 20 }}
                     >
-                      <CartesianGrid strokeDasharray="3 3" stroke="#1A2F50" opacity={0.6} />
-                      <XAxis dataKey="name" stroke="#94A3B8" fontSize={10} tickLine={false} />
-                      <YAxis stroke="#94A3B8" fontSize={11} tickLine={false} unit="%" />
+                      <CartesianGrid strokeDasharray="3 3" stroke="rgba(56, 214, 208, 0.12)" />
+                      <XAxis dataKey="name" stroke="#8DE2C5" fontSize={10} tickLine={false} fontWeight={600} />
+                      <YAxis stroke="#8DE2C5" fontSize={11} tickLine={false} unit="%" />
                       <Tooltip
                         content={({ active, payload }: any) => {
                           if (active && payload && payload.length) {
                             return (
-                              <div className="bg-ocean-900 border border-ocean-700 p-2.5 rounded-lg text-xs font-mono shadow-xl">
-                                <p className="font-bold text-cyan-300 mb-1">
+                              <div className="bg-reef-midnight/95 border border-reef-aqua/40 p-3 rounded-xl text-xs font-mono shadow-2xl backdrop-blur-md">
+                                <p className="font-bold text-reef-aqua mb-1 text-sm">
                                   {payload[0].payload.name}
                                 </p>
-                                <p className="text-teal-400">
+                                <p className="text-reef-seafoam font-semibold">
                                   Baseline ({assessmentA.assessmentDate}): {payload[0].value}%
                                 </p>
-                                <p className="text-cyan-400">
+                                <p className="text-reef-aqua font-semibold">
                                   Comparative ({assessmentB.assessmentDate}): {payload[1].value}%
                                 </p>
                               </div>
@@ -457,19 +441,19 @@ export const HistoricalComparison: React.FC = () => {
                         verticalAlign="top"
                         height={36}
                         formatter={(val) => (
-                          <span className="text-xs text-slate-300 font-medium">{val}</span>
+                          <span className="text-xs text-slate-200 font-semibold">{val}</span>
                         )}
                       />
                       <Bar
                         dataKey="Baseline"
                         name={`Baseline (${assessmentA.assessmentDate})`}
-                        fill="#0EA5E9"
+                        fill="#087E8B"
                         radius={[4, 4, 0, 0]}
                       />
                       <Bar
                         dataKey="Comparative"
                         name={`Comparative (${assessmentB.assessmentDate})`}
-                        fill="#2DD4BF"
+                        fill="#38D6D0"
                         radius={[4, 4, 0, 0]}
                       />
                     </BarChart>
@@ -477,19 +461,19 @@ export const HistoricalComparison: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-ocean-950 border border-ocean-800 text-xs font-mono text-slate-400 flex items-center justify-between">
-                <span>Baseline ID: {assessmentA.id}</span>
-                <span>Comparative ID: {assessmentB.id}</span>
+              <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/40 text-xs font-mono text-slate-300 flex items-center justify-between">
+                <span>Baseline ID: <strong className="text-white">{assessmentA.id}</strong></span>
+                <span>Comparative ID: <strong className="text-white">{assessmentB.id}</strong></span>
               </div>
             </div>
           </div>
 
-          {/* Full Chronological Timeline for this site */}
-          <div className="rounded-2xl bg-ocean-850/90 border border-ocean-700/80 p-5 shadow-lg">
-            <h3 className="text-sm font-bold text-slate-100 mb-1">
+          {/* Full Chronological Timeline */}
+          <div className="rounded-3xl reef-glass p-6">
+            <h3 className="text-sm font-extrabold text-white mb-1">
               Station Chronological Assessment Timeline ({selectedSite.siteName})
             </h3>
-            <p className="text-xs text-slate-400 mb-4">
+            <p className="text-xs text-slate-300 mb-4">
               Historical progression across all logged phototransects for this exact Site ID.
             </p>
             <HealthTrendLine assessments={siteAssessments} height={280} />

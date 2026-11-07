@@ -7,6 +7,7 @@ interface StatCardProps {
   subValue?: string;
   icon: LucideIcon;
   iconColor?: string;
+  iconBg?: string;
   badge?: React.ReactNode;
   trend?: {
     diff: number | string;
@@ -22,7 +23,8 @@ export const StatCard: React.FC<StatCardProps> = ({
   value,
   subValue,
   icon: Icon,
-  iconColor = 'text-cyan-400',
+  iconColor = 'text-reef-aqua',
+  iconBg = 'bg-reef-midnight/80 border-reef-border/60',
   badge,
   trend,
   onClick,
@@ -31,17 +33,17 @@ export const StatCard: React.FC<StatCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`relative p-5 rounded-xl bg-ocean-850/90 border border-ocean-700/60 shadow-lg backdrop-blur transition-all duration-200 ${
-        onClick ? 'cursor-pointer hover:border-cyan-500/50 hover:bg-ocean-800/80' : ''
+      className={`relative p-5 rounded-2xl reef-glass reef-glass-interactive transition-all duration-300 ${
+        onClick ? 'cursor-pointer hover:border-reef-aqua/60 group' : ''
       } ${className}`}
     >
       <div className="flex items-start justify-between">
-        <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-wider text-slate-400">
+        <div className="space-y-1.5">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-300">
             {title}
           </p>
           <div className="flex items-baseline gap-2">
-            <h3 className="text-2xl font-bold font-mono text-slate-100 tracking-tight">
+            <h3 className="text-2xl font-black font-mono text-white tracking-tight">
               {value}
             </h3>
             {subValue && (
@@ -50,23 +52,23 @@ export const StatCard: React.FC<StatCardProps> = ({
           </div>
         </div>
         <div
-          className={`p-2.5 rounded-lg bg-ocean-900/80 border border-ocean-700/50 ${iconColor}`}
+          className={`p-2.5 rounded-xl border shadow-md transition-transform group-hover:scale-110 ${iconBg} ${iconColor}`}
         >
           <Icon className="w-5 h-5" />
         </div>
       </div>
 
       {(trend || badge) && (
-        <div className="mt-3.5 pt-3 border-t border-ocean-800 flex items-center justify-between text-xs">
+        <div className="mt-3.5 pt-3 border-t border-reef-border/30 flex items-center justify-between text-xs">
           {trend ? (
             <div className="flex items-center gap-1.5">
               <span
-                className={`font-semibold font-mono ${
+                className={`font-bold font-mono ${
                   trend.isPositive
-                    ? 'text-emerald-400'
+                    ? 'text-reef-seafoam'
                     : trend.isPositive === false
-                    ? 'text-rose-400'
-                    : 'text-slate-400'
+                    ? 'text-reef-pink'
+                    : 'text-slate-300'
                 }`}
               >
                 {trend.diff}

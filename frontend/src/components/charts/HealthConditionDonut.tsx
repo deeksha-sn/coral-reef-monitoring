@@ -7,7 +7,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import { AssessmentSummary } from '../../types/assessment';
+import { AssessmentSummary } from '@/types/assessment';
 
 interface HealthConditionDonutProps {
   summary: AssessmentSummary;
@@ -43,16 +43,16 @@ export const HealthConditionDonut: React.FC<HealthConditionDonutProps> = ({
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="bg-ocean-900 border border-ocean-700 p-2.5 rounded-lg shadow-xl text-xs font-mono">
-          <p className="font-bold text-slate-100 flex items-center gap-1.5">
+        <div className="bg-reef-midnight/95 border border-reef-aqua/40 p-3 rounded-xl shadow-2xl text-xs font-mono backdrop-blur-md">
+          <p className="font-bold text-white flex items-center gap-1.5 text-sm">
             <span
-              className="w-2.5 h-2.5 rounded-full"
+              className="w-2.5 h-2.5 rounded-full shadow-sm"
               style={{ backgroundColor: item.color }}
             />
             {item.name}
           </p>
-          <p className="text-slate-300 mt-1">Detections: {item.value}</p>
-          <p className="text-cyan-400 font-semibold">Proportion: {item.pct}%</p>
+          <p className="text-slate-300 mt-1.5">Specimens: <span className="text-white font-bold">{item.value}</span></p>
+          <p className="text-reef-aqua font-bold">Proportion: {item.pct}%</p>
         </div>
       );
     }
@@ -70,11 +70,11 @@ export const HealthConditionDonut: React.FC<HealthConditionDonutProps> = ({
               cy="50%"
               innerRadius={55}
               outerRadius={85}
-              paddingAngle={4}
+              paddingAngle={5}
               dataKey="value"
             >
               {data.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.color} stroke="#08101E" strokeWidth={2} />
+                <Cell key={`cell-${index}`} fill={entry.color} stroke="#061B2C" strokeWidth={2.5} />
               ))}
             </Pie>
             <Tooltip content={<CustomTooltip />} />
@@ -82,7 +82,7 @@ export const HealthConditionDonut: React.FC<HealthConditionDonutProps> = ({
               verticalAlign="bottom"
               height={36}
               formatter={(value, entry: any) => (
-                <span className="text-xs text-slate-300 font-medium">
+                <span className="text-xs text-slate-200 font-semibold">
                   {value} ({entry.payload.pct}%)
                 </span>
               )}

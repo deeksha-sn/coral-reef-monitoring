@@ -9,7 +9,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
-import { Assessment } from '../../types/assessment';
+import { Assessment } from '@/types/assessment';
 
 interface HealthTrendLineProps {
   assessments: Assessment[];
@@ -37,15 +37,17 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-ocean-900 border border-ocean-700 p-3 rounded-lg shadow-2xl text-xs font-mono space-y-1">
-          <p className="font-bold text-cyan-300 mb-1.5">{label}</p>
+        <div className="bg-reef-midnight/95 border border-reef-aqua/40 p-3.5 rounded-xl shadow-2xl text-xs font-mono space-y-1.5 backdrop-blur-md">
+          <p className="font-bold text-reef-aqua mb-2 text-sm border-b border-reef-border/40 pb-1">
+            Survey Date: {label}
+          </p>
           {payload.map((p: any) => (
-            <div key={p.name} className="flex items-center justify-between gap-4">
+            <div key={p.name} className="flex items-center justify-between gap-5">
               <span className="flex items-center gap-1.5" style={{ color: p.color }}>
-                <span className="w-2 h-2 rounded-full" style={{ backgroundColor: p.color }} />
+                <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: p.color }} />
                 {p.name}:
               </span>
-              <span className="font-bold text-slate-100">{p.value}%</span>
+              <span className="font-extrabold text-white">{p.value}%</span>
             </div>
           ))}
         </div>
@@ -58,15 +60,16 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 15, right: 15, left: -15, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1A2F50" opacity={0.6} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(56, 214, 208, 0.12)" />
           <XAxis
             dataKey="date"
-            stroke="#94A3B8"
+            stroke="#8DE2C5"
             fontSize={11}
             tickLine={false}
+            fontWeight={500}
           />
           <YAxis
-            stroke="#94A3B8"
+            stroke="#8DE2C5"
             fontSize={11}
             tickLine={false}
             unit="%"
@@ -76,7 +79,7 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
             verticalAlign="top"
             height={36}
             formatter={(value) => (
-              <span className="text-xs text-slate-300 font-medium capitalize">
+              <span className="text-xs text-slate-200 font-semibold capitalize">
                 {value}
               </span>
             )}
@@ -86,24 +89,24 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
             dataKey="healthy"
             name="Healthy Coral"
             stroke="#10B981"
-            strokeWidth={2.5}
-            dot={{ r: 4, fill: '#10B981' }}
-            activeDot={{ r: 6 }}
+            strokeWidth={3}
+            dot={{ r: 4, fill: '#10B981', stroke: '#061B2C', strokeWidth: 1.5 }}
+            activeDot={{ r: 7 }}
           />
           <Line
             type="monotone"
             dataKey="bleached"
             name="Bleached Coral"
-            stroke="#F59E0B"
-            strokeWidth={2}
-            dot={{ r: 4, fill: '#F59E0B' }}
+            stroke="#FF8066"
+            strokeWidth={2.5}
+            dot={{ r: 4, fill: '#FF8066', stroke: '#061B2C', strokeWidth: 1.5 }}
           />
           <Line
             type="monotone"
             dataKey="dead"
             name="Dead Coral"
             stroke="#EF4444"
-            strokeWidth={1.5}
+            strokeWidth={2}
             strokeDasharray="4 4"
             dot={{ r: 3, fill: '#EF4444' }}
           />
@@ -112,8 +115,8 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
             dataKey="combinedBand"
             name="Combined Band Disease"
             stroke="#8B5CF6"
-            strokeWidth={2.5}
-            dot={{ r: 4, fill: '#8B5CF6' }}
+            strokeWidth={3}
+            dot={{ r: 4, fill: '#8B5CF6', stroke: '#061B2C', strokeWidth: 1.5 }}
           />
         </LineChart>
       </ResponsiveContainer>

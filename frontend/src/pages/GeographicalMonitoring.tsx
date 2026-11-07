@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Save,
   Trash2,
+  Waves,
 } from 'lucide-react';
 import { useApp } from '@/context/AppContext';
 import { useAuth } from '@/context/AuthContext';
@@ -43,7 +44,6 @@ export const GeographicalMonitoring: React.FC = () => {
     conservationStatus: 'Marine Protected Area',
   });
 
-  // Filter sites
   const countries = Array.from(new Set(sites.map((s) => s.country)));
   const regions = Array.from(
     new Set(
@@ -83,52 +83,51 @@ export const GeographicalMonitoring: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {/* Page Title */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-5 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-subtle">
+    <div className="space-y-7">
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 sm:p-7 rounded-3xl reef-glass shadow-2xl border border-reef-border/60">
         <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-xs font-mono font-bold tracking-wider text-cyan-400 uppercase">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-xs font-mono font-bold tracking-wider text-reef-aqua uppercase">
               Spatial Geospatial Intelligence
             </span>
             <DemoDataBadge size="sm" />
           </div>
-          <h1 className="text-2xl font-extrabold text-slate-100 tracking-tight">
-            Geographical Reef Monitoring Network
+          <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight flex items-center gap-2">
+            <span>Geographical Reef Monitoring Network</span>
           </h1>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-            Interactive GIS map of global coral transects, spatial pathogen distributions, and station conservation classifications.
+          <p className="text-xs text-slate-300 mt-1 max-w-2xl">
+            Interactive GIS bathymetry of global coral transects, spatial pathogen distributions, and station conservation classifications.
           </p>
         </div>
 
         {permissions.canCreateSites && (
           <button
             onClick={() => setShowRegisterModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold text-xs shadow-glow-cyan transition-all shrink-0"
+            className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-reef-aqua to-reef-teal hover:brightness-110 text-reef-deep font-black text-xs shadow-glow-aqua transition-all shrink-0 cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Register New Reef Site</span>
+            <span>Register Monitoring Station</span>
           </button>
         )}
       </div>
 
       {/* Filter Toolbar */}
-      <div className="p-4 rounded-xl bg-ocean-850/80 border border-ocean-700/70 flex flex-wrap items-center gap-4 text-xs">
-        <div className="flex items-center gap-1.5 text-slate-300 font-semibold">
-          <Filter className="w-3.5 h-3.5 text-cyan-400" />
+      <div className="p-4 rounded-2xl reef-glass flex flex-wrap items-center gap-4 text-xs">
+        <div className="flex items-center gap-1.5 text-white font-bold">
+          <Filter className="w-3.5 h-3.5 text-reef-aqua" />
           <span>Filters:</span>
         </div>
 
-        {/* Country Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-slate-400">Country:</label>
+          <label className="text-slate-300 font-semibold">Country:</label>
           <select
             value={countryFilter}
             onChange={(e) => {
               setCountryFilter(e.target.value);
               setRegionFilter('ALL');
             }}
-            className="px-2.5 py-1.5 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="px-3 py-1.5 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-medium"
           >
             <option value="ALL">All Countries ({countries.length})</option>
             {countries.map((c) => (
@@ -139,13 +138,12 @@ export const GeographicalMonitoring: React.FC = () => {
           </select>
         </div>
 
-        {/* Region Filter */}
         <div className="flex items-center gap-2">
-          <label className="text-slate-400">Region:</label>
+          <label className="text-slate-300 font-semibold">Region:</label>
           <select
             value={regionFilter}
             onChange={(e) => setRegionFilter(e.target.value)}
-            className="px-2.5 py-1.5 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+            className="px-3 py-1.5 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-medium"
           >
             <option value="ALL">All Regions</option>
             {regions.map((r) => (
@@ -156,19 +154,18 @@ export const GeographicalMonitoring: React.FC = () => {
           </select>
         </div>
 
-        {/* Quick Search */}
         <div className="flex-1 min-w-[200px]">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search transect name or reef ecosystem..."
-            className="w-full px-3 py-1.5 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500"
+            className="w-full px-3.5 py-1.5 rounded-xl bg-reef-deep border border-reef-border text-white placeholder-slate-400 focus:outline-none focus:border-reef-aqua text-xs"
           />
         </div>
 
-        <span className="text-slate-400 font-mono text-[11px]">
-          Showing {filteredSites.length} of {sites.length} sites
+        <span className="text-reef-seafoam font-mono text-xs font-bold">
+          Showing {filteredSites.length} of {sites.length} stations
         </span>
       </div>
 
@@ -181,26 +178,26 @@ export const GeographicalMonitoring: React.FC = () => {
             selectedSiteId={selectedSite?.id}
             onSelectSite={(id) => setSelectedSiteId(id)}
             assessments={assessments}
-            className="h-[560px] w-full rounded-2xl overflow-hidden border border-ocean-700 shadow-2xl"
+            className="h-[580px] w-full rounded-3xl overflow-hidden border border-reef-border/60 shadow-2xl"
           />
 
           {/* Quick Site Picker Strip */}
-          <div className="p-3 rounded-xl bg-ocean-850/90 border border-ocean-700/70">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+          <div className="p-4 rounded-2xl reef-glass">
+            <span className="text-[11px] font-bold text-slate-300 uppercase tracking-wider block mb-2.5">
               Select Transect Station:
             </span>
-            <div className="flex gap-2 overflow-x-auto pb-1">
+            <div className="flex gap-2.5 overflow-x-auto pb-1">
               {filteredSites.map((s) => (
                 <button
                   key={s.id}
                   onClick={() => setSelectedSiteId(s.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${
+                  className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center gap-1.5 ${
                     selectedSite?.id === s.id
-                      ? 'bg-cyan-500 text-slate-950 font-bold shadow-sm'
-                      : 'bg-ocean-900 text-slate-300 hover:bg-ocean-800'
+                      ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/40'
+                      : 'bg-reef-midnight text-slate-300 hover:bg-reef-surface hover:text-white'
                   }`}
                 >
-                  <MapPin className="w-3 h-3" />
+                  <MapPin className="w-3.5 h-3.5 text-reef-orange" />
                   <span>{s.siteName}</span>
                 </button>
               ))}
@@ -208,25 +205,24 @@ export const GeographicalMonitoring: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Selected Site Details & Longitudinal Survey Panel (5 cols) */}
+        {/* Right Column: Selected Site Details & Survey Panel (5 cols) */}
         <div className="lg:col-span-5 space-y-6">
           {selectedSite ? (
-            <div className="p-6 rounded-2xl bg-ocean-850/90 border border-ocean-700/80 shadow-2xl space-y-5">
-              {/* Site Header */}
-              <div className="flex items-start justify-between pb-4 border-b border-ocean-800">
+            <div className="p-6 rounded-3xl reef-glass shadow-2xl space-y-5">
+              <div className="flex items-start justify-between pb-4 border-b border-reef-border/40">
                 <div>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-mono font-bold text-cyan-400 px-2 py-0.5 rounded bg-ocean-950 border border-ocean-800">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-xs font-mono font-bold text-reef-aqua px-2.5 py-0.5 rounded-md bg-reef-midnight border border-reef-border">
                       {selectedSite.id}
                     </span>
-                    <span className="text-xs text-slate-400">
+                    <span className="text-xs text-slate-300 font-medium">
                       {selectedSite.region}, {selectedSite.country}
                     </span>
                   </div>
-                  <h2 className="text-lg font-bold text-slate-100">
+                  <h2 className="text-lg font-black text-white">
                     {selectedSite.siteName}
                   </h2>
-                  <p className="text-xs text-teal-400 font-medium mt-0.5">
+                  <p className="text-xs text-reef-seafoam font-semibold mt-0.5">
                     {selectedSite.reefName}
                   </p>
                 </div>
@@ -238,7 +234,7 @@ export const GeographicalMonitoring: React.FC = () => {
                         deleteSite(selectedSite.id);
                       }
                     }}
-                    className="p-1.5 rounded-lg text-rose-400 hover:bg-rose-950/50 hover:text-rose-300 transition-colors"
+                    className="p-2 rounded-xl text-rose-400 hover:bg-rose-950/60 hover:text-rose-300 transition-colors"
                     title="Delete reef site"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -248,54 +244,54 @@ export const GeographicalMonitoring: React.FC = () => {
 
               {/* Geographic Coordinates & Spec Metrics */}
               <div className="grid grid-cols-2 gap-3 text-xs font-mono">
-                <div className="p-3 rounded-xl bg-ocean-950/80 border border-ocean-800">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-sans">
                     Latitude
                   </span>
-                  <span className="text-slate-100 font-bold text-sm">
+                  <span className="text-white font-extrabold text-sm">
                     {selectedSite.latitude.toFixed(4)}°
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-ocean-950/80 border border-ocean-800">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-sans">
                     Longitude
                   </span>
-                  <span className="text-slate-100 font-bold text-sm">
+                  <span className="text-white font-extrabold text-sm">
                     {selectedSite.longitude.toFixed(4)}°
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-ocean-950/80 border border-ocean-800">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-sans">
                     Transect Depth
                   </span>
-                  <span className="text-slate-100 font-bold text-sm">
+                  <span className="text-white font-extrabold text-sm">
                     {selectedSite.depthMeters || 8} meters
                   </span>
                 </div>
-                <div className="p-3 rounded-xl bg-ocean-950/80 border border-ocean-800">
-                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block">
+                <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50">
+                  <span className="text-[10px] text-slate-400 uppercase tracking-wider block font-sans">
                     Conservation Status
                   </span>
-                  <span className="text-emerald-400 font-bold text-xs">
-                    {selectedSite.conservationStatus || 'Protected'}
+                  <span className="text-emerald-400 font-black text-xs">
+                    {selectedSite.conservationStatus || 'Protected Area'}
                   </span>
                 </div>
               </div>
 
               {/* Description */}
-              <div className="p-3 rounded-xl bg-ocean-950/50 border border-ocean-800/80 text-xs text-slate-300">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/60 border border-reef-border/40 text-xs text-slate-200">
                 <p className="leading-relaxed">
                   {selectedSite.description || 'Longitudinal benthic survey station.'}
                 </p>
               </div>
 
               {/* Latest Health Condition Stats */}
-              <div className="space-y-3 pt-3 border-t border-ocean-800">
+              <div className="space-y-3 pt-3 border-t border-reef-border/40">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-200 uppercase tracking-wider">
+                  <span className="font-extrabold text-white uppercase tracking-wider">
                     Latest Health Profile:
                   </span>
-                  <span className="text-slate-400 font-mono">
+                  <span className="text-slate-300 font-mono">
                     {latestAssessment
                       ? `Survey: ${latestAssessment.assessmentDate}`
                       : 'No survey data'}
@@ -303,45 +299,45 @@ export const GeographicalMonitoring: React.FC = () => {
                 </div>
 
                 {latestAssessment ? (
-                  <div className="grid grid-cols-3 gap-2 text-center font-mono">
-                    <div className="p-2.5 rounded-lg bg-emerald-950/40 border border-emerald-700/40">
-                      <span className="text-[10px] text-emerald-400 block">Healthy</span>
-                      <span className="text-sm font-bold text-emerald-300">
+                  <div className="grid grid-cols-3 gap-2.5 text-center font-mono">
+                    <div className="p-3 rounded-2xl bg-emerald-950/60 border border-emerald-500/40">
+                      <span className="text-[10px] text-emerald-400 block font-bold font-sans">Healthy</span>
+                      <span className="text-base font-black text-emerald-300">
                         {latestAssessment.summary.healthyCoral.percentage}%
                       </span>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-amber-950/40 border border-amber-700/40">
-                      <span className="text-[10px] text-amber-400 block">Bleached</span>
-                      <span className="text-sm font-bold text-amber-300">
+                    <div className="p-3 rounded-2xl bg-amber-950/60 border border-reef-orange/40">
+                      <span className="text-[10px] text-reef-orange block font-bold font-sans">Bleached</span>
+                      <span className="text-base font-black text-reef-orange">
                         {latestAssessment.summary.bleachedCoral.percentage}%
                       </span>
                     </div>
-                    <div className="p-2.5 rounded-lg bg-violet-950/40 border border-violet-700/40">
-                      <span className="text-[10px] text-violet-400 block">Band Disease</span>
-                      <span className="text-sm font-bold text-violet-300">
+                    <div className="p-3 rounded-2xl bg-purple-950/60 border border-purple-500/40">
+                      <span className="text-[10px] text-purple-300 block font-bold font-sans">Band Disease</span>
+                      <span className="text-base font-black text-purple-200">
                         {latestAssessment.summary.combinedBandDisease.percentage}%
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="p-4 rounded-xl bg-ocean-950 text-slate-400 text-xs text-center">
-                    No assessments have been recorded for this station yet.
+                  <div className="p-4 rounded-2xl bg-reef-midnight text-slate-400 text-xs text-center">
+                    No assessments recorded for this station yet.
                   </div>
                 )}
               </div>
 
-              {/* Historical Survey Timeline for this site */}
-              <div className="space-y-3 pt-3 border-t border-ocean-800">
+              {/* Historical Survey Timeline */}
+              <div className="space-y-3 pt-3 border-t border-reef-border/40">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-bold text-slate-200">
+                  <span className="font-extrabold text-white">
                     Logged Surveys ({siteAssessments.length}):
                   </span>
                   <Link
                     to={`/comparison?siteId=${selectedSite.id}`}
-                    className="text-cyan-400 hover:underline flex items-center gap-1 font-semibold"
+                    className="text-reef-aqua hover:underline flex items-center gap-1 font-bold"
                   >
                     <span>Chronological Comparison</span>
-                    <ArrowRight className="w-3 h-3" />
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
                 </div>
 
@@ -349,11 +345,11 @@ export const GeographicalMonitoring: React.FC = () => {
                   {siteAssessments.map((a) => (
                     <div
                       key={a.id}
-                      className="p-2.5 rounded-xl bg-ocean-950/90 border border-ocean-800 flex items-center justify-between text-xs font-mono"
+                      className="p-3 rounded-2xl bg-reef-midnight border border-reef-border/50 flex items-center justify-between text-xs font-mono"
                     >
                       <div>
-                        <div className="font-bold text-cyan-300">{a.id}</div>
-                        <div className="text-[11px] text-slate-400 font-sans">
+                        <div className="font-bold text-reef-aqua">{a.id}</div>
+                        <div className="text-[11px] text-slate-300 font-sans font-medium">
                           {a.assessmentDate} • {a.imageCount} quadrats
                         </div>
                       </div>
@@ -361,7 +357,7 @@ export const GeographicalMonitoring: React.FC = () => {
                         <span className="text-emerald-400 font-bold block">
                           {a.summary.healthyCoral.percentage}% Healthy
                         </span>
-                        <span className="text-violet-400 text-[11px]">
+                        <span className="text-purple-300 text-[11px] font-semibold">
                           {a.summary.combinedBandDisease.percentage}% Band
                         </span>
                       </div>
@@ -371,7 +367,7 @@ export const GeographicalMonitoring: React.FC = () => {
               </div>
             </div>
           ) : (
-            <div className="p-8 rounded-2xl bg-ocean-850/80 border border-ocean-700 text-center text-slate-400 text-xs">
+            <div className="p-8 rounded-3xl reef-glass text-center text-slate-300 text-xs">
               Select a reef monitoring site to view geographical metrics.
             </div>
           )}
@@ -380,25 +376,25 @@ export const GeographicalMonitoring: React.FC = () => {
 
       {/* Register Site Modal */}
       {showRegisterModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="w-full max-w-lg rounded-2xl bg-ocean-900 border border-ocean-700 shadow-2xl p-6 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-ocean-800">
-              <h3 className="text-base font-bold text-slate-100 flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-cyan-400" />
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="w-full max-w-lg rounded-3xl bg-reef-midnight border border-reef-aqua/40 shadow-2xl p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-reef-border/40">
+              <h3 className="text-base font-bold text-white flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-reef-aqua" />
                 <span>Register Permanent Reef Monitoring Station</span>
               </h3>
               <button
                 onClick={() => setShowRegisterModal(false)}
-                className="text-slate-400 hover:text-slate-200"
+                className="text-slate-400 hover:text-white"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleRegisterSite} className="space-y-3 text-xs">
+            <form onSubmit={handleRegisterSite} className="space-y-3.5 text-xs">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Country:
                   </label>
                   <input
@@ -408,11 +404,11 @@ export const GeographicalMonitoring: React.FC = () => {
                     onChange={(e) =>
                       setNewSiteData({ ...newSiteData, country: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     State / Region:
                   </label>
                   <input
@@ -422,13 +418,13 @@ export const GeographicalMonitoring: React.FC = () => {
                     onChange={(e) =>
                       setNewSiteData({ ...newSiteData, region: e.target.value })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   Reef Ecosystem Name:
                 </label>
                 <input
@@ -438,12 +434,12 @@ export const GeographicalMonitoring: React.FC = () => {
                   onChange={(e) =>
                     setNewSiteData({ ...newSiteData, reefName: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   Site Name / Transect Designation:
                 </label>
                 <input
@@ -453,13 +449,13 @@ export const GeographicalMonitoring: React.FC = () => {
                   onChange={(e) =>
                     setNewSiteData({ ...newSiteData, siteName: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Latitude (-90 to +90):
                   </label>
                   <input
@@ -473,11 +469,11 @@ export const GeographicalMonitoring: React.FC = () => {
                         latitude: parseFloat(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500 font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-mono"
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-slate-300 mb-1">
+                  <label className="block font-bold text-slate-200 mb-1">
                     Longitude (-180 to +180):
                   </label>
                   <input
@@ -491,13 +487,13 @@ export const GeographicalMonitoring: React.FC = () => {
                         longitude: parseFloat(e.target.value) || 0,
                       })
                     }
-                    className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500 font-mono"
+                    className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua font-mono"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block font-semibold text-slate-300 mb-1">
+                <label className="block font-bold text-slate-200 mb-1">
                   Habitat Description:
                 </label>
                 <textarea
@@ -506,21 +502,21 @@ export const GeographicalMonitoring: React.FC = () => {
                   onChange={(e) =>
                     setNewSiteData({ ...newSiteData, description: e.target.value })
                   }
-                  className="w-full px-3 py-2 rounded-lg bg-ocean-950 border border-ocean-700 text-slate-200 focus:outline-none focus:border-cyan-500"
+                  className="w-full px-3 py-2 rounded-xl bg-reef-deep border border-reef-border text-white focus:outline-none focus:border-reef-aqua"
                 />
               </div>
 
-              <div className="flex items-center justify-end gap-2 pt-3 border-t border-ocean-800">
+              <div className="flex items-center justify-end gap-2.5 pt-3 border-t border-reef-border/40">
                 <button
                   type="button"
                   onClick={() => setShowRegisterModal(false)}
-                  className="px-4 py-2 rounded-lg bg-ocean-800 hover:bg-ocean-750 text-slate-300"
+                  className="px-4 py-2 rounded-xl bg-reef-surface text-slate-300 hover:text-white"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-1.5"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-black flex items-center gap-1.5 shadow-glow-aqua"
                 >
                   <Save className="w-4 h-4" />
                   <span>Register Station</span>

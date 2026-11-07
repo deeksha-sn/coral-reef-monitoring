@@ -16,9 +16,10 @@ import {
   UserCheck,
   Eye,
   Waves,
+  Sparkles,
 } from 'lucide-react';
-import { useAuth } from '../../context/AuthContext';
-import { useApp } from '../../context/AppContext';
+import { useAuth } from '@/context/AuthContext';
+import { useApp } from '@/context/AppContext';
 
 interface NavItem {
   name: string;
@@ -54,9 +55,9 @@ export const Sidebar: React.FC = () => {
   const getRoleIcon = () => {
     switch (currentRole) {
       case 'ADMIN':
-        return <ShieldCheck className="w-4 h-4 text-cyan-400" />;
+        return <ShieldCheck className="w-4 h-4 text-reef-aqua" />;
       case 'RESEARCHER':
-        return <UserCheck className="w-4 h-4 text-teal-400" />;
+        return <UserCheck className="w-4 h-4 text-reef-orange" />;
       case 'VIEWER':
         return <Eye className="w-4 h-4 text-slate-400" />;
     }
@@ -64,33 +65,50 @@ export const Sidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 bottom-0 z-40 bg-ocean-900 border-r border-ocean-700/70 flex flex-col transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 bottom-0 z-40 bg-gradient-to-b from-reef-midnight via-reef-deep to-[#04121F] border-r border-reef-border/60 flex flex-col transition-all duration-300 ease-in-out shadow-2xl ${
         collapsed ? 'w-20' : 'w-72'
       }`}
     >
       {/* Brand Header */}
-      <div className="p-4 border-b border-ocean-700/70 flex items-center justify-between">
-        <div className="flex items-center gap-3 overflow-hidden">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-600 flex items-center justify-center shadow-glow-cyan shrink-0">
-            <Waves className="w-6 h-6 text-slate-950 font-bold" />
+      <div className="p-4 border-b border-reef-border/40 flex items-center justify-between relative overflow-hidden">
+        {/* Subtle decorative glow */}
+        <div className="absolute -top-10 -left-10 w-28 h-28 bg-reef-aqua/10 rounded-full blur-2xl pointer-events-none" />
+
+        <div className="flex items-center gap-3 overflow-hidden relative z-10">
+          {/* Logo with coral icon asset or styling */}
+          <div className="w-11 h-11 rounded-xl overflow-hidden bg-gradient-to-br from-reef-teal/40 via-reef-midnight to-reef-deep border border-reef-aqua/40 flex items-center justify-center shadow-glow-aqua/30 shrink-0 p-0.5 group">
+            <img
+              src="/assets/coral-logo.jpg"
+              alt="ReefSentra Logo"
+              className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform"
+              onError={(e) => {
+                // Fallback SVG if image not found
+                e.currentTarget.style.display = 'none';
+              }}
+            />
+            {/* Fallback icon if image doesn't show */}
+            <Waves className="w-6 h-6 text-reef-aqua hidden peer-invalid:block" />
           </div>
+
           {!collapsed && (
             <div className="flex flex-col min-w-0">
-              <span className="text-xs font-bold tracking-wider text-cyan-400 uppercase">
-                Marine AI System
-              </span>
-              <h1 className="text-sm font-extrabold text-slate-100 truncate leading-tight">
-                Coral Reef Health &amp; Disease
-              </h1>
-              <span className="text-[10px] text-slate-400 truncate">
-                Monitoring System
+              <div className="flex items-center gap-1.5">
+                <h1 className="text-lg font-black tracking-tight text-white flex items-center">
+                  <span>Reef</span>
+                  <span className="text-reef-aqua font-extrabold">Sentra</span>
+                </h1>
+                <Sparkles className="w-3 h-3 text-reef-orange animate-pulse" />
+              </div>
+              <span className="text-[11px] font-semibold text-reef-seafoam truncate leading-tight">
+                Coral Reef Health &amp; Disease Monitoring
               </span>
             </div>
           )}
         </div>
+
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-cyan-300 hover:bg-ocean-800 transition-colors shrink-0"
+          className="p-1.5 rounded-lg text-slate-400 hover:text-reef-aqua hover:bg-reef-surface transition-colors shrink-0 relative z-10"
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? (
@@ -103,70 +121,90 @@ export const Sidebar: React.FC = () => {
 
       {/* Official Research Paper Title Tag */}
       {!collapsed && (
-        <div className="mx-3 mt-3 p-2.5 rounded-lg bg-ocean-950/80 border border-ocean-800 text-[10.5px] text-slate-400 leading-snug">
-          <span className="text-cyan-400 font-semibold block mb-0.5">
-            Research Paper:
+        <div className="mx-3 mt-3 p-2.5 rounded-xl bg-reef-surface/40 border border-reef-border/30 text-[10px] text-slate-300 leading-snug">
+          <span className="text-reef-orange font-semibold block text-[10.5px] uppercase tracking-wider mb-0.5">
+            Research Paper Title:
           </span>
-          Detection and Monitoring of Coral Reef Disease and Health Condition
+          <span className="italic text-slate-200">
+            Detection and Monitoring of Coral Reef Disease and Health Condition
+          </span>
         </div>
       )}
 
       {/* Navigation Links */}
-      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
+      <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-1.5">
         {navItems.map((item) => (
           <NavLink
             key={item.path}
             to={item.path}
             end={item.path === '/'}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all group ${
+              `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group relative ${
                 isActive
-                  ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 shadow-glow-cyan/20'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-ocean-800/60'
+                  ? 'bg-gradient-to-r from-reef-teal/35 via-reef-aqua/20 to-transparent text-reef-white border border-reef-aqua/40 shadow-glow-aqua/20 font-semibold'
+                  : 'text-slate-300 hover:text-white hover:bg-reef-surface/50 hover:border hover:border-reef-border/30'
               }`
             }
             title={collapsed ? item.name : undefined}
           >
-            <item.icon className="w-5 h-5 shrink-0 transition-transform group-hover:scale-105" />
-            {!collapsed && (
-              <span className="truncate flex-1 text-[13.5px]">{item.name}</span>
-            )}
-            {!collapsed && item.badge !== undefined && (
-              <span className="px-2 py-0.5 text-xs font-mono font-bold rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/40 animate-pulse">
-                {item.badge}
-              </span>
-            )}
-            {collapsed && item.badge !== undefined && (
-              <span className="absolute right-2 w-2 h-2 rounded-full bg-rose-500" />
+            {({ isActive }) => (
+              <>
+                {/* Active indicator bar */}
+                {isActive && (
+                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 rounded-r-full bg-gradient-to-b from-reef-aqua to-reef-teal shadow-glow-aqua" />
+                )}
+
+                <item.icon
+                  className={`w-5 h-5 shrink-0 transition-transform group-hover:scale-110 ${
+                    isActive ? 'text-reef-aqua' : 'text-slate-400 group-hover:text-reef-aqua'
+                  }`}
+                />
+
+                {!collapsed && (
+                  <span className="truncate flex-1 text-[13.5px] tracking-tight">
+                    {item.name}
+                  </span>
+                )}
+
+                {!collapsed && item.badge !== undefined && (
+                  <span className="px-2 py-0.5 text-xs font-mono font-bold rounded-full bg-reef-pink/20 text-reef-pink border border-reef-pink/40 animate-pulse">
+                    {item.badge}
+                  </span>
+                )}
+
+                {collapsed && item.badge !== undefined && (
+                  <span className="absolute right-2 w-2.5 h-2.5 rounded-full bg-reef-pink animate-ping" />
+                )}
+              </>
             )}
           </NavLink>
         ))}
       </nav>
 
       {/* User Profile & Demo Role Footer */}
-      <div className="p-3 border-t border-ocean-700/70 bg-ocean-950/60">
+      <div className="p-3 border-t border-reef-border/40 bg-gradient-to-t from-black/40 via-reef-deep to-transparent">
         <div className="flex items-center gap-3">
           <img
             src={currentUser.avatarUrl}
             alt={currentUser.name}
-            className="w-9 h-9 rounded-full object-cover border border-cyan-500/40 shrink-0"
+            className="w-10 h-10 rounded-xl object-cover border-2 border-reef-aqua/50 shadow-glow-aqua/30 shrink-0"
           />
           {!collapsed && (
             <div className="min-w-0 flex-1">
               <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold text-slate-200 truncate">
+                <p className="text-xs font-bold text-white truncate">
                   {currentUser.name}
                 </p>
                 {getRoleIcon()}
               </div>
-              <p className="text-[11px] text-slate-400 truncate">
+              <p className="text-[11px] text-slate-300 truncate">
                 {currentUser.affiliation || currentUser.email}
               </p>
               <div className="mt-1 flex items-center gap-1.5">
-                <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-ocean-800 text-cyan-400 border border-ocean-700 font-semibold">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-reef-surface text-reef-aqua border border-reef-aqua/30 font-bold uppercase tracking-wider">
                   {currentRole}
                 </span>
-                <span className="text-[10px] text-slate-500">Demo Role</span>
+                <span className="text-[10px] text-slate-400">Demo Role</span>
               </div>
             </div>
           )}

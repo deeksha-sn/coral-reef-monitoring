@@ -1,4 +1,4 @@
-# Coral Reef Health & Disease Monitoring System
+# ReefSentra — Coral Reef Health & Disease Monitoring System
 
 **Official Research Paper Title:**  
 *Detection and Monitoring of Coral Reef Disease and Health Condition*
@@ -9,7 +9,7 @@ An advanced scientific frontend dashboard for real-time marine ecological survei
 
 ## Key Highlights
 
-- **Deep Ocean Dark Design System:** Tailored for marine research institutes with dark ocean backgrounds (`#040812` to `#13233D`), cyan/teal accents, subtle gradients, and data density.
+- **ReefSentra Immersive Design System:** Tailored for marine research institutes with a Deep Ocean palette (`#061B2C`, `#082A3A`, `#087E8B`, `#38D6D0`, `#FF8066`, `#FF6F91`, `#8DE2C5`, `#F3FAFC`), underwater sunlit hero visuals, subtle coral glow highlights, and glassmorphism.
 - **Nine Modular Research Modules:** Overview Dashboard, Image Assessment, Geographical Monitoring, Disease Analytics, Historical Comparison, Alerts & Notifications, Reports & PDF Export, Dataset Management, and Settings.
 - **Six Official Coral Taxonomic Categories:**
   1. Healthy Coral *(Condition)*
@@ -21,6 +21,7 @@ An advanced scientific frontend dashboard for real-time marine ecological survei
 - **Dual API Modes (MOCK vs LIVE):** Runs 100% independently in-browser with simulated inference by default. Can switch with one click to **LIVE API** to connect with teammates' FastAPI backend and YOLO11 model.
 - **Three Demonstration Roles:** ADMIN, RESEARCHER, and VIEWER with role-based feature gating and an interactive switcher.
 - **Scientific Rigor:** Strict mathematical separation of physiological bleaching from bacterial band diseases; comparisons calculated in **percentage points (pp)**.
+- **High-Fidelity GIS Maps:** Esri World Ocean Bathymetric basemap without watermark or external API keys.
 
 ---
 
