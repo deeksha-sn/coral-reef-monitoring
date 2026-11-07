@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: #050B14;
+    color: #F1F5F9;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Custom scientific dark scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #08101E;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1A2F50;
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2F5288;
+  }
+}
+
+/* Leaflet dark styling */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: #08101E !important;
+  font-family: inherit;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #0D192C !important;
+  color: #F1F5F9 !important;
+  border: 1px solid #213B64;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
+.leaflet-popup-tip {
+  background: #0D192C !important;
+  border: 1px solid #213B64;
+}
+
+.leaflet-bar a {
+  background-color: #0D192C !important;
+  color: #22D3EE !important;
+  border-bottom: 1px solid #213B64 !important;
+}
+
+.leaflet-bar a:hover {
+  background-color: #13233D !important;
+  color: #38BDF8 !important;
+}
+
+/* Scientific glass card effect */
+.glass-panel {
+  background: rgba(13, 25, 44, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(33, 59, 100, 0.6);
+}
+
+.glass-card-hover {
+  transition: all 0.2s ease-in-out;
+}
+
+.glass-card-hover:hover {
+  border-color: rgba(34, 211, 238, 0.4);
+  box-shadow: 0 4px 20px -2px rgba(6, 182, 212, 0.15);
+}

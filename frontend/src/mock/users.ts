@@ -1,0 +1,70 @@
+import { RolePermission, User } from '../types/user';
+
+export const MOCK_USERS: User[] = [
+  {
+    id: 'USR-ADMIN-01',
+    name: 'Dr. Corinne Alistair',
+    email: 'c.alistair@marine-research.org',
+    role: 'ADMIN',
+    affiliation: 'Global Coral Reef Alliance & Marine Institute',
+    avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'USR-RES-02',
+    name: 'Marcus Vance, M.Sc.',
+    email: 'm.vance@reef-monitoring.edu',
+    role: 'RESEARCHER',
+    affiliation: 'Oceanic Research Laboratory',
+    avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+  },
+  {
+    id: 'USR-VIEW-03',
+    name: 'Sarah Jenkins',
+    email: 's.jenkins@sanctuary-audit.gov',
+    role: 'VIEWER',
+    affiliation: 'Marine Sanctuary Conservation Directorate',
+    avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80',
+  },
+];
+
+export const ROLE_PERMISSIONS: Record<string, RolePermission> = {
+  ADMIN: {
+    role: 'ADMIN',
+    canManageUsers: true,
+    canCreateSites: true,
+    canDeleteSites: true,
+    canUploadAssessments: true,
+    canDeleteAssessments: true,
+    canRunPredictions: true,
+    canGenerateReports: true,
+    canManageSettings: true,
+    canAcknowledgeAlerts: true,
+    description: 'Full administrative access: configure models, manage user access, sites, assessments, and global thresholds.',
+  },
+  RESEARCHER: {
+    role: 'RESEARCHER',
+    canManageUsers: false,
+    canCreateSites: true,
+    canDeleteSites: false,
+    canUploadAssessments: true,
+    canDeleteAssessments: false,
+    canRunPredictions: true,
+    canGenerateReports: true,
+    canManageSettings: false,
+    canAcknowledgeAlerts: true,
+    description: 'Field researcher access: register reef sites, upload multi-image surveys, execute YOLO inference, and export reports.',
+  },
+  VIEWER: {
+    role: 'VIEWER',
+    canManageUsers: false,
+    canCreateSites: false,
+    canDeleteSites: false,
+    canUploadAssessments: false,
+    canDeleteAssessments: false,
+    canRunPredictions: false,
+    canGenerateReports: true,
+    canManageSettings: false,
+    canAcknowledgeAlerts: false,
+    description: 'Read-only stakeholder access: inspect dashboards, spatial maps, historical trends, and download published reports.',
+  },
+};
