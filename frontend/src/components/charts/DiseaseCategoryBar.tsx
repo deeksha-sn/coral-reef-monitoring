@@ -26,21 +26,21 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
       fullName: 'Black Band Disease',
       count: summary.blackBandDisease.count,
       pct: summary.blackBandDisease.percentage,
-      color: '#8B5CF6',
+      color: '#0A5CAB', // Deep Sea Dive (#0A5CAB)
     },
     {
       name: 'White Band',
       fullName: 'White Band Disease',
       count: summary.whiteBandDisease.count,
       pct: summary.whiteBandDisease.percentage,
-      color: '#38BDF8',
+      color: '#C94889', // Ocean Candy (#C94889)
     },
     {
       name: 'Yellow Band',
       fullName: 'Yellow Band Disease',
       count: summary.yellowBandDisease.count,
       pct: summary.yellowBandDisease.percentage,
-      color: '#EAB308',
+      color: '#F5B838', // Distinct Yellow Band
     },
   ];
 
@@ -48,7 +48,7 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
     if (active && payload && payload.length) {
       const item = payload[0].payload;
       return (
-        <div className="bg-reef-midnight/95 border border-reef-aqua/40 p-3 rounded-xl shadow-2xl text-xs font-mono backdrop-blur-md">
+        <div className="bg-reef-midnight/95 border border-reef-coralBay/40 p-3 rounded-xl shadow-2xl text-xs font-mono backdrop-blur-md">
           <p className="font-bold text-white flex items-center gap-1.5 text-sm">
             <span
               className="w-2.5 h-2.5 rounded-full shadow-sm"
@@ -57,7 +57,7 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
             {item.fullName}
           </p>
           <p className="text-slate-300 mt-1.5">Specimens: <span className="text-white font-bold">{item.count}</span> objects</p>
-          <p className="text-reef-aqua font-bold">Prevalence: {item.pct}%</p>
+          <p className="text-reef-coralBay font-bold">Prevalence: {item.pct}%</p>
         </div>
       );
     }
@@ -95,7 +95,7 @@ export const DiseaseCategoryBar: React.FC<DiseaseCategoryBarProps> = ({
 
       <div className="mt-2 pt-2.5 border-t border-reef-border/40 flex items-center justify-between text-xs font-mono px-2">
         <span className="text-slate-300 font-semibold">Combined Band Disease:</span>
-        <span className="font-black text-purple-300 bg-purple-950/40 px-2 py-0.5 rounded-md border border-purple-500/40">
+        <span className="font-black text-reef-candy bg-reef-midnight/90 px-2.5 py-0.5 rounded-md border border-reef-candy/40">
           {summary.combinedBandDisease.count} lesions ({summary.combinedBandDisease.percentage}%)
         </span>
       </div>

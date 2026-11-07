@@ -116,9 +116,9 @@ export const OverviewDashboard: React.FC = () => {
         <div className="relative z-10 p-7 sm:p-9 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="max-w-3xl space-y-3">
             <div className="flex flex-wrap items-center gap-2.5">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-reef-midnight/90 text-reef-aqua border border-reef-aqua/40 shadow-glow-aqua/30 backdrop-blur">
-                <Waves className="w-3.5 h-3.5 text-reef-aqua" />
-                <span>Marine Ecological Surveillance</span>
+              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider bg-reef-midnight/90 text-reef-coralBay border border-reef-coralBay/40 shadow-glow-aqua/30 backdrop-blur">
+                <Waves className="w-3.5 h-3.5 text-reef-coralBay" />
+                <span>CORAL REEF MONITORING</span>
               </span>
               <DemoDataBadge size="sm" />
             </div>
@@ -128,7 +128,7 @@ export const OverviewDashboard: React.FC = () => {
                 <span>Welcome to</span>
                 <span className="text-gradient-aqua">ReefSentra</span>
               </h1>
-              <p className="text-sm sm:text-base font-medium text-reef-seafoam mt-1 drop-shadow">
+              <p className="text-sm sm:text-base font-medium text-slate-200 mt-1 drop-shadow">
                 Monitor coral reef health, assess disease conditions and track changes across reef sites.
               </p>
             </div>
@@ -142,7 +142,7 @@ export const OverviewDashboard: React.FC = () => {
             <div className="shrink-0">
               <button
                 onClick={() => navigate('/assessment')}
-                className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-reef-aqua via-reef-teal to-[#076C78] hover:from-[#42ded8] hover:to-[#087E8B] text-reef-deep font-black text-sm shadow-glow-aqua transition-all transform hover:-translate-y-1 cursor-pointer border border-white/20"
+                className="flex items-center gap-2.5 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-reef-coralBay via-reef-deepSea to-reef-midnight hover:brightness-110 text-white font-black text-sm shadow-glow-aqua transition-all transform hover:-translate-y-0.5 cursor-pointer border border-white/20"
               >
                 <PlusCircle className="w-5 h-5 fill-current" />
                 <span>Create New Assessment</span>
@@ -158,39 +158,39 @@ export const OverviewDashboard: React.FC = () => {
           title="Total Reef Sites"
           value={totalSites}
           icon={MapPin}
-          iconColor="text-reef-aqua"
-          iconBg="bg-reef-midnight/80 border-reef-aqua/40"
+          iconColor="text-reef-coralBay"
+          iconBg="bg-reef-midnight/90 border-reef-coralBay/40"
           onClick={() => navigate('/geographical')}
         />
         <StatCard
           title="Assessments"
           value={totalAssessments}
           icon={ClipboardList}
-          iconColor="text-reef-seafoam"
-          iconBg="bg-reef-midnight/80 border-reef-seafoam/40"
+          iconColor="text-reef-coralBay"
+          iconBg="bg-reef-midnight/90 border-reef-coralBay/40"
           onClick={() => navigate('/analytics')}
         />
         <StatCard
           title="Images Analysed"
           value={totalImages}
           icon={ImageIcon}
-          iconColor="text-sky-300"
-          iconBg="bg-reef-midnight/80 border-sky-400/40"
+          iconColor="text-slate-300"
+          iconBg="bg-reef-midnight/90 border-reef-border/40"
         />
         <StatCard
           title="Total Detections"
           value={totalDetections}
           icon={Activity}
-          iconColor="text-purple-300"
-          iconBg="bg-reef-midnight/80 border-purple-400/40"
+          iconColor="text-reef-blush"
+          iconBg="bg-reef-midnight/90 border-reef-blush/40"
         />
         <StatCard
           title="Healthy Coral"
           value={`${aggregateSummary.healthyCoral.percentage}%`}
           subValue={`(${aggregateSummary.healthyCoral.count})`}
           icon={HeartPulse}
-          iconColor="text-emerald-400"
-          iconBg="bg-emerald-950/80 border-emerald-500/40"
+          iconColor="text-reef-coralBay"
+          iconBg="bg-reef-midnight/90 border-reef-coralBay/40"
           trend={{ diff: 'Dominant Cover', isPositive: true }}
         />
         <StatCard
@@ -198,8 +198,8 @@ export const OverviewDashboard: React.FC = () => {
           value={`${aggregateSummary.bleachedCoral.percentage}%`}
           subValue={`(${aggregateSummary.bleachedCoral.count})`}
           icon={SunMedium}
-          iconColor="text-reef-orange"
-          iconBg="bg-amber-950/80 border-reef-orange/40"
+          iconColor="text-reef-sunset"
+          iconBg="bg-reef-midnight/90 border-reef-sunset/40"
           trend={{ diff: 'Thermal Stress', isPositive: false }}
         />
         <StatCard
@@ -207,8 +207,8 @@ export const OverviewDashboard: React.FC = () => {
           value={`${aggregateSummary.combinedBandDisease.percentage}%`}
           subValue={`(${aggregateSummary.combinedBandDisease.count})`}
           icon={Biohazard}
-          iconColor="text-reef-pink"
-          iconBg="bg-purple-950/80 border-reef-pink/40"
+          iconColor="text-reef-candy"
+          iconBg="bg-reef-midnight/90 border-reef-candy/40"
           trend={{ diff: 'Band Pathogens', isPositive: false }}
         />
       </div>
@@ -349,17 +349,17 @@ export const OverviewDashboard: React.FC = () => {
                         {site?.siteName || asm.siteId}
                       </td>
                       <td className="py-3 px-3">
-                        <span className="text-emerald-400 font-bold">
+                        <span className="text-reef-coralBay font-bold">
                           {asm.summary.healthyCoral.percentage}%
                         </span>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="text-reef-orange font-bold">
+                        <span className="text-reef-sunset font-bold">
                           {asm.summary.bleachedCoral.percentage}%
                         </span>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="text-purple-300 font-bold">
+                        <span className="text-reef-candy font-bold">
                           {asm.summary.combinedBandDisease.percentage}%
                         </span>
                       </td>

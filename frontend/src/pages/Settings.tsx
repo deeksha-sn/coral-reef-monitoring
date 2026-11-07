@@ -145,8 +145,8 @@ export const Settings: React.FC = () => {
           onClick={() => setActiveTab('integration')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'integration'
-              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
-              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
+              ? 'bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-midnight/60'
           }`}
         >
           <Server className="w-4 h-4" />
@@ -157,8 +157,8 @@ export const Settings: React.FC = () => {
           onClick={() => setActiveTab('thresholds')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'thresholds'
-              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
-              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
+              ? 'bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-midnight/60'
           }`}
         >
           <BellRing className="w-4 h-4" />
@@ -169,36 +169,36 @@ export const Settings: React.FC = () => {
           onClick={() => setActiveTab('email')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'email'
-              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
-              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
+              ? 'bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-midnight/60'
           }`}
         >
           <Mail className="w-4 h-4" />
-          <span>Email Notifications</span>
+          <span>Notification Channels</span>
         </button>
 
         <button
           onClick={() => setActiveTab('roles')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'roles'
-              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
-              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
+              ? 'bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-midnight/60'
           }`}
         >
           <ShieldCheck className="w-4 h-4" />
-          <span>Role Permissions &amp; Access</span>
+          <span>Role Permissions Matrix</span>
         </button>
 
         <button
           onClick={() => setActiveTab('profile')}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl transition-all whitespace-nowrap ${
             activeTab === 'profile'
-              ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep shadow-glow-aqua/30'
-              : 'text-slate-300 hover:text-white hover:bg-reef-surface'
+              ? 'bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white shadow-glow-aqua/30'
+              : 'text-slate-300 hover:text-white hover:bg-reef-midnight/60'
           }`}
         >
           <User className="w-4 h-4" />
-          <span>User Profile</span>
+          <span>Demonstration Profile</span>
         </button>
       </div>
 

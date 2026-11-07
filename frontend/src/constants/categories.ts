@@ -5,60 +5,60 @@ export const CORAL_CATEGORIES: Record<CoralCategoryKey, CategoryMetadata> = {
     key: 'healthy_coral',
     displayName: 'Healthy Coral',
     type: 'condition',
-    color: '#10B981', // Emerald
-    tailwindBg: 'bg-emerald-500/10',
-    tailwindText: 'text-emerald-400',
-    tailwindBorder: 'border-emerald-500/30',
+    color: '#29B8E6', // Coral Bay Blue (#29B8E6)
+    tailwindBg: 'bg-[#29B8E6]/15',
+    tailwindText: 'text-[#29B8E6]',
+    tailwindBorder: 'border-[#29B8E6]/40',
     description: 'Vibrant pigmentation with active photosynthetic zooxanthellae and no visible lesion.',
   },
   bleached_coral: {
     key: 'bleached_coral',
     displayName: 'Bleached Coral',
     type: 'condition',
-    color: '#F59E0B', // Amber
-    tailwindBg: 'bg-amber-500/10',
-    tailwindText: 'text-amber-400',
-    tailwindBorder: 'border-amber-500/30',
-    description: 'Expulsion of symbiotic algae due to elevated sea surface temperatures or stress.',
+    color: '#FB8E5F', // Sunset Foam (#FB8E5F)
+    tailwindBg: 'bg-[#FB8E5F]/15',
+    tailwindText: 'text-[#FB8E5F]',
+    tailwindBorder: 'border-[#FB8E5F]/40',
+    description: 'Expulsion of symbiotic algae due to elevated sea surface temperatures or thermal stress.',
   },
   dead_coral: {
     key: 'dead_coral',
     displayName: 'Dead Coral',
     type: 'condition',
-    color: '#EF4444', // Red
-    tailwindBg: 'bg-red-500/10',
-    tailwindText: 'text-red-400',
-    tailwindBorder: 'border-red-500/30',
+    color: '#B8688B', // Seashell Blush (#B8688B)
+    tailwindBg: 'bg-[#B8688B]/15',
+    tailwindText: 'text-[#B8688B]',
+    tailwindBorder: 'border-[#B8688B]/40',
     description: 'Exposed bare skeleton overgrown with filamentous turf algae, structural collapse.',
   },
   black_band_disease: {
     key: 'black_band_disease',
     displayName: 'Black Band Disease',
     type: 'disease',
-    color: '#8B5CF6', // Purple/Violet
-    tailwindBg: 'bg-purple-500/10',
-    tailwindText: 'text-purple-400',
-    tailwindBorder: 'border-purple-500/30',
+    color: '#0A5CAB', // Deep Sea Dive (#0A5CAB)
+    tailwindBg: 'bg-[#0A5CAB]/25',
+    tailwindText: 'text-[#5CA8FF]',
+    tailwindBorder: 'border-[#0A5CAB]/50',
     description: 'Destructive microbial consortium dominated by cyanobacteria forming a dark annular band.',
   },
   white_band_disease: {
     key: 'white_band_disease',
     displayName: 'White Band Disease',
     type: 'disease',
-    color: '#38BDF8', // Sky Blue
-    tailwindBg: 'bg-sky-500/10',
-    tailwindText: 'text-sky-300',
-    tailwindBorder: 'border-sky-500/30',
-    description: 'Pathogenic bacterial necrosis producing a sharply demarcated white band advancing along branches.',
+    color: '#C94889', // Ocean Candy (#C94889)
+    tailwindBg: 'bg-[#C94889]/15',
+    tailwindText: 'text-[#C94889]',
+    tailwindBorder: 'border-[#C94889]/40',
+    description: 'Pathogenic bacterial necrosis producing a sharply demarcated band advancing along branches.',
   },
   yellow_band_disease: {
     key: 'yellow_band_disease',
     displayName: 'Yellow Band Disease',
     type: 'disease',
-    color: '#EAB308', // Yellow
-    tailwindBg: 'bg-yellow-500/10',
-    tailwindText: 'text-yellow-400',
-    tailwindBorder: 'border-yellow-500/30',
+    color: '#F5B838', // Distinct Yellow Band
+    tailwindBg: 'bg-[#F5B838]/15',
+    tailwindText: 'text-[#F5B838]',
+    tailwindBorder: 'border-[#F5B838]/40',
     description: 'Pale yellow to yellowish-brown blotches or bands with progressive tissue degradation.',
   },
 };

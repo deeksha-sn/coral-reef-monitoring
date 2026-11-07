@@ -19,14 +19,14 @@ export function exportAssessmentReportPDF(
   const pageWidth = doc.internal.pageSize.getWidth();
   let y = 18;
 
-  // Header Banner
-  doc.setFillColor(13, 27, 47); // Dark navy
+  // Header Banner - Midnight Current (#162B42) Base
+  doc.setFillColor(22, 43, 66);
   doc.rect(0, 0, pageWidth, 28, 'F');
 
-  doc.setTextColor(34, 211, 238); // Cyan
+  doc.setTextColor(41, 184, 230); // Coral Bay Blue (#29B8E6)
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
-  doc.text('CORAL REEF HEALTH & DISEASE MONITORING SYSTEM', 14, 12);
+  doc.text('REEFSENTRA — CORAL REEF HEALTH & DISEASE MONITORING', 14, 12);
 
   doc.setFontSize(8.5);
   doc.setFont('helvetica', 'normal');
@@ -211,14 +211,14 @@ export function exportComparisonReportPDF(
   const pageWidth = doc.internal.pageSize.getWidth();
   let y = 18;
 
-  // Header Banner
-  doc.setFillColor(13, 27, 47);
+  // Header Banner - Midnight Current (#162B42) Base
+  doc.setFillColor(22, 43, 66);
   doc.rect(0, 0, pageWidth, 28, 'F');
 
-  doc.setTextColor(34, 211, 238);
+  doc.setTextColor(41, 184, 230); // Coral Bay Blue (#29B8E6)
   doc.setFontSize(14);
   doc.setFont('helvetica', 'bold');
-  doc.text('CORAL REEF HEALTH & DISEASE MONITORING SYSTEM', 14, 12);
+  doc.text('REEFSENTRA — CORAL REEF HEALTH & DISEASE MONITORING', 14, 12);
 
   doc.setFontSize(8.5);
   doc.setFont('helvetica', 'normal');

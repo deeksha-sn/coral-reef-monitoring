@@ -37,8 +37,8 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-reef-midnight/95 border border-reef-aqua/40 p-3.5 rounded-xl shadow-2xl text-xs font-mono space-y-1.5 backdrop-blur-md">
-          <p className="font-bold text-reef-aqua mb-2 text-sm border-b border-reef-border/40 pb-1">
+        <div className="bg-reef-midnight/95 border border-reef-coralBay/40 p-3.5 rounded-xl shadow-2xl text-xs font-mono space-y-1.5 backdrop-blur-md">
+          <p className="font-bold text-reef-coralBay mb-2 text-sm border-b border-reef-border/40 pb-1">
             Survey Date: {label}
           </p>
           {payload.map((p: any) => (
@@ -60,16 +60,16 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
     <div style={{ width: '100%', height }}>
       <ResponsiveContainer>
         <LineChart data={data} margin={{ top: 15, right: 15, left: -15, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(56, 214, 208, 0.12)" />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(41, 184, 230, 0.15)" />
           <XAxis
             dataKey="date"
-            stroke="#8DE2C5"
+            stroke="#29B8E6"
             fontSize={11}
             tickLine={false}
             fontWeight={500}
           />
           <YAxis
-            stroke="#8DE2C5"
+            stroke="#29B8E6"
             fontSize={11}
             tickLine={false}
             unit="%"
@@ -88,35 +88,35 @@ export const HealthTrendLine: React.FC<HealthTrendLineProps> = ({
             type="monotone"
             dataKey="healthy"
             name="Healthy Coral"
-            stroke="#10B981"
+            stroke="#29B8E6"
             strokeWidth={3}
-            dot={{ r: 4, fill: '#10B981', stroke: '#061B2C', strokeWidth: 1.5 }}
+            dot={{ r: 4, fill: '#29B8E6', stroke: '#162B42', strokeWidth: 1.5 }}
             activeDot={{ r: 7 }}
           />
           <Line
             type="monotone"
             dataKey="bleached"
             name="Bleached Coral"
-            stroke="#FF8066"
+            stroke="#FB8E5F"
             strokeWidth={2.5}
-            dot={{ r: 4, fill: '#FF8066', stroke: '#061B2C', strokeWidth: 1.5 }}
+            dot={{ r: 4, fill: '#FB8E5F', stroke: '#162B42', strokeWidth: 1.5 }}
           />
           <Line
             type="monotone"
             dataKey="dead"
             name="Dead Coral"
-            stroke="#EF4444"
+            stroke="#B8688B"
             strokeWidth={2}
             strokeDasharray="4 4"
-            dot={{ r: 3, fill: '#EF4444' }}
+            dot={{ r: 3, fill: '#B8688B' }}
           />
           <Line
             type="monotone"
             dataKey="combinedBand"
             name="Combined Band Disease"
-            stroke="#8B5CF6"
+            stroke="#C94889"
             strokeWidth={3}
-            dot={{ r: 4, fill: '#8B5CF6', stroke: '#061B2C', strokeWidth: 1.5 }}
+            dot={{ r: 4, fill: '#C94889', stroke: '#162B42', strokeWidth: 1.5 }}
           />
         </LineChart>
       </ResponsiveContainer>

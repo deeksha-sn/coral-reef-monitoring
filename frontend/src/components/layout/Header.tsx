@@ -92,12 +92,12 @@ export const Header: React.FC = () => {
         {/* Left: Page Title & Breadcrumb */}
         <div className="min-w-0">
           <div className="flex items-center gap-2 text-xs text-slate-300 mb-0.5">
-            <Link to="/" className="hover:text-reef-aqua transition-colors flex items-center gap-1 font-medium">
-              <Waves className="w-3.5 h-3.5 text-reef-aqua" />
+            <Link to="/" className="hover:text-reef-coralBay transition-colors flex items-center gap-1 font-medium">
+              <Waves className="w-3.5 h-3.5 text-reef-coralBay" />
               <span>ReefSentra</span>
             </Link>
             <span className="text-slate-500">/</span>
-            <span className="text-reef-seafoam font-semibold">{pageInfo.title}</span>
+            <span className="text-reef-coralBay font-semibold">{pageInfo.title}</span>
           </div>
           <h2 className="text-xl font-extrabold text-white truncate tracking-tight">
             {pageInfo.title}
@@ -111,7 +111,7 @@ export const Header: React.FC = () => {
             <input
               type="text"
               placeholder="Search reef sites, transects, or pathogen alerts..."
-              className="w-full pl-9 pr-4 py-2 rounded-xl bg-reef-deep/80 border border-reef-border/60 text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:border-reef-aqua focus:ring-1 focus:ring-reef-aqua/40 transition-all shadow-inner"
+              className="w-full pl-9 pr-4 py-2 rounded-xl bg-reef-midnight/90 border border-reef-border/60 text-xs text-slate-200 placeholder-slate-400 focus:outline-none focus:border-reef-coralBay focus:ring-1 focus:ring-reef-coralBay/40 transition-all shadow-inner"
             />
           </div>
           <DemoDataBadge />
@@ -120,12 +120,12 @@ export const Header: React.FC = () => {
         {/* Right Controls */}
         <div className="flex items-center gap-3 shrink-0">
           {/* API Mode Switch (MOCK vs LIVE) */}
-          <div className="flex items-center rounded-xl bg-reef-deep border border-reef-border/60 p-1 text-xs shadow-inner">
+          <div className="flex items-center rounded-xl bg-reef-midnight border border-reef-border/60 p-1 text-xs shadow-inner">
             <button
               onClick={() => setApiMode('MOCK')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all font-semibold ${
                 apiMode === 'MOCK'
-                  ? 'bg-gradient-to-r from-reef-aqua to-reef-teal text-reef-deep font-bold shadow-glow-aqua/40'
+                  ? 'bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white font-bold shadow-glow-aqua/40'
                   : 'text-slate-300 hover:text-white'
               }`}
               title="Runs completely standalone in-browser using realistic simulated inference."
@@ -137,7 +137,7 @@ export const Header: React.FC = () => {
               onClick={() => setApiMode('LIVE')}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all font-semibold ${
                 apiMode === 'LIVE'
-                  ? 'bg-gradient-to-r from-reef-orange to-reef-pink text-white font-bold shadow-glow-coral/40'
+                  ? 'bg-gradient-to-r from-reef-sunset to-reef-candy text-white font-bold shadow-glow-coral/40'
                   : 'text-slate-300 hover:text-white'
               }`}
               title="Attempts direct HTTP connection to the FastAPI YOLO11 inference backend."

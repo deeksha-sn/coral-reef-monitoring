@@ -612,8 +612,8 @@ export const ImageAssessment: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3">
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-emerald-500/40">
-                <span className="text-[11px] font-bold text-emerald-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-coralBay/40">
+                <span className="text-[11px] font-bold text-reef-coralBay block mb-1">
                   Healthy Coral
                 </span>
                 <div className="text-xl font-black font-mono text-white">
@@ -624,8 +624,8 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-orange/40">
-                <span className="text-[11px] font-bold text-reef-orange block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-sunset/40">
+                <span className="text-[11px] font-bold text-reef-sunset block mb-1">
                   Bleached Coral
                 </span>
                 <div className="text-xl font-black font-mono text-white">
@@ -636,8 +636,8 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-rose-500/40">
-                <span className="text-[11px] font-bold text-rose-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-blush/40">
+                <span className="text-[11px] font-bold text-reef-blush block mb-1">
                   Dead Coral
                 </span>
                 <div className="text-xl font-black font-mono text-white">
@@ -648,8 +648,8 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-purple-500/40">
-                <span className="text-[11px] font-bold text-purple-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-deepSea/50">
+                <span className="text-[11px] font-bold text-[#5CA8FF] block mb-1">
                   Black Band
                 </span>
                 <div className="text-xl font-black font-mono text-white">
@@ -660,8 +660,8 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-sky-400/40">
-                <span className="text-[11px] font-bold text-sky-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-candy/40">
+                <span className="text-[11px] font-bold text-reef-candy block mb-1">
                   White Band
                 </span>
                 <div className="text-xl font-black font-mono text-white">
@@ -672,8 +672,8 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-yellow-400/40">
-                <span className="text-[11px] font-bold text-yellow-400 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-amber-400/40">
+                <span className="text-[11px] font-bold text-amber-400 block mb-1">
                   Yellow Band
                 </span>
                 <div className="text-xl font-black font-mono text-white">
@@ -684,14 +684,14 @@ export const ImageAssessment: React.FC = () => {
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-purple-400/60 shadow-glow-coral/20">
-                <span className="text-[11px] font-black text-purple-300 block mb-1">
+              <div className="p-3.5 rounded-2xl bg-reef-midnight/90 border border-reef-candy/50 shadow-glow-candy/20">
+                <span className="text-[11px] font-black text-reef-candy block mb-1">
                   Combined Band
                 </span>
-                <div className="text-xl font-black font-mono text-purple-200">
+                <div className="text-xl font-black font-mono text-white">
                   {assessmentResult.summary.combinedBandDisease.percentage}%
                 </div>
-                <span className="text-[11px] text-purple-300 font-mono">
+                <span className="text-[11px] text-reef-candy font-mono">
                   {assessmentResult.summary.combinedBandDisease.count} lesions
                 </span>
               </div>

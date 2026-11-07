@@ -100,8 +100,8 @@ export const Alerts: React.FC = () => {
 
       {/* Rules Criteria Reference Strip */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl reef-glass border border-reef-orange/40 text-xs">
-          <span className="font-extrabold text-reef-orange block mb-1 text-sm">
+        <div className="p-4 rounded-2xl reef-glass border border-reef-sunset/40 text-xs">
+          <span className="font-extrabold text-reef-sunset block mb-1 text-sm">
             Rule 1: Bleaching Alert
           </span>
           <p className="text-slate-300 leading-relaxed">
@@ -109,8 +109,8 @@ export const Alerts: React.FC = () => {
           </p>
         </div>
 
-        <div className="p-4 rounded-2xl reef-glass border border-purple-500/40 text-xs">
-          <span className="font-extrabold text-purple-300 block mb-1 text-sm">
+        <div className="p-4 rounded-2xl reef-glass border border-reef-candy/40 text-xs">
+          <span className="font-extrabold text-reef-candy block mb-1 text-sm">
             Rule 2: Combined Band Disease Alert
           </span>
           <p className="text-slate-300 leading-relaxed">
@@ -118,8 +118,8 @@ export const Alerts: React.FC = () => {
           </p>
         </div>
 
-        <div className="p-4 rounded-2xl reef-glass border border-reef-aqua/40 text-xs">
-          <span className="font-extrabold text-reef-aqua block mb-1 text-sm">
+        <div className="p-4 rounded-2xl reef-glass border border-reef-coralBay/40 text-xs">
+          <span className="font-extrabold text-reef-coralBay block mb-1 text-sm">
             Rule 3: New Disease Category Alert
           </span>
           <p className="text-slate-300 leading-relaxed">

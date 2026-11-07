@@ -222,11 +222,11 @@ export const Reports: React.FC = () => {
                 </div>
                 <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50">
                   <span className="text-[10px] text-slate-400 uppercase block font-sans">Healthy Ratio</span>
-                  <span className="text-xl font-black text-emerald-400">{selectedAssessment.summary.healthyCoral.percentage}%</span>
+                  <span className="text-xl font-black text-reef-coralBay">{selectedAssessment.summary.healthyCoral.percentage}%</span>
                 </div>
                 <div className="p-3.5 rounded-2xl bg-reef-midnight border border-reef-border/50">
                   <span className="text-[10px] text-slate-400 uppercase block font-sans">Combined Band</span>
-                  <span className="text-xl font-black text-purple-300">{selectedAssessment.summary.combinedBandDisease.percentage}%</span>
+                  <span className="text-xl font-black text-reef-candy">{selectedAssessment.summary.combinedBandDisease.percentage}%</span>
                 </div>
               </div>
 
@@ -247,46 +247,46 @@ export const Reports: React.FC = () => {
                     </thead>
                     <tbody className="divide-y divide-reef-border/30 bg-reef-deep/60">
                       <tr>
-                        <td className="py-3 px-4 font-sans font-bold text-emerald-400">Healthy Coral</td>
+                        <td className="py-3 px-4 font-sans font-bold text-reef-coralBay">Healthy Coral</td>
                         <td className="py-3 px-4 text-slate-300">Condition</td>
                         <td className="py-3 px-4 text-white">{selectedAssessment.summary.healthyCoral.count}</td>
-                        <td className="py-3 px-4 text-right font-black text-emerald-400">{selectedAssessment.summary.healthyCoral.percentage}%</td>
+                        <td className="py-3 px-4 text-right font-black text-reef-coralBay">{selectedAssessment.summary.healthyCoral.percentage}%</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-4 font-sans font-bold text-reef-orange">Bleached Coral</td>
+                        <td className="py-3 px-4 font-sans font-bold text-reef-sunset">Bleached Coral</td>
                         <td className="py-3 px-4 text-slate-300">Condition</td>
                         <td className="py-3 px-4 text-white">{selectedAssessment.summary.bleachedCoral.count}</td>
-                        <td className="py-3 px-4 text-right font-black text-reef-orange">{selectedAssessment.summary.bleachedCoral.percentage}%</td>
+                        <td className="py-3 px-4 text-right font-black text-reef-sunset">{selectedAssessment.summary.bleachedCoral.percentage}%</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-4 font-sans font-bold text-rose-400">Dead Coral</td>
+                        <td className="py-3 px-4 font-sans font-bold text-reef-blush">Dead Coral</td>
                         <td className="py-3 px-4 text-slate-300">Condition</td>
                         <td className="py-3 px-4 text-white">{selectedAssessment.summary.deadCoral.count}</td>
-                        <td className="py-3 px-4 text-right font-black text-rose-400">{selectedAssessment.summary.deadCoral.percentage}%</td>
+                        <td className="py-3 px-4 text-right font-black text-reef-blush">{selectedAssessment.summary.deadCoral.percentage}%</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-4 font-sans font-bold text-purple-400">Black Band Disease</td>
+                        <td className="py-3 px-4 font-sans font-bold text-[#5CA8FF]">Black Band Disease</td>
                         <td className="py-3 px-4 text-slate-300">Disease (Band)</td>
                         <td className="py-3 px-4 text-white">{selectedAssessment.summary.blackBandDisease.count}</td>
-                        <td className="py-3 px-4 text-right font-black text-purple-400">{selectedAssessment.summary.blackBandDisease.percentage}%</td>
+                        <td className="py-3 px-4 text-right font-black text-[#5CA8FF]">{selectedAssessment.summary.blackBandDisease.percentage}%</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-4 font-sans font-bold text-sky-400">White Band Disease</td>
+                        <td className="py-3 px-4 font-sans font-bold text-reef-candy">White Band Disease</td>
                         <td className="py-3 px-4 text-slate-300">Disease (Band)</td>
                         <td className="py-3 px-4 text-white">{selectedAssessment.summary.whiteBandDisease.count}</td>
-                        <td className="py-3 px-4 text-right font-black text-sky-400">{selectedAssessment.summary.whiteBandDisease.percentage}%</td>
+                        <td className="py-3 px-4 text-right font-black text-reef-candy">{selectedAssessment.summary.whiteBandDisease.percentage}%</td>
                       </tr>
                       <tr>
-                        <td className="py-3 px-4 font-sans font-bold text-yellow-400">Yellow Band Disease</td>
+                        <td className="py-3 px-4 font-sans font-bold text-amber-400">Yellow Band Disease</td>
                         <td className="py-3 px-4 text-slate-300">Disease (Band)</td>
                         <td className="py-3 px-4 text-white">{selectedAssessment.summary.yellowBandDisease.count}</td>
-                        <td className="py-3 px-4 text-right font-black text-yellow-400">{selectedAssessment.summary.yellowBandDisease.percentage}%</td>
+                        <td className="py-3 px-4 text-right font-black text-amber-400">{selectedAssessment.summary.yellowBandDisease.percentage}%</td>
                       </tr>
                       <tr className="bg-reef-midnight font-black border-t-2 border-reef-border">
-                        <td className="py-3.5 px-4 font-sans text-purple-300">Combined Band Disease (Aggregated Pathogens)</td>
-                        <td className="py-3.5 px-4 text-purple-400 font-sans">Band Diseases Sum</td>
-                        <td className="py-3.5 px-4 text-purple-200">{selectedAssessment.summary.combinedBandDisease.count}</td>
-                        <td className="py-3.5 px-4 text-right text-purple-200">{selectedAssessment.summary.combinedBandDisease.percentage}%</td>
+                        <td className="py-3.5 px-4 font-sans text-reef-candy">Combined Band Disease (Aggregated Pathogens)</td>
+                        <td className="py-3.5 px-4 text-reef-candy font-sans">Band Diseases Sum</td>
+                        <td className="py-3.5 px-4 text-white">{selectedAssessment.summary.combinedBandDisease.count}</td>
+                        <td className="py-3.5 px-4 text-right text-reef-candy">{selectedAssessment.summary.combinedBandDisease.percentage}%</td>
                       </tr>
                     </tbody>
                   </table>

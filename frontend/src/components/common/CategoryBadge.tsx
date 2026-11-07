@@ -20,13 +20,13 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
   if (category === 'combined_band_disease') {
     return (
       <span
-        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-purple-950/70 via-reef-midnight to-purple-950/70 border border-purple-500/50 text-purple-300 shadow-sm ${className}`}
+        className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-reef-midnight/90 border border-reef-candy/50 text-reef-candy shadow-sm ${className}`}
       >
-        {showDot && <span className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" />}
+        {showDot && <span className="w-2 h-2 rounded-full bg-reef-candy animate-pulse" />}
         <span>Combined Band Disease</span>
-        {count !== undefined && <span className="text-purple-300 font-mono">({count})</span>}
+        {count !== undefined && <span className="text-slate-300 font-mono">({count})</span>}
         {percentage !== undefined && (
-          <span className="text-purple-200 font-mono font-extrabold ml-0.5">{percentage}%</span>
+          <span className="text-white font-mono font-extrabold ml-0.5">{percentage}%</span>
         )}
       </span>
     );

@@ -265,8 +265,8 @@ export const HistoricalComparison: React.FC = () => {
         <>
           {/* Key Trajectory Delta Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-5 rounded-3xl reef-glass border border-reef-orange/40 shadow-lg">
-              <span className="text-xs font-mono uppercase tracking-wider text-reef-orange font-bold block mb-1">
+            <div className="p-5 rounded-3xl reef-glass border border-reef-sunset/40 shadow-lg">
+              <span className="text-xs font-mono uppercase tracking-wider text-reef-sunset font-bold block mb-1">
                 Thermal Bleaching Trajectory
               </span>
               <div className="flex items-baseline justify-between">
@@ -287,12 +287,12 @@ export const HistoricalComparison: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-5 rounded-3xl reef-glass border border-purple-500/40 shadow-lg">
-              <span className="text-xs font-mono uppercase tracking-wider text-purple-300 font-bold block mb-1">
+            <div className="p-5 rounded-3xl reef-glass border border-reef-candy/40 shadow-lg">
+              <span className="text-xs font-mono uppercase tracking-wider text-reef-candy font-bold block mb-1">
                 Combined Band Disease Trajectory
               </span>
               <div className="flex items-baseline justify-between">
-                <span className="text-3xl font-black font-mono text-purple-200">
+                <span className="text-3xl font-black font-mono text-reef-candy">
                   {formatPercentagePointDiff(combinedBandDiff)}
                 </span>
                 <span className="text-xs font-mono text-slate-300 font-semibold">
@@ -304,12 +304,12 @@ export const HistoricalComparison: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-5 rounded-3xl reef-glass border border-emerald-500/40 shadow-lg">
-              <span className="text-xs font-mono uppercase tracking-wider text-emerald-400 font-bold block mb-1">
+            <div className="p-5 rounded-3xl reef-glass border border-reef-coralBay/40 shadow-lg">
+              <span className="text-xs font-mono uppercase tracking-wider text-reef-coralBay font-bold block mb-1">
                 Healthy Tissue Trajectory
               </span>
               <div className="flex items-baseline justify-between">
-                <span className="text-3xl font-black font-mono text-emerald-300">
+                <span className="text-3xl font-black font-mono text-reef-coralBay">
                   {formatPercentagePointDiff(
                     calculatePercentagePointDiff(
                       assessmentB.summary.healthyCoral.percentage,
@@ -447,13 +447,13 @@ export const HistoricalComparison: React.FC = () => {
                       <Bar
                         dataKey="Baseline"
                         name={`Baseline (${assessmentA.assessmentDate})`}
-                        fill="#087E8B"
+                        fill="#0A5CAB"
                         radius={[4, 4, 0, 0]}
                       />
                       <Bar
                         dataKey="Comparative"
                         name={`Comparative (${assessmentB.assessmentDate})`}
-                        fill="#38D6D0"
+                        fill="#29B8E6"
                         radius={[4, 4, 0, 0]}
                       />
                     </BarChart>

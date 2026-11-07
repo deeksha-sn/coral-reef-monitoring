@@ -35,13 +35,13 @@
   }
 }
 
-/* Glassmorphism Panels for ReefSentra */
+/* Glassmorphism Panels for ReefSentra - Midnight Current (#162B42) Base */
 .reef-glass {
-  background: rgba(11, 51, 70, 0.65);
+  background: rgba(22, 43, 66, 0.72);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(56, 214, 208, 0.22);
-  box-shadow: 0 10px 30px -5px rgba(3, 16, 28, 0.7), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(41, 184, 230, 0.22);
+  box-shadow: 0 10px 30px -5px rgba(6, 27, 44, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 }
 
 .reef-glass-interactive {
@@ -49,64 +49,72 @@
 }
 
 .reef-glass-interactive:hover {
-  background: rgba(15, 62, 86, 0.8);
-  border-color: rgba(56, 214, 208, 0.45);
-  box-shadow: 0 14px 35px -5px rgba(3, 16, 28, 0.8), 0 0 20px -3px rgba(56, 214, 208, 0.25);
+  background: rgba(28, 54, 82, 0.85);
+  border-color: rgba(41, 184, 230, 0.45);
+  box-shadow: 0 14px 35px -5px rgba(6, 27, 44, 0.9), 0 0 20px -3px rgba(41, 184, 230, 0.25);
   transform: translateY(-2px);
 }
 
 .reef-glass-hero {
-  background: linear-gradient(135deg, rgba(8, 42, 58, 0.85) 0%, rgba(6, 27, 44, 0.92) 100%);
+  background: linear-gradient(135deg, rgba(22, 43, 66, 0.88) 0%, rgba(6, 27, 44, 0.95) 100%);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 214, 208, 0.3);
-  box-shadow: 0 20px 45px -10px rgba(2, 10, 18, 0.9);
+  border: 1px solid rgba(41, 184, 230, 0.3);
+  box-shadow: 0 20px 45px -10px rgba(4, 18, 31, 0.95);
 }
 
-/* Gradient text accents */
+/* Gradient text accents - Coral Bay Blue & Sunset Foam */
 .text-gradient-aqua {
-  background: linear-gradient(135deg, #38D6D0 0%, #8DE2C5 100%);
+  background: linear-gradient(135deg, #29B8E6 0%, #8DE2C5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .text-gradient-coral {
-  background: linear-gradient(135deg, #FF8066 0%, #FF6F91 100%);
+  background: linear-gradient(135deg, #FB8E5F 0%, #C94889 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Leaflet dark oceanic styling - no API key watermark! */
+/* Leaflet dark oceanic & bathymetric styling - zero API key watermark */
 .leaflet-container {
   width: 100%;
   height: 100%;
-  background: #061B2C !important;
+  background: #0f2336 !important;
   font-family: inherit;
 }
 
-.leaflet-tile-pane {
-  filter: hue-rotate(195deg) saturate(1.2) brightness(0.9) contrast(1.1);
+/* Deep Marine Bathymetry Inversion Filter:
+   Turns light bathymetry basemaps into deep midnight marine blue (#12273D)
+   with glowing cyan bathymetry contours and visible coastlines */
+.dark-ocean-tiles .leaflet-tile {
+  filter: invert(100%) hue-rotate(185deg) brightness(85%) contrast(125%) saturate(140%) !important;
+}
+
+/* Dark Marine Canvas Tiles */
+.dark-canvas-tiles .leaflet-tile {
+  filter: brightness(0.9) contrast(1.15) hue-rotate(10deg) !important;
 }
 
 .leaflet-popup-content-wrapper {
-  background: #082A3A !important;
+  background: #162B42 !important;
   color: #F3FAFC !important;
-  border: 1px solid rgba(56, 214, 208, 0.35) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 15px 35px -5px rgba(2, 10, 18, 0.8) !important;
+  border: 1px solid rgba(41, 184, 230, 0.4) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 15px 35px -5px rgba(6, 27, 44, 0.85) !important;
 }
 
 .leaflet-popup-tip {
-  background: #082A3A !important;
-  border: 1px solid rgba(56, 214, 208, 0.35) !important;
+  background: #162B42 !important;
+  border: 1px solid rgba(41, 184, 230, 0.4) !important;
 }
 
 .leaflet-bar a {
-  background-color: #082A3A !important;
-  color: #38D6D0 !important;
-  border-bottom: 1px solid rgba(56, 214, 208, 0.2) !important;
+  background-color: #162B42 !important;
+  color: #29B8E6 !important;
+  border-bottom: 1px solid rgba(41, 184, 230, 0.2) !important;
 }
 
 .leaflet-bar a:hover {
-  background-color: #0B3346 !important;
-  color: #8DE2C5 !important;
+  background-color: #12253A !important;
+  color: #FB8E5F !important;
 }

@@ -71,35 +71,34 @@ export const Sidebar: React.FC = () => {
     >
       {/* Brand Header */}
       <div className="p-4 border-b border-reef-border/40 flex items-center justify-between relative overflow-hidden">
-        {/* Subtle decorative glow */}
-        <div className="absolute -top-10 -left-10 w-28 h-28 bg-reef-aqua/10 rounded-full blur-2xl pointer-events-none" />
+        {/* Subtle decorative ocean glow */}
+        <div className="absolute -top-10 -left-10 w-32 h-32 bg-reef-coralBay/15 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="flex items-center gap-3 overflow-hidden relative z-10">
-          {/* Logo with coral icon asset or styling */}
-          <div className="w-11 h-11 rounded-xl overflow-hidden bg-gradient-to-br from-reef-teal/40 via-reef-midnight to-reef-deep border border-reef-aqua/40 flex items-center justify-center shadow-glow-aqua/30 shrink-0 p-0.5 group">
+        <div className="flex items-center gap-3.5 overflow-hidden relative z-10">
+          {/* Logo container: displays uploaded logo directly, slightly larger, in pure pristine fidelity */}
+          <div className="w-13 h-13 sm:w-14 sm:h-14 rounded-2xl overflow-hidden bg-white/95 p-1 border border-white/40 shadow-lg shadow-reef-coralBay/25 flex items-center justify-center shrink-0 group transition-all duration-300">
             <img
               src="/assets/coral-logo.jpg"
               alt="ReefSentra Logo"
-              className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform"
+              className="w-full h-full object-contain rounded-xl group-hover:scale-105 transition-transform duration-300"
               onError={(e) => {
-                // Fallback SVG if image not found
                 e.currentTarget.style.display = 'none';
               }}
             />
-            {/* Fallback icon if image doesn't show */}
-            <Waves className="w-6 h-6 text-reef-aqua hidden peer-invalid:block" />
+            {/* Fallback icon if image fails to load */}
+            <Waves className="w-7 h-7 text-reef-coralBay hidden peer-invalid:block" />
           </div>
 
           {!collapsed && (
-            <div className="flex flex-col min-w-0">
+            <div className="flex flex-col min-w-0 justify-center">
               <div className="flex items-center gap-1.5">
-                <h1 className="text-lg font-black tracking-tight text-white flex items-center">
+                <h1 className="text-xl font-black tracking-tight text-white flex items-center">
                   <span>Reef</span>
-                  <span className="text-reef-aqua font-extrabold">Sentra</span>
+                  <span className="text-reef-coralBay font-extrabold">Sentra</span>
                 </h1>
-                <Sparkles className="w-3 h-3 text-reef-orange animate-pulse" />
+                <Sparkles className="w-3.5 h-3.5 text-reef-sunset animate-pulse" />
               </div>
-              <span className="text-[11px] font-semibold text-reef-seafoam truncate leading-tight">
+              <span className="text-[11px] font-semibold text-slate-200 truncate leading-tight tracking-tight mt-0.5">
                 Coral Reef Health &amp; Disease Monitoring
               </span>
             </div>
@@ -108,7 +107,7 @@ export const Sidebar: React.FC = () => {
 
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-reef-aqua hover:bg-reef-surface transition-colors shrink-0 relative z-10"
+          className="p-1.5 rounded-lg text-slate-400 hover:text-reef-coralBay hover:bg-reef-surface transition-colors shrink-0 relative z-10"
           title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
           {collapsed ? (
@@ -121,8 +120,8 @@ export const Sidebar: React.FC = () => {
 
       {/* Official Research Paper Title Tag */}
       {!collapsed && (
-        <div className="mx-3 mt-3 p-2.5 rounded-xl bg-reef-surface/40 border border-reef-border/30 text-[10px] text-slate-300 leading-snug">
-          <span className="text-reef-orange font-semibold block text-[10.5px] uppercase tracking-wider mb-0.5">
+        <div className="mx-3 mt-3 p-2.5 rounded-xl bg-reef-midnight/80 border border-reef-border/40 text-[10px] text-slate-300 leading-snug">
+          <span className="text-reef-sunset font-bold block text-[10.5px] uppercase tracking-wider mb-0.5">
             Research Paper Title:
           </span>
           <span className="italic text-slate-200">
@@ -141,8 +140,8 @@ export const Sidebar: React.FC = () => {
             className={({ isActive }) =>
               `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all group relative ${
                 isActive
-                  ? 'bg-gradient-to-r from-reef-teal/35 via-reef-aqua/20 to-transparent text-reef-white border border-reef-aqua/40 shadow-glow-aqua/20 font-semibold'
-                  : 'text-slate-300 hover:text-white hover:bg-reef-surface/50 hover:border hover:border-reef-border/30'
+                  ? 'bg-gradient-to-r from-reef-coralBay/20 via-reef-coralBay/10 to-transparent text-white border border-reef-coralBay/50 shadow-glow-aqua/20 font-bold'
+                  : 'text-slate-300 hover:text-white hover:bg-reef-midnight/60 hover:border hover:border-reef-border/30'
               }`
             }
             title={collapsed ? item.name : undefined}

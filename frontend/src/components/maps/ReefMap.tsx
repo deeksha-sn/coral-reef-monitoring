@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
+import { Layers, Compass } from 'lucide-react';
 import { ReefSite } from '@/types/site';
 import { Assessment } from '@/types/assessment';
 
@@ -15,17 +16,17 @@ L.Icon.Default.mergeOptions({
 
 // Custom SVG icon generator for scientific reef pins with vibrant glowing colors
 function createReefIcon(color: string, isSelected: boolean) {
-  const size = isSelected ? 36 : 28;
+  const size = isSelected ? 38 : 30;
   const svg = `
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}" stroke="#061B2C" stroke-width="2">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="${size}" height="${size}" fill="${color}" stroke="#162B42" stroke-width="2">
       <defs>
-        <filter id="glow-${size}" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="${color}" flood-opacity="0.6"/>
+        <filter id="glow-${size}" x="-30%" y="-30%" width="160%" height="160%">
+          <feDropShadow dx="0" dy="2" stdDeviation="3.5" flood-color="${color}" flood-opacity="0.8"/>
         </filter>
       </defs>
       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" filter="url(#glow-${size})"/>
-      <circle cx="12" cy="9" r="3.2" fill="#061B2C"/>
-      <circle cx="12" cy="9" r="1.5" fill="#FFFFFF"/>
+      <circle cx="12" cy="9" r="3.2" fill="#162B42"/>
+      <circle cx="12" cy="9" r="1.5" fill="#F3FAFC"/>
     </svg>
   `;
   return L.divIcon({
@@ -64,17 +65,46 @@ export const ReefMap: React.FC<ReefMapProps> = ({
   selectedSiteId,
   onSelectSite,
   assessments = [],
-  className = 'h-[500px] w-full rounded-2xl overflow-hidden border border-reef-border/60 shadow-2xl',
+  className = 'h-[500px] w-full rounded-3xl overflow-hidden border border-reef-border/60 shadow-2xl',
   zoom = 3,
   center = [10.0, 30.0],
 }) => {
+  const [mapStyle, setMapStyle] = useState<'bathymetry' | 'canvas'>('bathymetry');
   const selectedSite = sites.find((s) => s.id === selectedSiteId);
   const activeCenter: [number, number] = selectedSite
     ? [selectedSite.latitude, selectedSite.longitude]
     : center;
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className} bg-[#0c1f33]`}>
+      {/* Interactive Basemap Layer Selector Pill */}
+      <div className="absolute top-3.5 right-3.5 z-[1000] flex items-center gap-1.5 p-1 rounded-xl bg-reef-midnight/90 backdrop-blur-md border border-reef-border/60 shadow-lg text-[11px] font-mono">
+        <button
+          onClick={() => setMapStyle('bathymetry')}
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all font-semibold ${
+            mapStyle === 'bathymetry'
+              ? 'bg-reef-coralBay text-reef-deep font-bold shadow-sm'
+              : 'text-slate-300 hover:text-white'
+          }`}
+          title="Dark ocean bathymetry with visible depth contours & coastlines"
+        >
+          <Compass className="w-3 h-3" />
+          <span>Bathymetric Depth</span>
+        </button>
+        <button
+          onClick={() => setMapStyle('canvas')}
+          className={`flex items-center gap-1 px-2.5 py-1 rounded-lg transition-all font-semibold ${
+            mapStyle === 'canvas'
+              ? 'bg-reef-coralBay text-reef-deep font-bold shadow-sm'
+              : 'text-slate-300 hover:text-white'
+          }`}
+          title="Esri World Dark Marine Canvas"
+        >
+          <Layers className="w-3 h-3" />
+          <span>Dark Canvas</span>
+        </button>
+      </div>
+
       <MapContainer
         center={activeCenter}
         zoom={selectedSite ? 6 : zoom}
@@ -82,15 +112,28 @@ export const ReefMap: React.FC<ReefMapProps> = ({
         className="w-full h-full"
       >
         {/*
-          Esri World Ocean Basemap:
-          Official marine bathymetry basemap designed for oceanographic research.
-          Free, public, high performance, and NO "API KEY REQUIRED" watermark!
+          Dark Ocean Bathymetry Basemaps:
+          1. Esri World Ocean Base with oceanic invert/bathymetry filter:
+             Converts pale tiles to deep marine blue (#12273D) with radiant depth contours!
+          2. Esri World Dark Gray Canvas:
+             Natively dark marine basemap with high-contrast coastlines and topography.
+          Both are 100% free, require zero API keys, and have no watermark!
         */}
-        <TileLayer
-          attribution='&copy; <a href="https://www.esri.com">Esri</a>, GEBCO, NOAA, National Geographic'
-          url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
-          maxZoom={13}
-        />
+        {mapStyle === 'bathymetry' ? (
+          <TileLayer
+            attribution='&copy; <a href="https://www.esri.com">Esri</a>, GEBCO, NOAA, National Geographic'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}"
+            className="dark-ocean-tiles"
+            maxZoom={13}
+          />
+        ) : (
+          <TileLayer
+            attribution='&copy; <a href="https://www.esri.com">Esri</a>, DeLorme, NAVTEQ'
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+            className="dark-canvas-tiles"
+            maxZoom={16}
+          />
+        )}
 
         {selectedSite && <MapRecenter center={[selectedSite.latitude, selectedSite.longitude]} zoom={6} />}
 
@@ -102,17 +145,22 @@ export const ReefMap: React.FC<ReefMapProps> = ({
               new Date(b.assessmentDate).getTime() - new Date(a.assessmentDate).getTime()
           )[0];
 
-          // Determine pin color based on latest health status
-          let pinColor = '#38D6D0'; // Aqua
+          // Determine pin color based on latest health status using the 6-color system:
+          // Healthy -> Coral Bay Blue (#29B8E6)
+          // Bleached -> Sunset Foam (#FB8E5F)
+          // High Band Pathogen -> Ocean Candy (#C94889) or Deep Sea Dive (#0A5CAB)
+          let pinColor = '#29B8E6'; // Coral Bay Blue default
           if (latestAssessment) {
             const bleach = latestAssessment.summary.bleachedCoral.percentage;
             const band = latestAssessment.summary.combinedBandDisease.percentage;
-            if (bleach >= 25 || band >= 20) {
-              pinColor = '#FF6F91'; // Coral pink alert
-            } else if (bleach >= 15 || band >= 12) {
-              pinColor = '#FF8066'; // Coral orange warning
+            if (band >= 15) {
+              pinColor = '#C94889'; // Ocean Candy alert (pathogen outbreak)
+            } else if (bleach >= 20) {
+              pinColor = '#FB8E5F'; // Sunset Foam warning (thermal bleaching)
+            } else if (bleach >= 12 || band >= 8) {
+              pinColor = '#B8688B'; // Seashell Blush moderate condition
             } else {
-              pinColor = '#10B981'; // Green healthy
+              pinColor = '#29B8E6'; // Coral Bay Blue healthy dominant
             }
           }
 
@@ -128,13 +176,13 @@ export const ReefMap: React.FC<ReefMapProps> = ({
               <Popup>
                 <div className="p-1 space-y-2 min-w-[240px]">
                   <div>
-                    <span className="text-[10px] font-mono font-bold text-reef-aqua uppercase tracking-wider block">
+                    <span className="text-[10px] font-mono font-bold text-reef-coralBay uppercase tracking-wider block">
                       {site.region}, {site.country}
                     </span>
                     <h4 className="text-sm font-bold text-white leading-tight">
                       {site.siteName}
                     </h4>
-                    <p className="text-[11px] text-reef-seafoam mt-0.5">
+                    <p className="text-[11px] text-slate-300 mt-0.5">
                       {site.reefName}
                     </p>
                   </div>
@@ -144,13 +192,13 @@ export const ReefMap: React.FC<ReefMapProps> = ({
                     <div>Surveys: {siteAssessments.length} recorded</div>
                     {latestAssessment ? (
                       <div className="grid grid-cols-3 gap-1 pt-1 text-center font-bold">
-                        <div className="text-emerald-400 bg-emerald-950/40 p-1 rounded">
+                        <div className="text-reef-coralBay bg-reef-midnight/90 border border-reef-coralBay/30 p-1 rounded">
                           {latestAssessment.summary.healthyCoral.percentage}% H
                         </div>
-                        <div className="text-reef-orange bg-amber-950/40 p-1 rounded">
+                        <div className="text-reef-sunset bg-reef-midnight/90 border border-reef-sunset/30 p-1 rounded">
                           {latestAssessment.summary.bleachedCoral.percentage}% B
                         </div>
-                        <div className="text-reef-pink bg-purple-950/40 p-1 rounded">
+                        <div className="text-reef-candy bg-reef-midnight/90 border border-reef-candy/30 p-1 rounded">
                           {latestAssessment.summary.combinedBandDisease.percentage}% D
                         </div>
                       </div>
@@ -162,7 +210,7 @@ export const ReefMap: React.FC<ReefMapProps> = ({
                   {onSelectSite && (
                     <button
                       onClick={() => onSelectSite(site.id)}
-                      className="w-full mt-1 py-1.5 rounded-lg bg-gradient-to-r from-reef-teal to-reef-aqua text-reef-deep text-xs font-bold hover:brightness-110 transition-all shadow-sm"
+                      className="w-full mt-1 py-1.5 rounded-lg bg-gradient-to-r from-reef-coralBay to-reef-deepSea text-white text-xs font-bold hover:brightness-110 transition-all shadow-sm cursor-pointer"
                     >
                       {isSelected ? 'Currently Selected' : 'Inspect Transect Data'}
                     </button>

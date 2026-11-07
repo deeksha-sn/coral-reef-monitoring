@@ -91,7 +91,7 @@ export const DiseaseAnalytics: React.FC = () => {
       name: 'Healthy Coral',
       count: counts.healthy_coral,
       pct: getPercentage(counts.healthy_coral),
-      color: '#10B981',
+      color: '#29B8E6', // Coral Bay Blue (#29B8E6)
       group: 'Condition',
     },
     {
@@ -99,7 +99,7 @@ export const DiseaseAnalytics: React.FC = () => {
       name: 'Bleached Coral',
       count: counts.bleached_coral,
       pct: getPercentage(counts.bleached_coral),
-      color: '#FF8066',
+      color: '#FB8E5F', // Sunset Foam (#FB8E5F)
       group: 'Condition',
     },
     {
@@ -107,7 +107,7 @@ export const DiseaseAnalytics: React.FC = () => {
       name: 'Dead Coral',
       count: counts.dead_coral,
       pct: getPercentage(counts.dead_coral),
-      color: '#EF4444',
+      color: '#B8688B', // Seashell Blush (#B8688B)
       group: 'Condition',
     },
     {
@@ -115,7 +115,7 @@ export const DiseaseAnalytics: React.FC = () => {
       name: 'Black Band Disease',
       count: counts.black_band_disease,
       pct: getPercentage(counts.black_band_disease),
-      color: '#8B5CF6',
+      color: '#0A5CAB', // Deep Sea Dive (#0A5CAB)
       group: 'Band Disease',
     },
     {
@@ -123,7 +123,7 @@ export const DiseaseAnalytics: React.FC = () => {
       name: 'White Band Disease',
       count: counts.white_band_disease,
       pct: getPercentage(counts.white_band_disease),
-      color: '#38BDF8',
+      color: '#C94889', // Ocean Candy (#C94889)
       group: 'Band Disease',
     },
     {
@@ -131,7 +131,7 @@ export const DiseaseAnalytics: React.FC = () => {
       name: 'Yellow Band Disease',
       count: counts.yellow_band_disease,
       pct: getPercentage(counts.yellow_band_disease),
-      color: '#EAB308',
+      color: '#F5B838', // Distinct Yellow Band
       group: 'Band Disease',
     },
   ];
@@ -436,9 +436,9 @@ export const DiseaseAnalytics: React.FC = () => {
                   return null;
                 }}
               />
-              <Bar dataKey="healthyPct" name="Healthy Coral" fill="#10B981" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="bleachedPct" name="Bleached Coral" fill="#FF8066" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="bandPct" name="Combined Band" fill="#8B5CF6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="healthyPct" name="Healthy Coral" fill="#29B8E6" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="bleachedPct" name="Bleached Coral" fill="#FB8E5F" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="bandPct" name="Combined Band" fill="#C94889" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
